@@ -1,6 +1,5 @@
 package com.anhtester.pages;
 
-import com.anhtester.drivers.DriverManager;
 import com.anhtester.keywords.WebUI;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -8,7 +7,7 @@ import java.awt.event.KeyEvent;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
-public class TaskPage extends CommonPage {
+public class TaskPage extends BasePage {
 
     //verify projects page
     private By titleTaskPage = By.xpath("//span[normalize-space()='Tasks Summary']");
@@ -22,15 +21,12 @@ public class TaskPage extends CommonPage {
 
     //verify Add new task page
     private By newTaskButton = By.xpath("//a[normalize-space()='New Task']");
-    private By titleAddNewTaskPopUp = By.xpath("//h4[@id='myModalLabel']");
-    private By checkboxPublic = By.xpath("//input[@id='task_is_public']");
-    private By textCheckboxPublic = By.xpath("//label[normalize-space()='Public']");
-    private By checkboxBillable = By.xpath("//input[@id='task_is_billable']");
-    private By textCheckboxBillable = By.xpath("//label[normalize-space()='Billable']");
-
+    private By titleAddNewTaskPopUp = By.xpath("//h4[normalize-space()='Add new task']");
+    private By inputStartDate = By.xpath("//input[@id='startdate']");
+    private By titleSubject = By.xpath("//label[@for='name']");
 
     //Add new task page
-    private By inputsubject = By.xpath("//input[@id='name']");
+    private By inputSubject = By.xpath("//input[@id='name']");
     private By saveTask = By.xpath("//button[normalize-space()='Save']");
     private By alertAddNewTaskSuccess = By.xpath("//span[@class='alert-title']");
 
@@ -39,8 +35,9 @@ public class TaskPage extends CommonPage {
     private By taskStatus = By.xpath("//span[@class='trigger pointer manual-popover text-has-action tw-text-neutral-800']");
     private By taskDescription = By.xpath("//span[@class='text-muted']");
     private By markComplete = By.xpath("//i[@class='fa fa-check']");
-    private By closeAlert = By.xpath("(//button[@data-dismiss='alert']//span[@aria-hidden='true'][normalize-space()='×']");
-    private By closePopUp = By.xpath("((//button[@aria-label='Close'])[3]");
+    private By closeAlert = By.xpath("//button[@data-dismiss='alert']//span[@aria-hidden='true'][normalize-space()='×']");
+    private By closePopUp = By.xpath("//div[@class='modal-header task-single-header']//button[@aria-label='Close']");
+
 
     //Verify Search Task Created and other Status don't have
     private By searchOnKanBan = By.xpath("//input[@id='search']");
@@ -49,10 +46,12 @@ public class TaskPage extends CommonPage {
     private By nodataTesting = By.xpath("//ul[3]//li[1]//div[1]//div[2]//div[1]//ul[1]//li[1]//h4[1]");
     private By nodataAwaitingFeedback = By.xpath("//ul[4]//li[1]//div[1]//div[2]//div[1]//ul[1]//li[1]//h4[1]");
 
-    //Click and add new description
+    //Click and edit Task
     private By taskCreated = By.xpath("//span[@class='inline-block full-width mtop10 tw-truncate']");
-    private By description = By.xpath("//i[@class='fa-regular fa-pen-to-square']");
-    private By inputDescription = By.xpath("//div[@id='task_view_description']");
+    private By menu = By.xpath("//a[@class='trigger manual-popover mright5']");
+    private By editOption = By.xpath("//div[@class='popover-content']//ul//li//a[@href='#'][normalize-space()='Edit']");
+    private By editedTask = By.xpath("//h4[@class='modal-title tw-flex tw-items-center']");
+
 
     //Close popup and verify description
     private By verifyDescription = By.xpath("//p[normalize-space()='Bin add new description']");
@@ -67,6 +66,7 @@ public class TaskPage extends CommonPage {
     //click switch to list, search and delete
     private By searchOnList = By.xpath("//input[@class='form-control input-sm']");
     private By binTaskOnList = By.xpath("//a[normalize-space()='Bin Task']");
+    private By binEditedTaskOnList = By.xpath("//a[normalize-space()='Bin Task Edited']");
     private By deleteTask = By.xpath("//a[normalize-space()='Delete']");
 
     //verify delete success, search and verify nodata after search
@@ -104,19 +104,15 @@ public class TaskPage extends CommonPage {
     {
         Assert.assertTrue(WebUI.checkElementExist(titleAddNewTaskPopUp), "The AddNewTask title not display.");
         WebUI.assertEquals(WebUI.getTextElement(titleAddNewTaskPopUp), "Add new task", "The AddNewTask title not match.");
-        //Assert.assertTrue(WebUI.checkElementExist(checkboxPublic), "The checkboxPublic not display.");
-        //Assert.assertFalse(WebUI.isElementSelected(checkboxPublic), "Checkbox Public should NOT be selected.");
-        Assert.assertTrue(WebUI.checkElementExist(textCheckboxPublic), "The textCheckboxPublic not display.");
-        WebUI.assertEquals(WebUI.getTextElement(textCheckboxPublic), "Public", "The textCheckboxPublic not match.");
-        Assert.assertTrue(WebUI.checkElementExist(checkboxBillable), "The checkboxBillable not display.");
-        Assert.assertTrue(WebUI.isElementSelected(checkboxBillable), "Checkbox Public should be selected.");
-        Assert.assertTrue(WebUI.checkElementExist(textCheckboxBillable), "The textCheckboxBillable title not display.");
-        WebUI.assertEquals(WebUI.getTextElement(textCheckboxBillable), "Billable", "The textCheckboxBillable not match.");
+        Assert.assertTrue(WebUI.checkElementExist(inputSubject), "The inputsubject field not display.");
+        WebUI.assertEquals(WebUI.getTextElement(titleSubject), "* Subject", "The Subject title not match.");
+        Assert.assertTrue(WebUI.checkElementExist(inputStartDate), "The inputStartDate not display.");
+        Assert.assertFalse(WebUI.checkFieldIsToday(inputStartDate, "dd-MM-yyyy"), "The inputStartDate format NOT match.");
     }
 
     public void submitDataForNewTask(String taskName)
     {
-        WebUI.setTextElement(inputsubject, taskName);
+        WebUI.setTextElement(inputSubject, taskName);
         WebUI.clickElement(saveTask);
     }
 
@@ -135,7 +131,7 @@ public class TaskPage extends CommonPage {
     public void markCompletedAndRefreshPage()
     {
         WebUI.clickElement(markComplete);
-        //WebUI.clickElement(closePopUp);
+        WebUI.clickElement(closePopUp);
         WebUI.waitForPageRefresh(binTask);
     }
 
@@ -145,32 +141,19 @@ public class TaskPage extends CommonPage {
         WebUI.assertEquals(WebUI.getTextElement(completeTaskTotal), "Complete - 1 Tasks", "The completeTaskTotal title not match.");
     }
 
-    public static void inputText() throws InterruptedException, AWTException
-    {
-        WebUI.sleep(1);
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_A);
-        robot.keyRelease(KeyEvent.VK_A);
-        robot.keyRelease(KeyEvent.VK_CONTROL);
-        WebUI.sleep(1);
-        robot.keyPress(KeyEvent.VK_DELETE);
-        robot.keyRelease(KeyEvent.VK_DELETE);
-    }
-
-    public void addNewDescriptionAndVerifyDescription() throws InterruptedException, AWTException
+    public void editTask(String taskNameEdited)
     {
         WebUI.clickElement(binTask);
-        WebUI.clickElement(description);
-        inputText();
-        WebUI.setTextElement(inputDescription, "Bin add new description");
-        WebUI.waitForPageRefresh(binTask);
-        //WebUI.clickElement(closePopUp);
+        WebUI.clickElement(menu);
+        WebUI.clickElement(editOption);
+        WebUI.setTextElement(inputSubject, taskNameEdited);
+        WebUI.clickElement(saveTask);
+        WebUI.clickElement(closePopUp);
     }
 
-    public void searchAndVerifyAfterSearch(String taskName)
+    public void searchAndVerifyAfterSearch(String taskNameEdited)
     {
-        WebUI.setTextElement(searchOnKanBan, taskName);
+        WebUI.setTextElement(searchOnKanBan, taskNameEdited);
         Assert.assertTrue(WebUI.checkElementExist(nodataNotStarted), "The nodataNotStarted title not display.");
         WebUI.assertEquals(WebUI.getTextElement(nodataNotStarted), "No Tasks Found", "The nodataNotStarted title not match.");
         Assert.assertTrue(WebUI.checkElementExist(nodataInprogress), "The nodataInprogress title not display.");
@@ -194,19 +177,11 @@ public class TaskPage extends CommonPage {
         WebUI.assertEquals(WebUI.getTextElement(notStartedTaskTotal), "Not Started - 1 Tasks", "The notStartedTaskTotal not match.");
     }
 
-    public void clickAndVerifyDescriptionAfterDragDrop()
-    {
-        WebUI.clickElement(taskCreated);
-        Assert.assertTrue(WebUI.checkElementExist(verifyDescription), "The Description not display.");
-        WebUI.assertEquals(WebUI.getTextElement(verifyDescription), "Bin add new description", "The Description not match.");
-        WebUI.clickElement(closePopUp);
-    }
-
-    public void searchAndDeleteTask(String taskName)
+    public void searchAndDeleteTask(String taskNameEdited)
     {
         WebUI.clickElement(switchToList);
-        WebUI.setTextElement(searchOnList, taskName);
-        WebUI.moveToElement(binTaskOnList);
+        WebUI.setTextElement(searchOnList, taskNameEdited);
+        WebUI.moveToElement(binEditedTaskOnList);
         WebUI.clickElement(deleteTask);
         WebUI.acceptAlert();
     }
