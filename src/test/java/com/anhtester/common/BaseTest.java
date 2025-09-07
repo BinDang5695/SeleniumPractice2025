@@ -20,7 +20,10 @@ public class BaseTest extends CommonPage {
         @BeforeSuite
         public void setUpEnvironment() {
             System.out.println("Before Suite: Load Config Files");
-            PropertiesHelper.loadAllFiles();
+            String env = System.getProperty("env", "test");
+            PropertiesHelper.loadByEnvironment(env);
+            LogUtils.info("Loaded config for ENV = " + env);
+            //PropertiesHelper.loadAllFiles();
         }
 
         @BeforeMethod
