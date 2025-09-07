@@ -37,6 +37,19 @@ public class PropertiesHelper {
         }
     }
 
+    public static Properties loadByEnvironment(String env) {
+        String filePath = "src/test/resources/configs/" + env + ".properties";
+        try {
+            properties = new Properties();
+            linkFile = SystemHelper.getCurrentDir() + File.separator + filePath;
+            file = new FileInputStream(linkFile);
+            properties.load(file);
+            return properties;
+        } catch (IOException ioe) {
+            return new Properties();
+        }
+    }
+
     public static void setFile(String relPropertiesFilePath) {
         properties = new Properties();
         try {
