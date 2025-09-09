@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 
 public class LoginPixabayPage {
 
-    private By linkLogin = By.xpath("//button[.//span[normalize-space()='Log in']]");
+    private By linkLogin = By.xpath("//body/div[@id='app']/div[@data-hid='root']/header[@class='header--TuwRF dark--vRbZ4']/div[@class='innerContainer--yNnyc']/div[@class='actionsRight--cgZPe']/div[2]/button[1]");
     private By inputEmail = By.xpath("//input[@name='login_user']");
     private By inputPassword = By.xpath("//input[@name='login_pass']");
     private By buttonLogin = By.xpath("(//button[.//span[normalize-space()='Log in']])[2]");
