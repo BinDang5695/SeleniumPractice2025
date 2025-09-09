@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite Task Test" verbose="1" parallel="tests">
+
+    <test name="Task Test with Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.anhtester.testcases.TaskTest">
+            </class>
+        </classes>
+    </test>
+
+</suite>

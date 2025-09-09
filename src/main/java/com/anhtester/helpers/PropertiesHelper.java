@@ -17,7 +17,7 @@ public class PropertiesHelper {
 
     public static Properties loadAllFiles() {
         LinkedList<String> files = new LinkedList<>();
-        files.add("src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "config.properties");;
+        files.add("src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "config.properties");
 //        files.add("src/test/resources/configs/local.properties");
 //        files.add("src/test/resources/configs/production.properties");
 

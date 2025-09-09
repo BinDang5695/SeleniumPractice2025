@@ -29,7 +29,7 @@ public class TaskTest extends BaseTest {
     @Issue("https://nashtech-global.atlassian.net/")
     @Test(description = "Verify can create, update & delete Task")
     public void verifyTask() {
-        loginPage().loginCRM("admin@example.com", "123456");
+        loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         taskPage().clickMenuTasks();
         String taskName = "Bin Task";
