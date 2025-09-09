@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-public class ProjectPage extends CommonPage {
+public class ProjectPage extends BasePage {
 
     //verify projects page
     private By titleProjectPage = By.xpath("//span[normalize-space()='Projects Summary']");

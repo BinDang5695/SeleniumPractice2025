@@ -5,7 +5,7 @@ import com.anhtester.helpers.SystemHelper;
 import com.anhtester.keywords.WebUI;
 import org.openqa.selenium.By;
 
-public class CustomerPage extends CommonPage {
+public class CustomerPage extends BasePage {
 
         private By menuCustomer = By.xpath("//span[normalize-space()='Customers']");
         private By searchAll = By.xpath("//input[@id='search_input']");

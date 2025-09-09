@@ -2,6 +2,7 @@ package com.anhtester.pages;
 
 import com.anhtester.helpers.PropertiesHelper;
 import com.anhtester.keywords.WebUI;
+import com.anhtester.reports.AllureManager;
 import org.openqa.selenium.By;
 
 public class LoginPage {
@@ -19,10 +20,18 @@ public class LoginPage {
         {
             WebUI.openURL(PropertiesHelper.getValue("URL"));
             WebUI.waitForPageLoaded();
-            //WebUI.clearText(inputEmail);
             WebUI.setTextElement(inputEmail, email);
-            //WebUI.clearText(inputPassword);
             WebUI.setTextElement(inputPassword, password);
+            WebUI.clickElement(buttonLogin);
+            return new DashboardPage();
+        }
+
+        public DashboardPage loginCRM()
+        {
+            WebUI.openURL(PropertiesHelper.getValue("URL"));
+            WebUI.waitForPageLoaded();
+            WebUI.setTextElement(inputEmail, PropertiesHelper.getValue("EMAIL"));
+            WebUI.setTextElement(inputPassword, PropertiesHelper.getValue("PASSWORD"));
             WebUI.clickElement(buttonLogin);
             return new DashboardPage();
         }
@@ -44,6 +53,7 @@ public class LoginPage {
             WebUI.assertContains(WebUI.getCurrentURL(), "authentication", "Login success, but expected to fail");
             WebUI.assertTrue(WebUI.checkElementDisplayed(alertErrorMessage), "Login success, but expected to fail");
             WebUI.assertEquals(WebUI.getTextElement(alertErrorMessage), text, "Error message is not as expected");
+            AllureManager.saveTextLog("==> Login failed with error message: " + text);
         }
 
 

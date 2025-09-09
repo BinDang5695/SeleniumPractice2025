@@ -4,7 +4,7 @@ import com.anhtester.helpers.SystemHelper;
 import com.anhtester.keywords.WebUI;
 import org.openqa.selenium.By;
 
-public class ContactsPage extends CommonPage {
+public class ContactsPage extends BasePage {
 
     private By buttonNewContact = By.xpath("//a[normalize-space()='New Contact']");
     private By fieldFirstName = By.xpath("//input[@id='firstname']");

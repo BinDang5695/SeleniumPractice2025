@@ -19,6 +19,8 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class WebUI {
@@ -99,28 +101,33 @@ public class WebUI {
             WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeout), Duration.ofMillis(500));
             wait.until(ExpectedConditions.visibilityOfElementLocated(by));
         } catch (Throwable error) {
-            LogUtils.info("Element " + by + " not found after waiting for 10 seconds.");
-            Assert.fail("Element " + by + " not found after waiting for 10 seconds.");
-        }
-    }
-
-    public static void waitForElementClickable(By by) {
-        try {
-            WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeout), Duration.ofMillis(500));
-            wait.until(ExpectedConditions.elementToBeClickable(by));
-        } catch (Throwable error) {
-            LogUtils.info("Element " + by + " not clickable after waiting for 10 seconds.");
-            Assert.fail("Element " + by + " not clickable after waiting for 10 seconds.");
+            LogUtils.info("❌ Element " + by + " not found after waiting for 10 seconds.");
+            Assert.fail("❌ Element " + by + " not found after waiting for 10 seconds.");
         }
     }
 
     @Step("Click on element {0}")
     public static void clickElement(By by) {
-        waitForElementClickable(by);
-        sleep(STEP_TIME);
-        DriverManager.getDriver().findElement(by).click();
-        LogUtils.info("Click element " + by);
-        ExtentTestManager.logMessage(Status.PASS, "Click on element " + by);
+        int attempts = 0;
+        while (attempts < 3) {
+            try {
+                WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeout));
+                WebElement element = wait.until(ExpectedConditions.refreshed(
+                        ExpectedConditions.elementToBeClickable(by)
+                ));
+                element.click();
+
+                LogUtils.info("Click element " + by);
+                ExtentTestManager.logMessage(Status.PASS, "Click on element " + by);
+                AllureManager.saveTextLog("Click on element " + by);
+                return;
+
+            } catch (StaleElementReferenceException e) {
+                attempts++;
+                LogUtils.warn("Retrying click due to stale element. Attempt: " + attempts);
+            }
+        }
+        Assert.fail("❌ Failed to click element after retries: " + by);
     }
 
     @Step("Set text: {1} on element {0}")
@@ -226,6 +233,25 @@ public class WebUI {
         }
     }
 
+    public static boolean checkFieldIsToday(By by, String pattern) {
+        try {
+            waitForElementVisible(by);
+            String uiDate = DriverManager.getDriver().findElement(by).getText().trim();
+
+            LocalDate today = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+            String todayStr = today.format(formatter);
+
+            LogUtils.info("UI date: " + uiDate + " | Expected today: " + todayStr);
+
+            return uiDate.equals(todayStr);
+
+        } catch (Exception e) {
+            LogUtils.error("Error checking field date: " + e.getMessage());
+            return false;
+        }
+    }
+
     public static boolean isElementSelected(By by) {
         try {
             WebElement element = DriverManager.getDriver().findElement(by);
@@ -275,16 +301,19 @@ public class WebUI {
     // Advanced
 
     public static void scrollToElement(By by) {
+        waitForElementVisible(by);
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
     }
 
     public static void scrollToElementAtTop(By by) {
+        waitForElementVisible(by);
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(true);", getWebElement(by));
     }
 
     public static void scrollToElementAtBottom(By by) {
+        waitForElementVisible(by);
         JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
     }
@@ -325,6 +354,12 @@ public class WebUI {
     public static void assertTrue(boolean condition, String message) {
         waitForPageLoaded();
         LogUtils.info("Assert true: " + condition);
+        Assert.assertTrue(condition, message);
+    }
+
+    public static void assertFalse(boolean condition, String message) {
+        waitForPageLoaded();
+        LogUtils.info("Assert false: " + condition);
         Assert.assertTrue(condition, message);
     }
 

@@ -53,6 +53,7 @@ public class TestListener implements ITestListener {
     public void onTestSuccess(ITestResult result) {
         LogUtils.info("✅ Test case " + result.getName() + " is passed.");
         ExtentTestManager.logMessage(Status.PASS, "✅ Test case " + result.getName() + " is passed");
+        AllureManager.saveTextLog("✅ Test case " + result.getName() + " is passed.");
         test_passed_total++;
         CaptureHelper.stopRecord(1);
     }
@@ -62,11 +63,11 @@ public class TestListener implements ITestListener {
         LogUtils.error("❌ Test case " + result.getName() + " is failed.");
         LogUtils.error(result.getThrowable());
 
-        ExtentTestManager.logMessage(Status.FAIL, result.getThrowable().toString());
-        ExtentTestManager.addScreenshot(result.getName());
-        ExtentTestManager.logMessage(Status.FAIL, "❌ Test case " + result.getName() + " is failed.");
+        //ExtentTestManager.logMessage(Status.FAIL, result.getThrowable().toString());
+        //ExtentTestManager.addScreenshot(result.getName());
+        //ExtentTestManager.logMessage(Status.FAIL, "❌ Test case " + result.getName() + " is failed.");
 
-        //AllureManager.saveTextLog("❌ Test case " + result.getName() + " is failed.");
+        AllureManager.saveTextLog("❌ Test case " + result.getName() + " is failed.");
         AllureManager.saveScreenshotPNG();
         test_failed_total++;
         CaptureHelper.captureScreenshot(result.getName());
@@ -77,8 +78,9 @@ public class TestListener implements ITestListener {
     public void onTestSkipped(ITestResult result) {
         LogUtils.warn("⚠️ Test case " + result.getName() + " is skipped.");
         LogUtils.error(result.getThrowable());
-        ExtentTestManager.logMessage(Status.SKIP, result.getThrowable().toString() + " is skipped");
-        ExtentTestManager.logMessage(Status.SKIP, result.getName() + "is skipped");
+        //ExtentTestManager.logMessage(Status.SKIP, result.getThrowable().toString() + " is skipped");
+        //ExtentTestManager.logMessage(Status.SKIP, result.getName() + "is skipped");
+        AllureManager.saveTextLog("⚠️ Test case " + result.getName() + " is skipped.");
         test_skipped_total++;
         CaptureHelper.stopRecord(1);
     }

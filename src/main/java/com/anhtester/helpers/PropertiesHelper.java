@@ -17,7 +17,7 @@ public class PropertiesHelper {
 
     public static Properties loadAllFiles() {
         LinkedList<String> files = new LinkedList<>();
-        files.add("src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "config.properties");;
+        files.add("src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "config.properties");
 //        files.add("src/test/resources/configs/local.properties");
 //        files.add("src/test/resources/configs/production.properties");
 
@@ -31,6 +31,19 @@ public class PropertiesHelper {
                 tempProp.load(file);
                 properties.putAll(tempProp);
             }
+            return properties;
+        } catch (IOException ioe) {
+            return new Properties();
+        }
+    }
+
+    public static Properties loadByEnvironment(String env) {
+        String filePath = "src/test/resources/configs/" + env + ".properties";
+        try {
+            properties = new Properties();
+            linkFile = SystemHelper.getCurrentDir() + File.separator + filePath;
+            file = new FileInputStream(linkFile);
+            properties.load(file);
             return properties;
         } catch (IOException ioe) {
             return new Properties();

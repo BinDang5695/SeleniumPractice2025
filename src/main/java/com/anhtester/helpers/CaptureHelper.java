@@ -94,7 +94,7 @@ public class CaptureHelper extends ScreenRecorder {
                 System.out.println("🛑 Stop recording video.");
                 screenRecorder = null;
             } else {
-                System.out.println("⚠️ screenRecorder is null, skip stop.");
+                System.out.println("⚠️ ScreenRecorder is null, skip stop.");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,7 +109,7 @@ public class CaptureHelper extends ScreenRecorder {
                 System.out.println("🛑 Stop recording video (delay " + delayInSeconds + "s).");
                 screenRecorder = null;
             } else {
-                System.out.println("⚠️ screenRecorder is null, skip stop.");
+                System.out.println("⚠️ ScreenRecorder is null, skip stop.");
             }
         } catch (Exception e) {
             e.printStackTrace();

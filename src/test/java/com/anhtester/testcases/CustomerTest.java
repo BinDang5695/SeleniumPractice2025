@@ -18,7 +18,7 @@ public class CustomerTest extends BaseTest {
     @Test(priority = 0)
     public void manageCustomer() {
         String customerName = "Nashtech Company";
-        loginPage().loginCRM("admin@example.com", "123456");
+        loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         customerPage().clickMenuCustomers();
         int beforeTotal = customerPage().getTotalCustomers();

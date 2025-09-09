@@ -23,7 +23,7 @@ public class ProjectTest extends BaseTest {
     @Test(description = "Verify Project of Customer before and after delete")
     public void verifyProjectOfCustomer()
     {
-        loginPage().loginCRM("admin@example.com", "123456");
+        loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         projectPage().clickMenuProjects();
         String projectName = "Bin Project";

@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
         @Test
         public void verifyDashboard()
         {
-            loginPage().loginCRM("admin@example.com", "123456");
+            loginPage().loginCRM();
             dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         }
 

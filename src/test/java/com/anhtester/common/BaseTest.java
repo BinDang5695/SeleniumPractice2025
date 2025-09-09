@@ -1,10 +1,10 @@
 package com.anhtester.common;
 
-import com.anhtester.pages.CommonPage;
+import com.anhtester.pages.BasePage;
 import com.anhtester.drivers.DriverManager;
-import com.anhtester.helpers.CaptureHelper;
 import com.anhtester.helpers.PropertiesHelper;
 import com.anhtester.listeners.TestListener;
+import com.anhtester.utils.LogUtils;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,7 +15,7 @@ import org.testng.annotations.*;
 import java.time.Duration;
 
 @Listeners(TestListener.class)
-public class BaseTest extends CommonPage {
+public class BaseTest extends BasePage {
 
         @BeforeSuite
         public void setUpEnvironment() {
@@ -54,12 +54,11 @@ public class BaseTest extends CommonPage {
                     break;
             }
             DriverManager.setDriver(driver); // Set the driver in ThreadLocal
-
             DriverManager.getDriver().manage().window().maximize();
             DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         }
 
-        @AfterMethod
+        @AfterMethod(alwaysRun = true)
         public void closeDriver()
         {
             if(DriverManager.getDriver() != null)

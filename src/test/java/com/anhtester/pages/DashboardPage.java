@@ -3,7 +3,7 @@ package com.anhtester.pages;
 import com.anhtester.keywords.WebUI;
 import org.openqa.selenium.By;
 
-public class DashboardPage extends CommonPage {
+public class DashboardPage extends BasePage {
 
         private By menuDashboard = By.xpath("//span[normalize-space()='Dashboard']");
         private By iconUserProfile = By.xpath("//li[@class='icon header-user-profile']");

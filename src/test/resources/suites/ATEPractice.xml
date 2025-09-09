@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite Customer Test" verbose="1">
+    <test name="ATEPractice Test">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.anhtester.pixabaytestcases.ATEPractice"> </class>
+        </classes>
+    </test>
+</suite>
