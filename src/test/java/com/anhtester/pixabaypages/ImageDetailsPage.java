@@ -15,6 +15,7 @@ public class ImageDetailsPage {
 
     public void clickOnButtonFollow()
     {
+        WebUI.moveToElement(buttonFollow);
         WebUI.clickElement(buttonFollow);
         WebUI.moveToElement(buttonDonate);
     }
