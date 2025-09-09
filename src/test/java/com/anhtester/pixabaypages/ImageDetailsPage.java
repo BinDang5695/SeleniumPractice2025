@@ -11,12 +11,12 @@ public class ImageDetailsPage {
     private By buttonDownload = By.xpath("//span[normalize-space()='Download']");
     private By optionDownload = By.xpath("//a[@class='buttonBase--r4opq primaryButton--h-+gi base--jzyee']//span[@class='label--Ngqjq'][normalize-space()='Download']");
     private By buttonClose = By.xpath("//button[@aria-label='Close']//span[@class='icon--L+lBh close--qCtdc']");
-
+    private By buttonDonate = By.xpath("//span[normalize-space()='Donate']");
 
     public void clickOnButtonFollow()
     {
         WebUI.clickElement(buttonFollow);
-        WebUI.waitForPageRefresh(buttonFollowing);
+        WebUI.moveToElement(buttonDonate);
     }
 
     public void verifyButtonFollowChangeToFollowing()
