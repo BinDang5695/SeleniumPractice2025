@@ -33,7 +33,7 @@ public class TaskTest extends BaseTest {
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         taskPage().clickMenuTasks();
         String taskName = "Bin Task";
-        String taskNameEdited = "Bin Task Edited";
+        String taskNameEdited = "NashTech";
         taskPage().verifyNavigateToTasksPage();
         taskPage().clickButtonSwitchToKanBan();
         taskPage().verifyNavigateToKanbanPage();
