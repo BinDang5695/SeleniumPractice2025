@@ -15,11 +15,11 @@ public class LoginPixabayPage {
     {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
         WebUI.waitForPageLoaded();
+        WebUI.moveToElement(linkLogin);
         WebUI.clickElement(linkLogin);
         WebUI.setTextElement(inputEmail, PropertiesHelper.getValue("EMAIL"));
         WebUI.setTextElement(inputPassword, PropertiesHelper.getValue("PASSWORD"));
         WebUI.clickElement(buttonLogin);
         return new HomePage();
     }
-
 }
