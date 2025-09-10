@@ -66,7 +66,7 @@ public class TaskPage extends BasePage {
     //click switch to list, search and delete
     private By searchOnList = By.xpath("//input[@class='form-control input-sm']");
     private By binTaskOnList = By.xpath("//a[normalize-space()='Bin Task']");
-    private By binEditedTaskOnList = By.xpath("//a[normalize-space()='Bin Task Edited']");
+    private By binEditedTaskOnList = By.xpath("//a[normalize-space()='NashTech']");
     private By deleteTask = By.xpath("//a[normalize-space()='Delete']");
 
     //verify delete success, search and verify nodata after search
