@@ -41,10 +41,8 @@ public class VerifyDataBookBody {
 
         Assert.assertNotNull(responseImages, "Image list should not be null");
 
-        // Kiểm tra số lượng image
         Assert.assertEquals(responseImages.size(), requestImageIds.size(), "Number of images in response does not match request image_ids");
 
-        // So sánh từng phần tử theo index
         for (int i = 0; i < requestImageIds.size(); i++) {
 
             ImagePOJO_Response_Lombok img = responseImages.get(i);

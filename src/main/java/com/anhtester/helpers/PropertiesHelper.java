@@ -13,11 +13,11 @@ public class PropertiesHelper {
     private static String linkFile;
     private static FileInputStream file;
     private static FileOutputStream out;
-    private static String relPropertiesFilePathDefault = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "configs.properties";
+    private static String relPropertiesFilePathDefault = "src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "crm.properties";
 
     public static Properties loadAllFiles() {
         LinkedList<String> files = new LinkedList<>();
-        files.add("src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "configs.properties");
+        files.add("src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "crm.properties");
 //        files.add("src" + File.separator + "test" + File.separator + "resources" + File.separator + "configs" + File.separator + "pixabay.properties");
 //        files.add("src/test/resources/configs/production.properties");
 
