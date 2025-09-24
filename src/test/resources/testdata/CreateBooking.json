@@ -1,0 +1,11 @@
+{
+  "firstname" : "Leigh",
+  "lastname" : "Marvin",
+  "totalprice" : 508,
+  "depositpaid" : false,
+  "bookingdates" : {
+    "checkin" : "2015-10-01",
+    "checkout" : "2015-10-02"
+  },
+  "additionalneeds" : "Breakfast"
+}

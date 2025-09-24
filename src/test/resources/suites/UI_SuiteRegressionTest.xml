@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite Regression Test" verbose="1" parallel="methods" thread-count="2">
+
+    <test name="Regression Test with Chrome">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="com.anhtester.test.ui.testcases.LoginTest">
+            </class>
+            <class name="com.anhtester.test.ui.testcases.CustomerTest">
+            </class>
+            <class name="com.anhtester.test.ui.testcases.ProjectTest">
+            </class>
+            <class name="com.anhtester.test.ui.testcases.TaskTest">
+            </class>
+        </classes>
+    </test>
+
+</suite>
