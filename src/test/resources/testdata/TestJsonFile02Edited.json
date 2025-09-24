@@ -1,9 +1,0 @@
-{
-  "name": "Bin",
-  "department": {
-    "checkout": {
-      "role": "lead",
-      "years": 3
-    }
-  }
-}
