@@ -3,9 +3,9 @@
 <suite name="Suite Demo Parallel" verbose="1">
     <test name="Test Parallel version 1">
         <classes>
-            <class name="com.anhtester.test.api.crud.CRUDBook"/>
-            <class name="com.anhtester.test.api.crud.CRUDImage"/>
-            <class name="com.anhtester.test.api.crud.CRUDUser" />
+            <class name="test.api.crud.CRUDBook"/>
+            <class name="test.api.crud.CRUDImage"/>
+            <class name="test.api.crud.CRUDUser" />
         </classes>
     </test>
 </suite>
