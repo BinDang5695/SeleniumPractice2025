@@ -34,7 +34,10 @@ public class ATEPractice extends BaseTest {
         homePage().clickOnImageProfile();
         homePage().clickOnOptionLibrary();
         libraryPage().clickOnTabLikes();
-        libraryPage().verifyLikedImages();
+        libraryPage().verifyImages(
+                new String[]{"pumpkins", "nature-wallpaper", "autumn"},
+                "liked"
+        );
         libraryPage().clickToDisliked();
     }
 
@@ -51,7 +54,10 @@ public class ATEPractice extends BaseTest {
         homePage().clickOnOptionLibrary();
         libraryPage().clickOnCreatedCollection();
         libraryPage().removeImage2FromCollection();
-        libraryPage().verifyImagesOnCollection();
+        libraryPage().verifyImages(
+                new String[]{"nature-wallpaper"},
+                "collection"
+        );
     }
 
     @Test
@@ -60,6 +66,9 @@ public class ATEPractice extends BaseTest {
         homePage().clickOnImageByIndex(3);
         imageDetailsPage().downloadImage();
         libraryPage().goToDownloadHistoryPage();
-        libraryPage().verifyImagesOnDownloadHistory();
+        libraryPage().verifyImages(
+                new String[]{"autumn-9875155_1280.jpg"},
+                "download"
+        );
     }
 }

@@ -18,8 +18,7 @@ public class LoginPixabayPage {
         WebUI.waitForElementVisible(linkLogin);
         WebUI.scrollToElement(linkLogin);
         WebUI.moveToElement(linkLogin);
-        WebUI.sleep(5);
-        WebUI.clickElement(linkLogin);
+        WebUI.clickUntilVisible(linkLogin, inputEmail);
         WebUI.setTextElement(inputEmail, PropertiesHelper.getValue("EMAIL"));
         WebUI.setTextElement(inputPassword, PropertiesHelper.getValue("PASSWORD"));
         WebUI.clickElement(buttonLogin);

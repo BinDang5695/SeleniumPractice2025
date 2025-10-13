@@ -129,6 +129,32 @@ public class WebUI {
         Assert.fail("❌ Failed to click element after retries: " + by);
     }
 
+    @Step("Click {0} until element {1} is visible")
+    public static void clickUntilVisible(By clickTarget, By waitTarget) {
+        int attempts = 0;
+        int maxAttempts = 5;
+
+        while (attempts < maxAttempts) {
+            try {
+                WebUI.clickElement(clickTarget);
+                WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeout));
+                wait.until(ExpectedConditions.visibilityOfElementLocated(waitTarget));
+
+                LogUtils.info("✅ Target element appeared after click: " + waitTarget);
+                return;
+
+            } catch (TimeoutException e) {
+                attempts++;
+                LogUtils.warn("⚠️ Element not visible yet. Retry click (" + attempts + "/" + maxAttempts + ")");
+            } catch (Exception e) {
+                attempts++;
+                LogUtils.warn("⚠️ Click attempt failed: " + e.getMessage());
+            }
+        }
+
+        Assert.fail("❌ Element " + waitTarget + " not visible after clicking " + clickTarget + " " + maxAttempts + " times.");
+    }
+
     @Step("Set text: {1} on element {0}")
     public static void setTextElement(By by, String text) {
         waitForElementVisible(by);

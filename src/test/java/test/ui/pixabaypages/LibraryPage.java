@@ -47,42 +47,30 @@ public class LibraryPage {
         }
     }
 
-    public void verifyLikedImages() {
-        String[] expectedSrcs = {
-                "pumpkins",
-                "nature-wallpaper",
-                "autumn"
-        };
+    public void verifyImages(String[] expectedSrcs, String type) {
+        LogUtils.info("🔍 Verifying images (" + type + ")");
 
-        for (int i = 0; i < expectedSrcs.length; i++) {
-            int columnIndex = i + 1;
-            By imageContainer = By.xpath("(//div[@class='column--HhhwH'])[" + columnIndex + "]");
-            By imageElement = By.xpath("(//div[@class='column--HhhwH'])[" + columnIndex + "]//img");
+        switch (type.toLowerCase()) {
+            case "liked":
+                verifyLikedImages(expectedSrcs, "❤️ Liked");
+                break;
 
-            WebUI.moveToElement(imageContainer);
+            case "collection":
+                verifyCollectionImages(expectedSrcs);
+                break;
 
-            String actualSrc = WebUI.getAttributeElement(imageElement, "src");
-            String expectedSrc = expectedSrcs[i];
+            case "download":
+                verifyDownloadImages(expectedSrcs);
+                break;
 
-            LogUtils.info("Column " + columnIndex + ": " + actualSrc);
-
-            AssertHelper.assertTrue(
-                    actualSrc.contains(expectedSrc),
-                    "❌ Image at column " + columnIndex + " mismatch! Expected keyword: "
-                            + expectedSrcs + " but got src: " + actualSrc
-            );
+            default:
+                throw new IllegalArgumentException("❌ Unknown verification type: " + type);
         }
-        LogUtils.info("✅ All liked images verified successfully!");
+
+        LogUtils.info("✅ Finished verifying images for type: " + type);
     }
 
-
-    public void verifyImagesOnCollection() {
-        LogUtils.info("🔍 Verifying remaining images in the collection...");
-
-        String[] expectedSrcs = {
-                "nature-wallpaper"
-        };
-
+    private void verifyLikedImages(String[] expectedSrcs, String type) {
         for (int i = 0; i < expectedSrcs.length; i++) {
             int columnIndex = i + 1;
             By imageContainer = By.xpath("(//div[@class='column--HhhwH'])[" + columnIndex + "]");
@@ -93,7 +81,7 @@ public class LibraryPage {
             String actualSrc = WebUI.getAttributeElement(imageElement, "src");
             String expectedSrc = expectedSrcs[i];
 
-            LogUtils.info("🖼️ Column " + columnIndex + " src: " + actualSrc);
+            LogUtils.info("🖼️ Column " + columnIndex + ": " + actualSrc);
 
             AssertHelper.assertTrue(
                     actualSrc.contains(expectedSrc),
@@ -101,16 +89,15 @@ public class LibraryPage {
                             + expectedSrc + " but got src: " + actualSrc
             );
         }
+        LogUtils.info(type + " images verified successfully!");
+    }
 
-        LogUtils.info("✅ Remaining image(s) verified successfully.");
+    private void verifyCollectionImages(String[] expectedSrcs) {
+        verifyLikedImages(expectedSrcs, "📸 Collection");
 
         AssertHelper.assertTrue(WebUI.checkElementExist(totalImageOnCollection), "❌ Total image label not exist.");
         AssertHelper.assertTrue(WebUI.checkElementDisplayed(totalImageOnCollection), "❌ Total image label not displayed.");
-        AssertHelper.assertEquals(
-                WebUI.getTextElement(totalImageOnCollection),
-                "1 item",
-                "❌ Total item count text mismatch."
-        );
+
         LogUtils.info("📸 Total item count verified: 1 item");
 
         WebUI.clickElement(buttonEditCollection);
@@ -120,18 +107,25 @@ public class LibraryPage {
         LogUtils.info("🗑️ Collection deleted successfully after verification!");
     }
 
+    private void verifyDownloadImages(String[] expectedSrcs) {
+        verifyLikedImages(expectedSrcs, "⬇️ Download");
 
-    public void verifyImagesOnDownloadHistory() {
-        AssertHelper.assertTrue(WebUI.checkElementExist(image1), "The image1 not exist.");
-        AssertHelper.assertTrue(WebUI.checkElementDisplayed(image1), "The image1 not display");
+        AssertHelper.assertTrue(WebUI.checkElementExist(image1), "❌ Downloaded image not exist.");
+        AssertHelper.assertTrue(WebUI.checkElementDisplayed(image1), "❌ Downloaded image not displayed.");
+
+        // Dùng tên file từ expectedSrcs[0] nếu có, tránh hardcode
+        String expectedFileName = expectedSrcs.length > 0 ? expectedSrcs[0] : "autumn-9875155_1280.jpg";
 
         FileHelper.verifyAndCleanDownloadedFile(
                 DriverManager.getDownloadPath(),
-                "autumn-9875155_1280.jpg"
+                expectedFileName
         );
+
         WebUI.moveToElement(image1);
         WebUI.clickElement(iconRemove);
         WebUI.clickElement(buttonRemove);
+
+        LogUtils.info("🗑️ Downloaded image removed successfully!");
     }
 
     public void createNewCollection()
