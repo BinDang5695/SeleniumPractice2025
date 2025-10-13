@@ -13,7 +13,7 @@ public class ApiAssertion {
         response.then().statusCode(expectedStatusCode);
     }
 
-    // ✅ Verify message chung
+    // ✅ Verify message
     public static void verifyMessage(Response response, String expectedMessage) {
         String actualMessage = response.jsonPath().getString("message");
         Assert.assertEquals(actualMessage, expectedMessage, "Message not match.");
@@ -38,7 +38,7 @@ public class ApiAssertion {
         response.then().assertThat().body(JsonSchemaValidator.matchesJsonSchema(schema));
     }
 
-    // ✅ Gói gọn verify chung
+    // ✅ Verify all
     public static void verifyBaseResponse(Response response,
                                           int statusCode,
                                           long maxTimeMs) {

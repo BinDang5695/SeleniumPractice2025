@@ -49,9 +49,9 @@ public class LibraryPage {
 
     public void verifyLikedImages() {
         String[] expectedSrcs = {
-                "bridge",
-                "mountains",
-                "truck"
+                "pumpkins",
+                "nature-wallpaper",
+                "autumn"
         };
 
         for (int i = 0; i < expectedSrcs.length; i++) {
@@ -77,17 +77,49 @@ public class LibraryPage {
 
 
     public void verifyImagesOnCollection() {
-        AssertHelper.assertTrue(WebUI.checkElementExist(image1), "The image1 not exist.");
-        AssertHelper.assertTrue(WebUI.checkElementDisplayed(image1), "The image1 not display");
-        //WebUI.assertFalse(WebUI.checkElementExist(image2), "The image2 still exist.");
-        //WebUI.assertFalse(WebUI.checkElementDisplayed(image2),"The image2 still display.");
-        AssertHelper.assertTrue(WebUI.checkElementExist(totalImageOnCollection), "The totalImageOnCollection not exist.");
-        AssertHelper.assertTrue(WebUI.checkElementDisplayed(totalImageOnCollection),"The totalImageOnCollection not display.");
-        AssertHelper.assertEquals(WebUI.getTextElement(totalImageOnCollection),"1 item", "The totalImageOnCollection not match.");
+        LogUtils.info("🔍 Verifying remaining images in the collection...");
+
+        String[] expectedSrcs = {
+                "nature-wallpaper"
+        };
+
+        for (int i = 0; i < expectedSrcs.length; i++) {
+            int columnIndex = i + 1;
+            By imageContainer = By.xpath("(//div[@class='column--HhhwH'])[" + columnIndex + "]");
+            By imageElement = By.xpath("(//div[@class='column--HhhwH'])[" + columnIndex + "]//img");
+
+            WebUI.moveToElement(imageContainer);
+
+            String actualSrc = WebUI.getAttributeElement(imageElement, "src");
+            String expectedSrc = expectedSrcs[i];
+
+            LogUtils.info("🖼️ Column " + columnIndex + " src: " + actualSrc);
+
+            AssertHelper.assertTrue(
+                    actualSrc.contains(expectedSrc),
+                    "❌ Image at column " + columnIndex + " mismatch! Expected keyword: "
+                            + expectedSrc + " but got src: " + actualSrc
+            );
+        }
+
+        LogUtils.info("✅ Remaining image(s) verified successfully.");
+
+        AssertHelper.assertTrue(WebUI.checkElementExist(totalImageOnCollection), "❌ Total image label not exist.");
+        AssertHelper.assertTrue(WebUI.checkElementDisplayed(totalImageOnCollection), "❌ Total image label not displayed.");
+        AssertHelper.assertEquals(
+                WebUI.getTextElement(totalImageOnCollection),
+                "1 item",
+                "❌ Total item count text mismatch."
+        );
+        LogUtils.info("📸 Total item count verified: 1 item");
+
         WebUI.clickElement(buttonEditCollection);
         WebUI.clickElement(buttonDelete);
         WebUI.clickElement(buttonYesDelete);
+
+        LogUtils.info("🗑️ Collection deleted successfully after verification!");
     }
+
 
     public void verifyImagesOnDownloadHistory() {
         AssertHelper.assertTrue(WebUI.checkElementExist(image1), "The image1 not exist.");
@@ -95,7 +127,7 @@ public class LibraryPage {
 
         FileHelper.verifyAndCleanDownloadedFile(
                 DriverManager.getDownloadPath(),
-                "truck-8190240_1280.jpg"
+                "autumn-9875155_1280.jpg"
         );
         WebUI.moveToElement(image1);
         WebUI.clickElement(iconRemove);

@@ -8,7 +8,7 @@ public class ATEPractice extends BaseTest {
     @Test
     public void testScenario1() {
         loginPixabayPage().login();
-        homePage().clickOnFirstImage();
+        homePage().clickOnImageByIndex(3);
         imageDetailsPage().clickOnButtonFollow();
         imageDetailsPage().verifyButtonFollowChangeToFollowing();
         imageDetailsPage().clickFollowingToUnfollow();
@@ -30,7 +30,7 @@ public class ATEPractice extends BaseTest {
     @Test
     public void testScenario3() {
         loginPixabayPage().login();
-        homePage().clickImagesByAction(new int[]{3, 7, 11}, "like");
+        homePage().clickImagesByAction(new int[]{3, 5, 7}, "like");
         homePage().clickOnImageProfile();
         homePage().clickOnOptionLibrary();
         libraryPage().clickOnTabLikes();
@@ -46,7 +46,7 @@ public class ATEPractice extends BaseTest {
         libraryPage().createNewCollection();
         libraryPage().clickOnCreatedCollection();
         libraryPage().clickOnButtonFindMedia();
-        homePage().clickImagesByAction(new int[]{3, 7}, "bookmark");
+        homePage().clickImagesByAction(new int[]{3, 5}, "bookmark");
         homePage().clickOnImageProfile();
         homePage().clickOnOptionLibrary();
         libraryPage().clickOnCreatedCollection();
@@ -57,7 +57,7 @@ public class ATEPractice extends BaseTest {
     @Test
     public void testScenario5() {
         loginPixabayPage().login();
-        homePage().clickOnFirstImage();
+        homePage().clickOnImageByIndex(3);
         imageDetailsPage().downloadImage();
         libraryPage().goToDownloadHistoryPage();
         libraryPage().verifyImagesOnDownloadHistory();
