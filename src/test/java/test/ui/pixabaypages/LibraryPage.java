@@ -8,6 +8,7 @@ import settings.keywords.WebUI;
 import org.openqa.selenium.By;
 import settings.utils.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryPage {
@@ -15,19 +16,16 @@ public class LibraryPage {
     private By tabLikes = By.xpath("//span[normalize-space()='Likes']");
     private By image1 = By.xpath("//div[@class='column--HhhwH'][1]");
     private By image2 = By.xpath("//div[@class='column--HhhwH'][2]");
-    private By image3 = By.xpath("//div[@class='column--HhhwH'][3]");
-    private By buttonDislike = By.xpath("//button[contains(@class,'selected--Bz9-S')]");
-    private By inputCollectionName = By.xpath("//div[@class='content--AsYbE']//input[@class='interactiveInputStyle--JrJMF textInput--yG-0W']");
-    private By linkCreate = By.xpath("//span[contains(text(),'Create')]");
+    private By inputCollectionName = By.xpath("(//input[contains(@class, 'interactiveInputStyle')])[2]");
+    private By linkCreate = By.xpath("(//button[(.//span[normalize-space()='Create'])])[1]");
     private By createdCollection = By.xpath("//a[normalize-space()='Bin Create New Collection']");
-    private By buttonFindMedia = By.xpath("//span[normalize-space()='Find media']");
-    private By buttonCreate = By.xpath("//span[@class='label--9n8oV']");
-    private By removeFromCollection = By.xpath("//div[@class='verticalMasonry--xIvQk multiColumn--qWb9Y lgColumnGap--ICoun']//div[2]//div[1]//div[1]//div[1]//div[1]//div[1]//button[1]//span[1]");
-    private By buttonRemove = By.xpath("//div[@class='rightButtons--wQ+Wt']//button[@type='button']");
+    private By buttonFindMedia = By.xpath("//a[contains(@class,'buttonBase') and normalize-space(.)='Find media']");
+    private By buttonCreate = By.xpath("(//button[(.//span[normalize-space()='Create'])])[2]");
+    private By removeFromCollection = By.xpath("(//button[@aria-label='Remove from collection'])[2]");
+    private By buttonRemove = By.xpath("//button[.//span[normalize-space()='Yes, remove']]");
     private By downloadHistoryPage = By.xpath("//span[normalize-space()='Download history']");
-    private By totalImageOnCollection = By.xpath("//span[normalize-space()='1 item']");
-    private By iconRemove = By.xpath("//span[@class='icon--L+lBh trash--VuWn-']");
-    private By buttonEditCollection = By.xpath("//button[@class='edit--4w63P buttonBase--r4opq tertiaryButton--+4ehJ base--jzyee light--uBcBI']");
+    private By removeFromDownloadHistory = By.xpath("//button[@aria-label='Remove from download history']");
+    private By buttonEditCollection = By.xpath("//button[.//span[normalize-space()='Edit collection']]");
     private By buttonDelete = By.xpath("//span[normalize-space()='Delete']");
     private By buttonYesDelete = By.xpath("//span[normalize-space()='Yes, delete']");
 
@@ -41,64 +39,131 @@ public class LibraryPage {
         List<WebElement> likedButtons = WebUI.getWebElements(By.xpath(xpathButton));
 
         for (int i = 0; i < likedButtons.size(); i++) {
-            WebUI.moveToElement(likedButtons.get(i));
-            likedButtons.get(i).click();
-            LogUtils.info("Disliked image " + (i + 1));
-        }
-    }
+            int columnIndex = 2 * i + 1;
 
-    public void verifyImages(String[] expectedSrcs, String type) {
-        LogUtils.info("🔍 Verifying images (" + type + ")");
+            By imageContainer = By.xpath("(//div[contains(@class,'column--')])[" + columnIndex + "]");
 
-        switch (type.toLowerCase()) {
-            case "liked":
-                verifyLikedImages(expectedSrcs, "❤️ Liked");
-                break;
-
-            case "collection":
-                verifyCollectionImages(expectedSrcs);
-                break;
-
-            case "download":
-                verifyDownloadImages(expectedSrcs);
-                break;
-
-            default:
-                throw new IllegalArgumentException("❌ Unknown verification type: " + type);
-        }
-
-        LogUtils.info("✅ Finished verifying images for type: " + type);
-    }
-
-    private void verifyLikedImages(String[] expectedSrcs, String type) {
-        for (int i = 0; i < expectedSrcs.length; i++) {
-            int columnIndex = i + 1;
-            By imageContainer = By.xpath("(//div[@class='column--HhhwH'])[" + columnIndex + "]");
-            By imageElement = By.xpath("(//div[@class='column--HhhwH'])[" + columnIndex + "]//img");
-
+            WebUI.scrollToElement(imageContainer);
             WebUI.moveToElement(imageContainer);
 
-            String actualSrc = WebUI.getAttributeElement(imageElement, "src");
-            String expectedSrc = expectedSrcs[i];
+            WebUI.moveToElement(likedButtons.get(i));
+            WebUI.clickElement(likedButtons.get(i));
 
-            LogUtils.info("🖼️ Column " + columnIndex + ": " + actualSrc);
-
-            AssertHelper.assertTrue(
-                    actualSrc.contains(expectedSrc),
-                    "❌ Image at column " + columnIndex + " mismatch! Expected keyword: "
-                            + expectedSrc + " but got src: " + actualSrc
-            );
+            LogUtils.info("💔 Disliked image " + (i + 1) + " at column " + columnIndex);
         }
-        LogUtils.info(type + " images verified successfully!");
+
+        LogUtils.info("✅ Finished disliking all visible liked images.");
     }
 
-    private void verifyCollectionImages(String[] expectedSrcs) {
-        verifyLikedImages(expectedSrcs, "📸 Collection");
+//    public void verifyImages(int[] imageIndexes, String actionType) {
+//        LogUtils.info("🔍 Verifying images for action: " + actionType);
+//
+//        for (int i = 0; i < imageIndexes.length; i++) {
+//            int index = imageIndexes[i];
+//            int columnIndex = 2 * i + 1;
+//            int imageIndex = i + 1;
+//
+//            By imageContainer = By.xpath("(//div[contains(@class,'column--')])[" + columnIndex + "]");
+//            By imageElement = By.xpath("(//img[contains(@title,'Download free HD stock')])[" + imageIndex + "]");
+//
+//            WebUI.moveToElement(imageContainer);
+//            WebUI.scrollToElement(imageContainer);
+//
+//            String actualSrc = WebUI.getAttributeElement(imageElement, "src");
+//
+//            LogUtils.info("🖼️ Column index" + columnIndex + ": actual src = " + actualSrc + ", index = " + index);
+//
+//            AssertHelper.assertTrue(actualSrc != null && !actualSrc.isEmpty(),
+//                    "❌ Image at column " + columnIndex + " (index " + index + ") not loaded properly!");
+//        }
+//
+//        LogUtils.info("✅ Verified " + imageIndexes.length + " images for action: " + actionType);
+//
+//    }
 
-        AssertHelper.assertTrue(WebUI.checkElementExist(totalImageOnCollection), "❌ Total image label not exist.");
-        AssertHelper.assertTrue(WebUI.checkElementDisplayed(totalImageOnCollection), "❌ Total image label not displayed.");
+    public void verifyImagesAfterRandomLiked(HomePage homePage, String actionType) {
+        List<String> clickedSrcs = homePage.getClickedImageSrcs();
 
-        LogUtils.info("📸 Total item count verified: 1 item");
+        LogUtils.info("🔍 Verifying clicked images for action: " + actionType);
+
+        if (clickedSrcs == null || clickedSrcs.isEmpty()) {
+            LogUtils.error("⚠️ Không có ảnh nào được lưu để verify. Hãy đảm bảo đã click trước!");
+            return;
+        }
+
+        for (int i = 0; i < clickedSrcs.size(); i++) {
+            String expectedSrc = clickedSrcs.get(i);
+
+            String imageId = expectedSrc.replaceAll(".*/photo/\\d{4}/\\d{2}/\\d{2}/\\d{2}/\\d{2}/(.*?)_+\\d+\\.jpg", "$1");
+
+            LogUtils.info("🔎 Looking for image ID: " + imageId);
+
+            By imageLocator = By.xpath("//img[contains(@src,'" + imageId + "') or contains(@srcset,'" + imageId + "')]");
+            WebUI.waitForElementVisible(imageLocator);
+
+            String actualSrc = WebUI.getAttributeElement(imageLocator, "src");
+            String actualSrcSet = "";
+            try {
+                actualSrcSet = WebUI.getAttributeElement(imageLocator, "srcset");
+            } catch (Exception ignore) {}
+
+            LogUtils.info(String.format(
+                    "🖼️ Image [%d] ID=%s\n  expected=%s\n  actual src=%s\n  actual srcset=%s",
+                    i + 1, imageId, expectedSrc, actualSrc, actualSrcSet));
+
+            AssertHelper.assertTrue(actualSrc != null && !actualSrc.isEmpty(),
+                    "❌ Image " + (i + 1) + " not loaded properly!");
+
+            boolean matched = (actualSrc.contains(imageId) || (actualSrcSet != null && actualSrcSet.contains(imageId)));
+            AssertHelper.assertTrue(matched,
+                    "❌ Image mismatch! Expected ID: " + imageId + " | Actual src/srcset: " + actualSrc + " / " + actualSrcSet);
+        }
+
+        LogUtils.info("✅ Verified " + clickedSrcs.size() + " clicked images for action: " + actionType);
+    }
+
+    public void verifyRemainingImageByColumnAfterRemove(int expectedRemainingCount) {
+        LogUtils.info("🔍 Verifying remaining images by column after remove...");
+
+        List<WebElement> imageElements = WebUI.getWebElements(
+                By.xpath("//div[contains(@class,'column--')]//img[contains(@title,'Download free HD stock')]")
+        );
+
+        int actualCount = imageElements.size();
+        LogUtils.info("📊 Found " + actualCount + " image(s) in collection (expected " + expectedRemainingCount + ")");
+
+        for (int i = 0; i < actualCount; i++) {
+            WebElement imageElement = imageElements.get(i);
+            int columnIndex = 2 * i + 1;
+            int imageIndex = i + 1;
+
+            try {
+                WebUI.scrollToElement(imageElement);
+                WebUI.moveToElement(imageElement);
+
+                String actualSrc = imageElement.getAttribute("src");
+
+                LogUtils.info("🖼️ Column index " + columnIndex + " | image index " + imageIndex + " | src = " + actualSrc);
+
+                AssertHelper.assertTrue(
+                        actualSrc != null && !actualSrc.isEmpty(),
+                        "❌ Image at column " + columnIndex + " (index " + imageIndex + ") not loaded properly!"
+                );
+
+            } catch (Exception e) {
+                LogUtils.error("❌ Failed to verify image at index " + imageIndex + ": " + e.getMessage());
+            }
+        }
+
+        AssertHelper.assertEquals(
+                actualCount, expectedRemainingCount,
+                "❌ Số lượng ảnh còn lại trong collection không khớp!"
+        );
+
+        LogUtils.info("✅ Verified " + actualCount + " remaining image(s) after remove successfully!");
+    }
+
+    public void deleteCollectionAfterVerified() {
 
         WebUI.clickElement(buttonEditCollection);
         WebUI.clickElement(buttonDelete);
@@ -107,22 +172,23 @@ public class LibraryPage {
         LogUtils.info("🗑️ Collection deleted successfully after verification!");
     }
 
-    private void verifyDownloadImages(String[] expectedSrcs) {
-        verifyLikedImages(expectedSrcs, "⬇️ Download");
+    public void verifyDownloadImages(String expectedFileName) {
 
         AssertHelper.assertTrue(WebUI.checkElementExist(image1), "❌ Downloaded image not exist.");
         AssertHelper.assertTrue(WebUI.checkElementDisplayed(image1), "❌ Downloaded image not displayed.");
 
-        // Dùng tên file từ expectedSrcs[0] nếu có, tránh hardcode
-        String expectedFileName = expectedSrcs.length > 0 ? expectedSrcs[0] : "autumn-9875155_1280.jpg";
+        String fileName = (expectedFileName != null && !expectedFileName.isEmpty())
+                ? expectedFileName : "karlsbad-9718003_1280.jpg";
+
+        LogUtils.info("🔍 Verifying downloaded file: " + fileName);
 
         FileHelper.verifyAndCleanDownloadedFile(
                 DriverManager.getDownloadPath(),
-                expectedFileName
+                fileName
         );
 
         WebUI.moveToElement(image1);
-        WebUI.clickElement(iconRemove);
+        WebUI.clickElement(removeFromDownloadHistory);
         WebUI.clickElement(buttonRemove);
 
         LogUtils.info("🗑️ Downloaded image removed successfully!");
@@ -131,7 +197,7 @@ public class LibraryPage {
     public void createNewCollection()
     {
         WebUI.moveToElement(linkCreate);
-        WebUI.clickElement(linkCreate);
+        WebUI.clickUntilVisible(linkCreate, inputCollectionName);
         WebUI.setTextElement(inputCollectionName, "Bin Create New Collection");
         WebUI.clickElement(buttonCreate);
     }
@@ -144,6 +210,7 @@ public class LibraryPage {
     public void clickOnButtonFindMedia()
     {
         WebUI.clickElement(buttonFindMedia);
+        WebUI.sleep(3);
     }
 
     public void removeImage2FromCollection()
@@ -151,6 +218,7 @@ public class LibraryPage {
         WebUI.moveToElement(image2);
         WebUI.clickElement(removeFromCollection);
         WebUI.clickElement(buttonRemove);
+        LogUtils.info("🗑️ Collection image removed successfully!");
     }
 
     public void goToDownloadHistoryPage()
@@ -158,6 +226,5 @@ public class LibraryPage {
         WebUI.openURL("https://pixabay.com/accounts/collections/");
         WebUI.clickElement(downloadHistoryPage);
     }
-
 
 }

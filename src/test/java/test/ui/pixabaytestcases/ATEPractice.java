@@ -1,7 +1,10 @@
 package test.ui.pixabaytestcases;
 
+import settings.keywords.WebUI;
 import test.ui.common.BaseTest;
 import org.testng.annotations.Test;
+import test.ui.pixabaypages.HomePage;
+import test.ui.pixabaypages.LibraryPage;
 
 public class ATEPractice extends BaseTest {
 
@@ -27,19 +30,47 @@ public class ATEPractice extends BaseTest {
         settingsPage().verifyNewAvatarUploaded();
     }
 
+//    @Test
+//    public void testScenario3() {
+//        loginPixabayPage().login();
+//        int[] imageIndexes = {3, 5, 7};
+//        homePage().clickImagesByAction(imageIndexes, "like");
+//        homePage().clickOnImageProfile();
+//        homePage().clickOnOptionLibrary();
+//        libraryPage().clickOnTabLikes();
+//        libraryPage().verifyImages(imageIndexes, "liked");
+//        libraryPage().clickToDisliked();
+//    }
+
     @Test
     public void testScenario3() {
         loginPixabayPage().login();
-        homePage().clickImagesByAction(new int[]{3, 5, 7}, "like");
+        homePage().clickImagesByActionRandomly(3, "like");
         homePage().clickOnImageProfile();
         homePage().clickOnOptionLibrary();
         libraryPage().clickOnTabLikes();
-        libraryPage().verifyImages(
-                new String[]{"pumpkins", "nature-wallpaper", "autumn"},
-                "liked"
-        );
+        libraryPage().verifyImagesAfterRandomLiked(homePage(), "like");
         libraryPage().clickToDisliked();
     }
+
+//    @Test
+//    public void testScenario5() {
+//        loginPixabayPage().login();
+//        int[] imageIndexes = {3, 5};
+//        int[] imageIndexesAfterRemovedImage = {3};
+//        homePage().clickOnImageProfile();
+//        homePage().clickOnOptionLibrary();
+//        libraryPage().createNewCollection();
+//        libraryPage().clickOnCreatedCollection();
+//        libraryPage().clickOnButtonFindMedia();
+//        homePage().clickImagesByAction(imageIndexes, "bookmark");
+//        homePage().clickOnImageProfile();
+//        homePage().clickOnOptionLibrary();
+//        libraryPage().clickOnCreatedCollection();
+//        libraryPage().removeImage2FromCollection();
+//        libraryPage().verifyImages(imageIndexesAfterRemovedImage, "collection");
+//        libraryPage().deleteCollectionAfterVerified();
+//    }
 
     @Test
     public void testScenario4() {
@@ -49,15 +80,13 @@ public class ATEPractice extends BaseTest {
         libraryPage().createNewCollection();
         libraryPage().clickOnCreatedCollection();
         libraryPage().clickOnButtonFindMedia();
-        homePage().clickImagesByAction(new int[]{3, 5}, "bookmark");
+        homePage().clickImagesByActionRandomly(2, "addtocollection");
         homePage().clickOnImageProfile();
         homePage().clickOnOptionLibrary();
         libraryPage().clickOnCreatedCollection();
         libraryPage().removeImage2FromCollection();
-        libraryPage().verifyImages(
-                new String[]{"nature-wallpaper"},
-                "collection"
-        );
+        libraryPage().verifyRemainingImageByColumnAfterRemove(1);
+        libraryPage().deleteCollectionAfterVerified();
     }
 
     @Test
@@ -66,9 +95,6 @@ public class ATEPractice extends BaseTest {
         homePage().clickOnImageByIndex(3);
         imageDetailsPage().downloadImage();
         libraryPage().goToDownloadHistoryPage();
-        libraryPage().verifyImages(
-                new String[]{"autumn-9875155_1280.jpg"},
-                "download"
-        );
+        libraryPage().verifyDownloadImages("sparrow-9617024_1280.jpg");
     }
 }

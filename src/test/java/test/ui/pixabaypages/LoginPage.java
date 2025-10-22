@@ -4,12 +4,13 @@ import settings.helpers.PropertiesHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
 
-public class LoginPixabayPage {
+public class LoginPage {
 
     private By linkLogin = By.xpath("//button[.//span[normalize-space()='Log in']]");
     private By inputEmail = By.xpath("//input[@name='login_user']");
     private By inputPassword = By.xpath("//input[@name='login_pass']");
     private By buttonLogin = By.xpath("(//button[.//span[normalize-space()='Log in']])[2]");
+    private By imageProfile = By.xpath("(//div[.//img[@alt='Bin Dang']])[5]");
 
     public HomePage login()
     {
@@ -21,7 +22,7 @@ public class LoginPixabayPage {
         WebUI.clickUntilVisible(linkLogin, inputEmail);
         WebUI.setTextElement(inputEmail, PropertiesHelper.getValue("EMAIL"));
         WebUI.setTextElement(inputPassword, PropertiesHelper.getValue("PASSWORD"));
-        WebUI.clickElement(buttonLogin);
+        WebUI.clickUntilVisible(buttonLogin, imageProfile);
         return new HomePage();
     }
 

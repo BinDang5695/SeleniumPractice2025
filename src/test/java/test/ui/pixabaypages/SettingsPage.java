@@ -4,10 +4,14 @@ import settings.helpers.AssertHelper;
 import settings.helpers.SystemHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
+import settings.utils.LogUtils;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class SettingsPage {
 
-    private By buttonEdit = By.xpath("//div[@class='container--eBEkE clickable--6WIEU xl--zIL1f']");
+    private By buttonEdit = By.xpath("//button[contains(@class, 'editButton')]");
     private By buttonBrowseFiles = By.xpath("//span[normalize-space()='Browse files']");
     String filePath = SystemHelper.getCurrentDir() + "src\\test\\resources\\testdata\\UK.jpg";
     private By buttonApply = By.xpath("(//button[.//span[text()='Apply']])[2]");
@@ -17,12 +21,14 @@ public class SettingsPage {
     private By inputAboutMe = By.xpath("//textarea[@placeholder='In a few words, tell us about yourself']");
     private By inputCity = By.xpath("//input[@placeholder='Enter your city']");
     private By buttonSaveChanges = By.xpath("//span[normalize-space()='Save changes']");
-    private By imageAfterUploaded = By.xpath("(//div[contains(@class,'container--eBEkE')]//img[contains(@class,'image--vdlQM')])[3]");
+    private By imageUploaded = By.xpath("(//img[contains(@class, 'image')])[4]");
 
     public void clickOnButtonEdit()
     {
-        WebUI.moveToElement(buttonEdit);
-        WebUI.clickElement(buttonEdit);
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(imageUploaded);
+        WebUI.scrollToElement(imageUploaded);
+        WebUI.clickUntilVisible(buttonEdit);
     }
 
     public void uploadNewAvatar() {
@@ -43,12 +49,22 @@ public class SettingsPage {
         WebUI.setTextElement(inputAboutMe, "Bindz");
         WebUI.setTextElement(inputCity, "DN");
         WebUI.clickElement(buttonSaveChanges);
-        WebUI.getTextElement(imageAfterUploaded);
+        WebUI.getTextElement(imageUploaded);
     }
 
     public void verifyNewAvatarUploaded() {
-        AssertHelper.assertTrue(WebUI.checkElementExist(imageAfterUploaded), "The new avatar image not display.");
-        AssertHelper.assertTrue(WebUI.getAttributeElement(imageAfterUploaded, "src").contains("pixabay.com"),"The new avatar image src not match.");
-    }
+        LogUtils.info("🚀 Start verifying avatar upload...");
 
+        WebUI.waitForElementVisible(imageUploaded);
+        String actualSrc = WebUI.getAttributeElement(imageUploaded, "src");
+        LogUtils.info("🖼️ Avatar image src: " + actualSrc);
+
+        AssertHelper.assertTrue(actualSrc != null && !actualSrc.isEmpty(),
+                "❌ Avatar src is empty or not found.");
+
+        AssertHelper.assertTrue(actualSrc.startsWith("blob:https://pixabay.com/"),
+                "❌ Avatar src is not a blob URL after upload. Found: " + actualSrc);
+
+        LogUtils.info("✅ Avatar uploaded successfully and previewed via blob URL.");
+    }
 }

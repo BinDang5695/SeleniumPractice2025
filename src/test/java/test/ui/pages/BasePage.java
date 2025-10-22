@@ -111,15 +111,15 @@ public class BasePage {
 
     // PexelsTest
 
-    private LoginPixabayPage loginPixabayPage;
+    private test.ui.pixabaypages.LoginPage loginPixabayPage;
     private HomePage homePage;
     private ImageDetailsPage imageDetailsPage;
     private SettingsPage settingsPage;
     private LibraryPage libraryPage;
 
-    public LoginPixabayPage loginPixabayPage() {
+    public test.ui.pixabaypages.LoginPage loginPixabayPage() {
         if (loginPixabayPage == null) {
-            loginPixabayPage = new LoginPixabayPage();
+            loginPixabayPage = new test.ui.pixabaypages.LoginPage();
         }
         return loginPixabayPage;
     }
