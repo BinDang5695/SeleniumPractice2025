@@ -284,6 +284,30 @@ public class WebUI {
         return attributeValues;
     }
 
+    public static void waitForAllElementsVisible(By locator, int timeoutInSeconds) {
+        LogUtils.info("⏳ Waiting for all elements to be visible...");
+
+        WebDriver driver = DriverManager.getDriver();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+
+        try {
+            wait.until(driver1 -> {
+                List<WebElement> elements = driver1.findElements(locator);
+                if (elements.isEmpty()) return false;
+
+                boolean allVisible = elements.stream().allMatch(WebElement::isDisplayed);
+                if (!allVisible) {
+                    LogUtils.info("🕓 Not all elements visible yet (" + elements.size() + " found)");
+                }
+                return allVisible;
+            });
+
+            LogUtils.info("✅ All elements are now visible (" +
+                    DriverManager.getDriver().findElements(locator).size() + ")");
+        } catch (TimeoutException e) {
+            LogUtils.warn("⚠️ Timeout waiting for all elements visible after " + timeoutInSeconds + "s");
+        }
+    }
 
 
     public static List<WebElement> getWebElements(By by) {

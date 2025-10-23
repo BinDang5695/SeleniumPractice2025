@@ -22,10 +22,11 @@ public class SettingsPage {
     private By inputCity = By.xpath("//input[@placeholder='Enter your city']");
     private By buttonSaveChanges = By.xpath("//span[normalize-space()='Save changes']");
     private By imageUploaded = By.xpath("(//img[contains(@class, 'image')])[4]");
+    private By allImagesInSettingPage = By.xpath("//img[contains(@class, 'image')]");
 
     public void clickOnButtonEdit()
     {
-        WebUI.waitForPageLoaded();
+        WebUI.waitForAllElementsVisible(allImagesInSettingPage, 10);
         WebUI.moveToElement(imageUploaded);
         WebUI.scrollToElement(imageUploaded);
         WebUI.clickUntilVisible(buttonEdit);

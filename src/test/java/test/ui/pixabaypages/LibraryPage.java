@@ -55,31 +55,31 @@ public class LibraryPage {
         LogUtils.info("✅ Finished disliking all visible liked images.");
     }
 
-//    public void verifyImages(int[] imageIndexes, String actionType) {
-//        LogUtils.info("🔍 Verifying images for action: " + actionType);
-//
-//        for (int i = 0; i < imageIndexes.length; i++) {
-//            int index = imageIndexes[i];
-//            int columnIndex = 2 * i + 1;
-//            int imageIndex = i + 1;
-//
-//            By imageContainer = By.xpath("(//div[contains(@class,'column--')])[" + columnIndex + "]");
-//            By imageElement = By.xpath("(//img[contains(@title,'Download free HD stock')])[" + imageIndex + "]");
-//
-//            WebUI.moveToElement(imageContainer);
-//            WebUI.scrollToElement(imageContainer);
-//
-//            String actualSrc = WebUI.getAttributeElement(imageElement, "src");
-//
-//            LogUtils.info("🖼️ Column index" + columnIndex + ": actual src = " + actualSrc + ", index = " + index);
-//
-//            AssertHelper.assertTrue(actualSrc != null && !actualSrc.isEmpty(),
-//                    "❌ Image at column " + columnIndex + " (index " + index + ") not loaded properly!");
-//        }
-//
-//        LogUtils.info("✅ Verified " + imageIndexes.length + " images for action: " + actionType);
-//
-//    }
+    public void verifyImages(int[] imageIndexes, String actionType) {
+        LogUtils.info("🔍 Verifying images for action: " + actionType);
+
+        for (int i = 0; i < imageIndexes.length; i++) {
+            int index = imageIndexes[i];
+            int columnIndex = 2 * i + 1;
+            int imageIndex = i + 1;
+
+            By imageContainer = By.xpath("(//div[contains(@class,'column--')])[" + columnIndex + "]");
+            By imageElement = By.xpath("(//img[contains(@title,'Download free HD stock')])[" + imageIndex + "]");
+
+            WebUI.moveToElement(imageContainer);
+            WebUI.scrollToElement(imageContainer);
+
+            String actualSrc = WebUI.getAttributeElement(imageElement, "src");
+
+            LogUtils.info("🖼️ Column index" + columnIndex + ": actual src = " + actualSrc + ", index = " + index);
+
+            AssertHelper.assertTrue(actualSrc != null && !actualSrc.isEmpty(),
+                    "❌ Image at column " + columnIndex + " (index " + index + ") not loaded properly!");
+        }
+
+        LogUtils.info("✅ Verified " + imageIndexes.length + " images for action: " + actionType);
+
+    }
 
     public void verifyImagesAfterRandomLiked(HomePage homePage, String actionType) {
         List<String> clickedSrcs = homePage.getClickedImageSrcs();
@@ -87,7 +87,7 @@ public class LibraryPage {
         LogUtils.info("🔍 Verifying clicked images for action: " + actionType);
 
         if (clickedSrcs == null || clickedSrcs.isEmpty()) {
-            LogUtils.error("⚠️ Không có ảnh nào được lưu để verify. Hãy đảm bảo đã click trước!");
+            LogUtils.error("⚠️ No images saved for verification. Make sure to click first!");
             return;
         }
 
@@ -157,7 +157,7 @@ public class LibraryPage {
 
         AssertHelper.assertEquals(
                 actualCount, expectedRemainingCount,
-                "❌ Số lượng ảnh còn lại trong collection không khớp!"
+                "❌ The number of photos remaining in the collection does not match!"
         );
 
         LogUtils.info("✅ Verified " + actualCount + " remaining image(s) after remove successfully!");

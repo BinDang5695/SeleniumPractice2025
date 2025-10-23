@@ -4,7 +4,7 @@ import settings.helpers.PropertiesHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
 
-public class LoginPage {
+public class LoginPixabay {
 
     private By linkLogin = By.xpath("//button[.//span[normalize-space()='Log in']]");
     private By inputEmail = By.xpath("//input[@name='login_user']");

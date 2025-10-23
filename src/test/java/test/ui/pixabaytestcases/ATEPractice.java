@@ -10,7 +10,7 @@ public class ATEPractice extends BaseTest {
 
     @Test
     public void testScenario1() {
-        loginPixabayPage().login();
+        loginPixabay().login();
         homePage().clickOnImageByIndex(3);
         imageDetailsPage().clickOnButtonFollow();
         imageDetailsPage().verifyButtonFollowChangeToFollowing();
@@ -19,7 +19,7 @@ public class ATEPractice extends BaseTest {
 
     @Test
     public void testScenario2() {
-        loginPixabayPage().login();
+        loginPixabay().login();
         homePage().clickOnImageProfile();
         homePage().clickOnOptionSettings();
         settingsPage().clickOnButtonEdit();
@@ -30,21 +30,21 @@ public class ATEPractice extends BaseTest {
         settingsPage().verifyNewAvatarUploaded();
     }
 
-//    @Test
-//    public void testScenario3() {
-//        loginPixabayPage().login();
-//        int[] imageIndexes = {3, 5, 7};
-//        homePage().clickImagesByAction(imageIndexes, "like");
-//        homePage().clickOnImageProfile();
-//        homePage().clickOnOptionLibrary();
-//        libraryPage().clickOnTabLikes();
-//        libraryPage().verifyImages(imageIndexes, "liked");
-//        libraryPage().clickToDisliked();
-//    }
-
     @Test
     public void testScenario3() {
-        loginPixabayPage().login();
+        loginPixabay().login();
+        int[] imageIndexes = {3, 5, 7};
+        homePage().clickImagesByAction(imageIndexes, "like");
+        homePage().clickOnImageProfile();
+        homePage().clickOnOptionLibrary();
+        libraryPage().clickOnTabLikes();
+        libraryPage().verifyImages(imageIndexes, "liked");
+        libraryPage().clickToDisliked();
+    }
+
+    @Test
+    public void testScenario4() {
+        loginPixabay().login();
         homePage().clickImagesByActionRandomly(3, "like");
         homePage().clickOnImageProfile();
         homePage().clickOnOptionLibrary();
@@ -53,28 +53,28 @@ public class ATEPractice extends BaseTest {
         libraryPage().clickToDisliked();
     }
 
-//    @Test
-//    public void testScenario5() {
-//        loginPixabayPage().login();
-//        int[] imageIndexes = {3, 5};
-//        int[] imageIndexesAfterRemovedImage = {3};
-//        homePage().clickOnImageProfile();
-//        homePage().clickOnOptionLibrary();
-//        libraryPage().createNewCollection();
-//        libraryPage().clickOnCreatedCollection();
-//        libraryPage().clickOnButtonFindMedia();
-//        homePage().clickImagesByAction(imageIndexes, "bookmark");
-//        homePage().clickOnImageProfile();
-//        homePage().clickOnOptionLibrary();
-//        libraryPage().clickOnCreatedCollection();
-//        libraryPage().removeImage2FromCollection();
-//        libraryPage().verifyImages(imageIndexesAfterRemovedImage, "collection");
-//        libraryPage().deleteCollectionAfterVerified();
-//    }
+    @Test
+    public void testScenario5() {
+        loginPixabay().login();
+        int[] imageIndexes = {3, 5};
+        int[] imageIndexesAfterRemovedImage = {3};
+        homePage().clickOnImageProfile();
+        homePage().clickOnOptionLibrary();
+        libraryPage().createNewCollection();
+        libraryPage().clickOnCreatedCollection();
+        libraryPage().clickOnButtonFindMedia();
+        homePage().clickImagesByAction(imageIndexes, "bookmark");
+        homePage().clickOnImageProfile();
+        homePage().clickOnOptionLibrary();
+        libraryPage().clickOnCreatedCollection();
+        libraryPage().removeImage2FromCollection();
+        libraryPage().verifyImages(imageIndexesAfterRemovedImage, "collection");
+        libraryPage().deleteCollectionAfterVerified();
+    }
 
     @Test
-    public void testScenario4() {
-        loginPixabayPage().login();
+    public void testScenario6() {
+        loginPixabay().login();
         homePage().clickOnImageProfile();
         homePage().clickOnOptionLibrary();
         libraryPage().createNewCollection();
@@ -90,8 +90,8 @@ public class ATEPractice extends BaseTest {
     }
 
     @Test
-    public void testScenario5() {
-        loginPixabayPage().login();
+    public void testScenario7() {
+        loginPixabay().login();
         homePage().clickOnImageByIndex(3);
         imageDetailsPage().downloadImage();
         libraryPage().goToDownloadHistoryPage();

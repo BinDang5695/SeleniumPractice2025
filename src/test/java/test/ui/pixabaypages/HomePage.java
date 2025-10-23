@@ -30,41 +30,41 @@ public class HomePage {
         return clickedImageSrcs;
     }
 
-//    public void clickImagesByAction(int[] imageIndexes, String actionType) {
-//        clickedImageIndexes.clear();
-//        clickedImageSrcs.clear();
-//        for (int index : imageIndexes) {
-//            clickOnImageAction(index, actionType);
-//        }
-//    }
-//
-//    public void clickOnImageAction(int imageIndex, String actionType) {
-//        By image = By.xpath("(//img)[" + imageIndex + "]");
-//
-//        WebUI.scrollToElement(image);
-//        WebUI.moveToElement(image);
-//        WebUI.waitForElementVisible(image);
-//
-//        String actualSrc = WebUI.getAttributeElement(image, "src");
-//        clickedImageSrcs.add(actualSrc);
-//        clickedImageIndexes.add(imageIndex);
-//
-//        String ariaLabel = actionType.equalsIgnoreCase("like") ? "HeartOutline" : "BookmarkOutline";
-//        By actionButton = By.xpath("(//img)[" + imageIndex + "]/ancestor::div[contains(@class,'cell--') or contains(@class,'card--')][1]"
-//                + "//button[.//div[@role='img' and @aria-label='" + ariaLabel + "']]");
-//
-//        WebUI.waitForElementVisible(actionButton);
-//        WebUI.moveToElement(actionButton);
-//        WebUI.clickElement(actionButton);
-//
-//        if (actionType.equalsIgnoreCase("bookmark")) {
-//            WebUI.clickElement(buttonAdd);
-//            WebUI.clickElement(buttonX);
-//            LogUtils.info("✅ Added image index " + imageIndex + " to collection successfully!");
-//        } else {
-//            LogUtils.info("❤️ Liked image index " + imageIndex + " successfully!");
-//        }
-//    }
+    public void clickImagesByAction(int[] imageIndexes, String actionType) {
+        clickedImageIndexes.clear();
+        clickedImageSrcs.clear();
+        for (int index : imageIndexes) {
+            clickOnImageAction(index, actionType);
+        }
+    }
+
+    public void clickOnImageAction(int imageIndex, String actionType) {
+        By image = By.xpath("(//img)[" + imageIndex + "]");
+
+        WebUI.scrollToElement(image);
+        WebUI.moveToElement(image);
+        WebUI.waitForElementVisible(image);
+
+        String actualSrc = WebUI.getAttributeElement(image, "src");
+        clickedImageSrcs.add(actualSrc);
+        clickedImageIndexes.add(imageIndex);
+
+        String ariaLabel = actionType.equalsIgnoreCase("like") ? "HeartOutline" : "BookmarkOutline";
+        By actionButton = By.xpath("(//img)[" + imageIndex + "]/ancestor::div[contains(@class,'cell--') or contains(@class,'card--')][1]"
+                + "//button[.//div[@role='img' and @aria-label='" + ariaLabel + "']]");
+
+        WebUI.waitForElementVisible(actionButton);
+        WebUI.moveToElement(actionButton);
+        WebUI.clickElement(actionButton);
+
+        if (actionType.equalsIgnoreCase("bookmark")) {
+            WebUI.clickElement(buttonAdd);
+            WebUI.clickElement(buttonX);
+            LogUtils.info("✅ Added image index " + imageIndex + " to collection successfully!");
+        } else {
+            LogUtils.info("❤️ Liked image index " + imageIndex + " successfully!");
+        }
+    }
 
     public void clickImagesByActionRandomly(int numberOfImages, String actionType) {
 
@@ -82,7 +82,7 @@ public class HomePage {
                 requiresPopupAction = true;
                 break;
             default:
-                LogUtils.error("❌ Loại hành động không hợp lệ: " + actionType);
+                LogUtils.error("❌ Invalid action type: " + actionType);
                 return;
         }
 
@@ -90,10 +90,10 @@ public class HomePage {
         List<WebElement> allImages = WebUI.getWebElements(imageLocator);
 
         int totalImages = allImages.size();
-        LogUtils.info("🖼️ Tổng số ảnh hợp lệ tìm thấy: " + totalImages);
+        LogUtils.info("🖼️ Total number of valid images found: " + totalImages);
 
         if (totalImages == 0) {
-            LogUtils.error("❌ Không tìm thấy ảnh nào để thao tác.");
+            LogUtils.error("❌ No images found to manipulate.");
             return;
         }
 
@@ -108,7 +108,7 @@ public class HomePage {
             }
         }
 
-        LogUtils.info("🎯 Danh sách chỉ số ảnh được chọn để click: " + randomIndexes);
+        LogUtils.info("🎯 List of selected image indexes to click: " + randomIndexes);
 
         clickedImageIndexes.clear();
         clickedImageSrcs.clear();
@@ -117,9 +117,8 @@ public class HomePage {
             try {
                 WebElement imageElement = allImages.get(index);
 
-                WebUI.sleep(2);
+                WebUI.waitForAllElementsVisible(imageLocator, 10);
                 WebUI.scrollToElement(imageElement);
-                WebUI.sleep(2);
                 WebUI.moveToElement(imageElement);
 
                 WebElement actionButton = imageElement.findElement(
@@ -127,9 +126,7 @@ public class HomePage {
                                 "//button[.//div[@role='img' and @aria-label='" + ariaLabel + "']]")
                 );
 
-                WebUI.sleep(2);
                 WebUI.moveToElement(actionButton);
-                WebUI.sleep(2);
                 WebUI.clickElement(actionButton);
 
                 if (requiresPopupAction) {
@@ -141,15 +138,15 @@ public class HomePage {
                 clickedImageSrcs.add(actualSrc);
                 clickedImageIndexes.add(index);
 
-                LogUtils.info("✅ Click " + actionType + " thành công ảnh index=" + index +
+                LogUtils.info("✅ Click " + actionType + " success image index=" + index +
                         " | src=" + actualSrc);
 
             } catch (Exception e) {
-                LogUtils.error("⚠️ Lỗi khi click ảnh index " + index + ": " + e.getMessage());
+                LogUtils.error("⚠️ Error while click image index " + index + ": " + e.getMessage());
             }
         }
 
-        LogUtils.info("🎉 Hoàn tất click " + randomIndexes.size() + " ảnh ngẫu nhiên cho hành động: " + actionType);
+        LogUtils.info("🎉 Done click " + randomIndexes.size() + " random image for action: " + actionType);
     }
 
     public void clickOnImageByIndex(int index) {
