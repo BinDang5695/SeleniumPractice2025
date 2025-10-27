@@ -1,4 +1,4 @@
-package test.ui.pages;
+package test.ui.crmpages;
 
 import settings.helpers.AssertHelper;
 import settings.helpers.SystemHelper;

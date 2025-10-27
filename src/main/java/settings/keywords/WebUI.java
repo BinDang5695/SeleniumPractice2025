@@ -335,7 +335,7 @@ public class WebUI {
             // Step 1: Click vào input form
             LogUtils.info("🔘 Clicking on file upload element: " + elementFileForm);
             WebUI.clickElement(elementFileForm);
-            WaitHelper.sleep(2);
+            WaitHelper.sleep(3);
 
             // Step 2: Copy file path vào clipboard
             LogUtils.info("📋 Copying file path to clipboard...");
@@ -350,14 +350,14 @@ public class WebUI {
             rb.keyRelease(KeyEvent.VK_CONTROL);
             rb.keyRelease(KeyEvent.VK_V);
 
-            WaitHelper.sleep(1);
+            WaitHelper.sleep(3);
 
             // Step 4: Nhấn Enter để xác nhận chọn file
             LogUtils.info("⏎ Pressing ENTER to confirm upload...");
             rb.keyPress(KeyEvent.VK_ENTER);
             rb.keyRelease(KeyEvent.VK_ENTER);
 
-            WaitHelper.sleep(2);
+            WaitHelper.sleep(3);
 
             // Step 5: Kết thúc
             LogUtils.info("✅ File uploaded successfully.");
@@ -486,11 +486,34 @@ public class WebUI {
     }
 
     @Step("Scroll to element {0}")
-    public static void scrollToElement(WebElement element) {
+    public static void scrollToElementTest(By by) {
+        LogUtils.info("🧭 Scrolling to element: " + by);
+        waitForElementVisible(by);
+
+        WebElement element = getWebElement(by);
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript(
+                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});",
+                element
+        );
+
+        WebUI.sleep(1);
+
         waitForElementVisible(element);
-        ((JavascriptExecutor) getDriver())
-                .executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block:'center', inline:'nearest'});", element);
     }
+
+    @Step("Scroll to element {0}")
+    public static void scrollToElement(WebElement element) {
+        LogUtils.info("🧭 Scrolling to element: " + element);
+        waitForElementVisible(element);
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript(
+                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});",
+                element
+        );
+        WebUI.sleep(1);
+    }
+
 
     public static void scrollToElementAtTop(By by) {
         waitForElementVisible(by);
@@ -502,6 +525,26 @@ public class WebUI {
         waitForElementVisible(by);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+    }
+
+    public static void scrollToBottom() {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) getDriver();
+            long lastHeight = (long) js.executeScript("return document.body.scrollHeight");
+
+            while (true) {
+                js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+                WebUI.sleep(2);
+
+                long newHeight = (long) js.executeScript("return document.body.scrollHeight");
+                if (newHeight == lastHeight) {
+                    break;
+                }
+                lastHeight = newHeight;
+            }
+        } catch (Exception e) {
+            LogUtils.error("⚠️ Error while scrolling to bottom: " + e.getMessage());
+        }
     }
 
     public static boolean dragAndDrop(By fromElement, By toElement) {

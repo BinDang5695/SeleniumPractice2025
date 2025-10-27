@@ -31,7 +31,7 @@ public class LibraryPage {
 
     public void clickOnTabLikes()
     {
-        WebUI.clickElement(tabLikes);
+        WebUI.clickUntilVisible(tabLikes);
     }
 
     public void clickToDisliked() {
@@ -43,9 +43,11 @@ public class LibraryPage {
 
             By imageContainer = By.xpath("(//div[contains(@class,'column--')])[" + columnIndex + "]");
 
+            WebUI.sleep(1);
             WebUI.scrollToElement(imageContainer);
             WebUI.moveToElement(imageContainer);
 
+            WebUI.sleep(1);
             WebUI.moveToElement(likedButtons.get(i));
             WebUI.clickElement(likedButtons.get(i));
 
@@ -165,9 +167,9 @@ public class LibraryPage {
 
     public void deleteCollectionAfterVerified() {
 
-        WebUI.clickElement(buttonEditCollection);
-        WebUI.clickElement(buttonDelete);
-        WebUI.clickElement(buttonYesDelete);
+        WebUI.clickUntilVisible(buttonEditCollection);
+        WebUI.clickUntilVisible(buttonDelete);
+        WebUI.clickUntilVisible(buttonYesDelete);
 
         LogUtils.info("🗑️ Collection deleted successfully after verification!");
     }
@@ -188,8 +190,8 @@ public class LibraryPage {
         );
 
         WebUI.moveToElement(image1);
-        WebUI.clickElement(removeFromDownloadHistory);
-        WebUI.clickElement(buttonRemove);
+        WebUI.clickUntilVisible(removeFromDownloadHistory);
+        WebUI.clickUntilVisible(buttonRemove);
 
         LogUtils.info("🗑️ Downloaded image removed successfully!");
     }
@@ -199,32 +201,31 @@ public class LibraryPage {
         WebUI.moveToElement(linkCreate);
         WebUI.clickUntilVisible(linkCreate, inputCollectionName);
         WebUI.setTextElement(inputCollectionName, "Bin Create New Collection");
-        WebUI.clickElement(buttonCreate);
+        WebUI.clickUntilVisible(buttonCreate);
     }
 
     public void clickOnCreatedCollection()
     {
-        WebUI.clickElement(createdCollection);
+        WebUI.clickUntilVisible(createdCollection);
     }
 
     public void clickOnButtonFindMedia()
     {
-        WebUI.clickElement(buttonFindMedia);
-        WebUI.sleep(3);
+        WebUI.clickUntilVisible(buttonFindMedia);
     }
 
     public void removeImage2FromCollection()
     {
         WebUI.moveToElement(image2);
-        WebUI.clickElement(removeFromCollection);
-        WebUI.clickElement(buttonRemove);
+        WebUI.clickUntilVisible(removeFromCollection);
+        WebUI.clickUntilVisible(buttonRemove);
         LogUtils.info("🗑️ Collection image removed successfully!");
     }
 
     public void goToDownloadHistoryPage()
     {
         WebUI.openURL("https://pixabay.com/accounts/collections/");
-        WebUI.clickElement(downloadHistoryPage);
+        WebUI.clickUntilVisible(downloadHistoryPage);
     }
 
 }

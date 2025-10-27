@@ -5,12 +5,9 @@ import settings.drivers.DriverManager;
 import settings.helpers.PropertiesHelper;
 import settings.utils.LogUtils;
 import test.ui.listeners.TestListener;
-import test.ui.pages.BasePage;
+import test.ui.crmpages.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 
 import java.time.Duration;

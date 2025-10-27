@@ -1,4 +1,4 @@
-package test.ui.testcases;
+package test.ui.crmtestcases;
 
 import test.ui.common.BaseTest;
 import io.qameta.allure.*;

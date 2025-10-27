@@ -12,10 +12,9 @@ public class LoginPixabay {
     private By buttonLogin = By.xpath("(//button[.//span[normalize-space()='Log in']])[2]");
     private By imageProfile = By.xpath("(//div[.//img[@alt='Bin Dang']])[5]");
 
-    public HomePage login()
+    public void login()
     {
         WebUI.openURL(PropertiesHelper.getValue("URL"));
-        WebUI.waitForPageLoaded();
         WebUI.waitForElementVisible(linkLogin);
         WebUI.scrollToElement(linkLogin);
         WebUI.moveToElement(linkLogin);
@@ -23,7 +22,6 @@ public class LoginPixabay {
         WebUI.setTextElement(inputEmail, PropertiesHelper.getValue("EMAIL"));
         WebUI.setTextElement(inputPassword, PropertiesHelper.getValue("PASSWORD"));
         WebUI.clickUntilVisible(buttonLogin, imageProfile);
-        return new HomePage();
     }
 
 }

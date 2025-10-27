@@ -1,15 +1,13 @@
-package test.ui.pages;
+package test.ui.crmpages;
 
 import settings.helpers.ExcelHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import test.ui.pexelspages.*;
 import test.ui.pixabaypages.*;
 
 public class BasePage {
 
-    private static final Logger log = LoggerFactory.getLogger(BasePage.class);
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
     private CustomerPage customerPage;
@@ -109,7 +107,7 @@ public class BasePage {
         return new TaskPage();
     }
 
-    // PexelsTest
+    // Pixabay
 
     private LoginPixabay loginPixabay;
     private HomePage homePage;
@@ -150,6 +148,41 @@ public class BasePage {
             libraryPage = new LibraryPage();
         }
         return libraryPage;
+    }
+
+    // CMS
+
+    private LoginPexelsPage loginPexelsPage;
+    private ImagePage imagePage;
+    private ProfilePage profilePage;
+    private CollectionsPage collectionsPage;
+
+    public LoginPexelsPage loginPexelsPage() {
+        if (loginPexelsPage == null) {
+            loginPexelsPage = new LoginPexelsPage();
+        }
+        return loginPexelsPage;
+    }
+
+    public ImagePage imagePage() {
+        if (imagePage == null) {
+            imagePage = new ImagePage();
+        }
+        return imagePage;
+    }
+
+    public ProfilePage profilePage() {
+        if (profilePage == null) {
+            profilePage = new ProfilePage();
+        }
+        return profilePage;
+    }
+
+    public CollectionsPage collectionsPage() {
+        if (collectionsPage == null) {
+            collectionsPage = new CollectionsPage();
+        }
+        return collectionsPage;
     }
 
 

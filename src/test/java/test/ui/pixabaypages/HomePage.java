@@ -55,11 +55,11 @@ public class HomePage {
 
         WebUI.waitForElementVisible(actionButton);
         WebUI.moveToElement(actionButton);
-        WebUI.clickElement(actionButton);
+        WebUI.clickUntilVisible(actionButton);
 
         if (actionType.equalsIgnoreCase("bookmark")) {
-            WebUI.clickElement(buttonAdd);
-            WebUI.clickElement(buttonX);
+            WebUI.clickUntilVisible(buttonAdd);
+            WebUI.clickUntilVisible(buttonX);
             LogUtils.info("✅ Added image index " + imageIndex + " to collection successfully!");
         } else {
             LogUtils.info("❤️ Liked image index " + imageIndex + " successfully!");
@@ -75,12 +75,12 @@ public class HomePage {
             case "like":
                 ariaLabel = "HeartOutline";
                 break;
-            case "collection":
-            case "bookmark":
+
             case "addtocollection":
                 ariaLabel = "BookmarkOutline";
                 requiresPopupAction = true;
                 break;
+
             default:
                 LogUtils.error("❌ Invalid action type: " + actionType);
                 return;
@@ -117,8 +117,10 @@ public class HomePage {
             try {
                 WebElement imageElement = allImages.get(index);
 
-                WebUI.waitForAllElementsVisible(imageLocator, 10);
+                //WebUI.waitForElementVisible(imageElement);
+                WebUI.sleep(5);
                 WebUI.scrollToElement(imageElement);
+                WebUI.sleep(3);
                 WebUI.moveToElement(imageElement);
 
                 WebElement actionButton = imageElement.findElement(
@@ -126,7 +128,9 @@ public class HomePage {
                                 "//button[.//div[@role='img' and @aria-label='" + ariaLabel + "']]")
                 );
 
+                WebUI.sleep(2);
                 WebUI.moveToElement(actionButton);
+                WebUI.sleep(2);
                 WebUI.clickElement(actionButton);
 
                 if (requiresPopupAction) {
@@ -151,7 +155,7 @@ public class HomePage {
 
     public void clickOnImageByIndex(int index) {
         By image = By.xpath("(//img)[" + index + "]");
-        WebUI.clickElement(image);
+        WebUI.clickUntilVisible(image);
     }
 
     public void clickOnImageProfile() {
@@ -160,11 +164,11 @@ public class HomePage {
 
     public void clickOnOptionSettings() {
         WebUI.moveToElement(optionSettings);
-        WebUI.clickElement(optionSettings);
+        WebUI.clickUntilVisible(optionSettings);
     }
 
     public void clickOnOptionLibrary() {
-        WebUI.clickElement(optionLibrary);
+        WebUI.clickUntilVisible(optionLibrary);
     }
 
 

@@ -16,14 +16,14 @@ public class ImageDetailsPage {
     public void clickOnButtonFollow()
     {
         WebUI.moveToElement(buttonFollow);
-        WebUI.clickElement(buttonFollow);
+        WebUI.clickUntilVisible(buttonFollow);
         WebUI.moveToElement(buttonDownload);
     }
 
     public void clickFollowingToUnfollow()
     {
         WebUI.moveToElement(buttonFollowing);
-        WebUI.clickElement(buttonUnfollow);
+        WebUI.clickUntilVisible(buttonUnfollow);
     }
 
     public void verifyButtonFollowChangeToFollowing()
@@ -34,9 +34,9 @@ public class ImageDetailsPage {
 
     public void downloadImage()
     {
-        WebUI.clickElement(buttonDownload);
-        WebUI.clickElement(optionDownload);
-        WebUI.clickElement(buttonX);
+        WebUI.clickUntilVisible(buttonDownload);
+        WebUI.clickUntilVisible(optionDownload);
+        WebUI.clickUntilVisible(buttonX);
     }
 
 }

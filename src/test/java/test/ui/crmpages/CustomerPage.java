@@ -1,4 +1,4 @@
-package test.ui.pages;
+package test.ui.crmpages;
 
 import settings.drivers.DriverManager;
 import settings.helpers.AssertHelper;

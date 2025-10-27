@@ -5,13 +5,13 @@
     <test name="Regression Test with Chrome">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="test.ui.testcases.LoginTest">
+            <class name="test.ui.crmtestcases.LoginTest">
             </class>
-            <class name="test.ui.testcases.CustomerTest">
+            <class name="test.ui.crmtestcases.CustomerTest">
             </class>
-            <class name="test.ui.testcases.ProjectTest">
+            <class name="test.ui.crmtestcases.ProjectTest">
             </class>
-            <class name="test.ui.testcases.TaskTest">
+            <class name="test.ui.crmtestcases.TaskTest">
             </class>
         </classes>
     </test>
