@@ -17,7 +17,7 @@ public class ImagePage {
     By imageProfile = By.xpath("//img[@alt='Bin Dang']");
     By optionYourCollections = By.xpath("//a[normalize-space()='Your Collections']");
     By optionMyCollection = By.xpath("//button[contains(.,'My collection')]");
-    By buttonClose = By.xpath("//button[@class='Modal_close__Pf0IY']");
+    By buttonClose = By.xpath("//button[contains(@class, 'Modal_close')]");
     By buttonFreeDownload = By.xpath("(//a[.='Free download'])[2]");
 
     // Scenario 1
