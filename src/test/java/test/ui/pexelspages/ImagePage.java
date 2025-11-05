@@ -17,7 +17,7 @@ public class ImagePage {
     By imageProfile = By.xpath("//img[@alt='Bin Dang']");
     By optionYourCollections = By.xpath("//a[normalize-space()='Your Collections']");
     By optionMyCollection = By.xpath("//button[contains(.,'My collection')]");
-    By buttonClose = By.xpath("//button[@class='Modal_close__Pf0IY']");
+    By buttonClose = By.xpath("//button[contains(@class, 'Modal_close')]");
     By buttonFreeDownload = By.xpath("(//a[.='Free download'])[2]");
 
     // Scenario 1
@@ -36,6 +36,7 @@ public class ImagePage {
 
     public void verifyButtonFollowChangeToFollowing()
     {
+        WebUI.waitForElementVisible(buttonFollowing);
         AssertHelper.assertTrue(WebUI.checkElementExist(buttonFollowing), "The buttonFollowing not display.");
         AssertHelper.assertEquals(WebUI.getTextElement(buttonFollowing), "Following", "The buttonFollowing text not match.");
     }
@@ -106,6 +107,7 @@ public class ImagePage {
                 WebElement article = img.findElement(By.xpath("./ancestor::article"));
                 WebElement likeBtn = article.findElement(By.xpath(".//button[@title='Like']"));
 
+                WebUI.scrollToElement(likeBtn);
                 WebUI.moveToElement(likeBtn);
                 WebUI.clickElement(likeBtn);
 

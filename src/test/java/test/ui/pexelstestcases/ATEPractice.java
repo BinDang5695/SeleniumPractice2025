@@ -54,7 +54,7 @@ public class ATEPractice extends BaseTest {
         imagePage().clickOnImageByIndex(1);
         imagePage().clickOnFreeDownload();
         profilePage().goToDownloadHistoryPage();
-        collectionsPage().verifyDownloadImages("pexels-cileklipalet-34299175.jpg");
+        collectionsPage().verifyDownloadImages("pexels-gaborbalazs97-33640991.jpg");
     }
 
 

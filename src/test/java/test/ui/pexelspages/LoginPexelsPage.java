@@ -16,7 +16,8 @@ public class LoginPexelsPage {
     public void login() {
         WebUI.openURL("https://www.pexels.com/");
         WebUI.waitForPageLoaded();
-        WebUI.clickUntilVisible(threeDots, optionLogin);
+        //WebUI.clickUntilVisible(threeDots, optionLogin);
+        WebUI.moveToElement(threeDots);
         WebUI.clickUntilVisible(optionLogin, inputEmail);
         WebUI.setTextElement(inputEmail, PropertiesHelper.getValue("EMAIL"));
         WebUI.setTextElement(inputPassword, PropertiesHelper.getValue("PASSWORD"));

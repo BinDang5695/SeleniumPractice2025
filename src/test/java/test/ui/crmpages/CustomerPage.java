@@ -151,7 +151,7 @@ public class CustomerPage extends BasePage {
             WebUI.acceptAlert();
         }
 
-        public void logOut()
+        public void logOutCRM()
         {
             WebUI.clickElement(iconUser);
             WebUI.clickElement(buttonLogout);
