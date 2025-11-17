@@ -497,10 +497,15 @@ public class WebUI {
                 element
         );
 
+<<<<<<< HEAD
         // Chờ animation và load xong
         WebUI.sleep(1);
 
         // Kiểm tra lại visibility (bắt buộc cho lazy load)
+=======
+        WebUI.sleep(1);
+
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         waitForElementVisible(element);
     }
 
@@ -529,6 +534,7 @@ public class WebUI {
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
     }
 
+<<<<<<< HEAD
     public static void scrollToTop() {
         try {
             JavascriptExecutor js = (JavascriptExecutor) getDriver();
@@ -550,6 +556,8 @@ public class WebUI {
         }
     }
 
+=======
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     public static void scrollToBottom() {
         try {
             JavascriptExecutor js = (JavascriptExecutor) getDriver();
@@ -582,4 +590,8 @@ public class WebUI {
         }
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0

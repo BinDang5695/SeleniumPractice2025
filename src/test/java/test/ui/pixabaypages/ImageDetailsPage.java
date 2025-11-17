@@ -16,14 +16,22 @@ public class ImageDetailsPage {
     public void clickOnButtonFollow()
     {
         WebUI.moveToElement(buttonFollow);
+<<<<<<< HEAD
         WebUI.clickElement(buttonFollow);
+=======
+        WebUI.clickUntilVisible(buttonFollow);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.moveToElement(buttonDownload);
     }
 
     public void clickFollowingToUnfollow()
     {
         WebUI.moveToElement(buttonFollowing);
+<<<<<<< HEAD
         WebUI.clickElement(buttonUnfollow);
+=======
+        WebUI.clickUntilVisible(buttonUnfollow);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
     public void verifyButtonFollowChangeToFollowing()
@@ -34,9 +42,15 @@ public class ImageDetailsPage {
 
     public void downloadImage()
     {
+<<<<<<< HEAD
         WebUI.clickElement(buttonDownload);
         WebUI.clickElement(optionDownload);
         WebUI.clickElement(buttonX);
+=======
+        WebUI.clickUntilVisible(buttonDownload);
+        WebUI.clickUntilVisible(optionDownload);
+        WebUI.clickUntilVisible(buttonX);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
 }

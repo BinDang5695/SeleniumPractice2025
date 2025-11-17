@@ -10,8 +10,16 @@ import org.openqa.selenium.By;
 public class CustomerPage extends BasePage {
 
         private By menuCustomer = By.xpath("//span[normalize-space()='Customers']");
+<<<<<<< HEAD
         private By buttonAddNewCustomer = By.xpath("//a[normalize-space()='New Customer']");
         private By inputSearchCustomer = By.xpath("//input[@aria-controls='clients']");
+=======
+        private By searchAll = By.xpath("//input[@id='search_input']");
+        private By headerCustomerPage = By.xpath("//span[normalize-space()='Customers Summary']");
+        private By buttonAddNewCustomer = By.xpath("//a[normalize-space()='New Customer']");
+        private By buttonImportCustomer = By.xpath("//a[normalize-space()='Import Customers']");
+        private By inputSearchCustomer = By.xpath("//input[@class='form-control input-sm']");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         private By inputCompany = By.xpath("//input[@id='company']");
         private By inputVATNumber = By.xpath("//input[@id='vat']");
         private By inputPhoneNumber = By.xpath("//input[@id='phonenumber']");
@@ -30,19 +38,57 @@ public class CustomerPage extends BasePage {
         private By countryDropdown = By.xpath("//button[@aria-owns='bs-select-4']");
         private By searchCountry = By.xpath("//input[@aria-controls='bs-select-4']");
         private By optionVietnam = By.xpath("//span[normalize-space()='Vietnam']");
+<<<<<<< HEAD
         private By buttonSave = By.xpath("//button[contains(@class,'only-save')]");
         private By dataInTable = By.xpath("//a[normalize-space()='Nashtech Company']");
         private By totalCustomer = By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span");
         private By buttonDelete = By.xpath("//a[normalize-space()='Delete']");
         private By iconUser = By.xpath("//img[contains(@class,'staff-profile-image')]");
         private By buttonLogout = By.xpath("//ul[contains(@class,'dropdown')]//a[text()='Logout']");
+=======
+        private By buttonSave = By.xpath("//button[@class='btn btn-primary only-save customer-form-submiter']");
+        private By dataInTable = By.xpath("//a[normalize-space()='Nashtech Company']");
+        private By totalCustomer = By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span");
+        private By buttonDelete = By.xpath("//a[normalize-space()='Delete']");
+        private By iconUser = By.xpath("//img[@class='img img-responsive staff-profile-image-small tw-ring-1 tw-ring-offset-2 tw-ring-primary-500 tw-mx-1 tw-mt-2.5']");
+        private By buttonLogout = By.xpath("//a[@href='#' and normalize-space()='Logout']");
+        private By buttonChooseFile = By.xpath("//input[@type='file']");
+        private By buttonImport = By.xpath("//button[normalize-space()='Import']");
+        String filePath = SystemHelper.getCurrentDir() + "src/test/resources/testdata/sample_import_file.csv";
+        private By customerNameInTable = By.xpath("//tbody/tr[1]/td[3]/a[1]");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
         public void clickbuttonAddNewCustomer() {
             WebUI.waitForElementVisible(buttonAddNewCustomer);
             WebUI.clickElement(buttonAddNewCustomer);
         }
 
+<<<<<<< HEAD
         public void addNewCustomer()
+=======
+        public void clickbuttonImportCustomer() {
+            WebUI.waitForElementVisible(buttonImportCustomer);
+            WebUI.clickElement(buttonImportCustomer);
+        }
+
+        public void setTextForUploadFile() {
+            WebUI.setTextElement(buttonChooseFile, filePath);
+        }
+
+        public void clickbuttonImport() {
+            WebUI.setTextElement(buttonChooseFile, filePath);
+        }
+
+        public void searchAndCheckDataInTable(int column, String customerName, String columnName)
+        {
+            WebUI.setTextElement(inputSearchCustomer,customerName);
+            WebUI.waitForElementVisible(customerNameInTable);
+            WebUI.waitForPageLoaded();
+            TableHelper.checkDataInTableByColumn_Contains(3, customerName, "Company");
+        }
+
+        public void addNewCustomer(String customerName)
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         {
             WebUI.setTextElement(inputCompany, "Nashtech Company");
             WebUI.setTextElement(inputVATNumber, "123456789");
@@ -68,7 +114,11 @@ public class CustomerPage extends BasePage {
 
         public void verifyCustomerAdded()
         {
+<<<<<<< HEAD
             WebUI.waitForElementVisible(inputCompany);
+=======
+            //WebUI1.waitForElementVisible(inputCompany);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
             AssertHelper.assertTrue(WebUI.checkElementDisplayed(inputCompany), "Company field not displayed");
             AssertHelper.assertEquals(WebUI.getAttributeElement(inputCompany, "value"), "Nashtech Company", "Company name not matched");
             AssertHelper.assertTrue(WebUI.checkElementDisplayed(inputVATNumber), "VAT number field not displayed");
@@ -102,6 +152,7 @@ public class CustomerPage extends BasePage {
             return Integer.parseInt(totalString);
         }
 
+<<<<<<< HEAD
         public void searchCustomer()
         {
             WebUI.clickElement(menuCustomer);
@@ -111,12 +162,38 @@ public class CustomerPage extends BasePage {
         }
 
         public void deleteCustomer()
+=======
+        public void searchCustomer(String customerName)
+        {
+            WebUI.clickElement(menuCustomer);
+            WebUI.setTextElement(inputSearchCustomer,customerName);
+            WebUI.waitForElementVisible(dataInTable);
+            AssertHelper.assertTrue(WebUI.checkElementDisplayed(dataInTable), "Customer not found: " + customerName);
+        }
+
+        public void searchDataCustomer(String data)
+        {
+            WebUI.waitForPageLoaded();
+            WebUI.setTextElement(inputSearchCustomer,data);
+        }
+
+        public void deleteCustomer(String CustomerName)
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         {
             WebUI.moveToElement(dataInTable);
             WebUI.clickElement(buttonDelete);
             WebUI.acceptAlert();
         }
 
+<<<<<<< HEAD
+=======
+        public void logOutCRM()
+        {
+            WebUI.clickElement(iconUser);
+            WebUI.clickElement(buttonLogout);
+        }
+
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
 
 }

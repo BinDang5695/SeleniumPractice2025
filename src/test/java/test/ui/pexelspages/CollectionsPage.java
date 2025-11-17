@@ -2,7 +2,10 @@ package test.ui.pexelspages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+<<<<<<< HEAD
 import org.testng.Assert;
+=======
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 import settings.drivers.DriverManager;
 import settings.helpers.AssertHelper;
 import settings.helpers.FileHelper;
@@ -13,8 +16,13 @@ import java.util.stream.Collectors;
 
 public class CollectionsPage {
 
+<<<<<<< HEAD
     By image1 = By.xpath("(//img[contains(@src, 'pexels.com/photos')])[1]");
     By image2 = By.xpath("(//img[contains(@src, 'pexels.com/photos')])[2]");
+=======
+    By image1 = By.xpath("(//article[contains(@class,'MediaCard_card')]//img)[1]");
+    By image2 = By.xpath("(//article[contains(@class,'MediaCard_card')]//img)[2]");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     By buttonCollectionOfImage1 = By.xpath("(//button[contains(@title, 'Collect')])[1]");
     By buttonCollectionOfImage2 = By.xpath("(//button[contains(@title, 'Collect')])[2]");
     By optionMyCollection = By.xpath("//button[contains(.,'My collection')]");
@@ -23,7 +31,14 @@ public class CollectionsPage {
     // Scenario 3
 
     public void verifyLikedRandomImages() {
+<<<<<<< HEAD
         By imageLocator = By.xpath("//img[contains(@src, 'pexels.com/photos')]");
+=======
+
+        By imageLocator = By.xpath("//article[contains(@class,'MediaCard_card')]//img");
+
+        WebUI.waitForElementVisible(imageLocator);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
         LogUtils.info("🔍 Verifying liked random images...");
 
@@ -65,9 +80,14 @@ public class CollectionsPage {
 
         for (int i = 0; i < likedButtons.size(); i++) {
             int imageIndex = i + 1;
+<<<<<<< HEAD
             By imageContainer = By.xpath("(//img[contains(@src, 'pexels.com/photos')])[" + imageIndex + "]");
 
             WebUI.scrollToElement(imageContainer);
+=======
+            By imageContainer = By.xpath("(//article[contains(@class,'MediaCard_card')]//img)[" + imageIndex + "]");
+
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
             WebUI.moveToElement(imageContainer);
             WebUI.moveToElement(likedButtons.get(i));
             WebUI.clickElement(likedButtons.get(i));
@@ -82,7 +102,10 @@ public class CollectionsPage {
 
     public void removeImage2FromCollection()
     {
+<<<<<<< HEAD
         WebUI.scrollToElement(image2);
+=======
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.moveToElement(image2);
         WebUI.clickUntilVisible(buttonCollectionOfImage2);
         WebUI.clickUntilVisible(optionMyCollection);
@@ -99,7 +122,11 @@ public class CollectionsPage {
 
     public void removeImage1FromCollectionAfterVerified()
     {
+<<<<<<< HEAD
         WebUI.moveToElement(image1);
+=======
+        //WebUI.moveToElement(image1);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.clickElement(buttonCollectionOfImage1);
         WebUI.clickElement(optionMyCollection);
         WebUI.clickUntilVisible(buttonClose);
@@ -110,11 +137,19 @@ public class CollectionsPage {
 
     public void verifyDownloadImages(String expectedFileName) {
 
+<<<<<<< HEAD
+=======
+        WebUI.waitForElementVisible(image1);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         AssertHelper.assertTrue(WebUI.checkElementExist(image1), "❌ Downloaded image not exist.");
         AssertHelper.assertTrue(WebUI.checkElementDisplayed(image1), "❌ Downloaded image not displayed.");
 
         String fileName = (expectedFileName != null && !expectedFileName.isEmpty())
+<<<<<<< HEAD
                 ? expectedFileName : "pexels-cileklipalet-34299175.jpg";
+=======
+                ? expectedFileName : "pexels-gaborbalazs97-33640991.jpg";
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
         LogUtils.info("🔍 Verifying downloaded file: " + fileName);
 
@@ -129,4 +164,8 @@ public class CollectionsPage {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0

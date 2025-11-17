@@ -16,7 +16,12 @@ public class LoginPexelsPage {
     public void login() {
         WebUI.openURL("https://www.pexels.com/");
         WebUI.waitForPageLoaded();
+<<<<<<< HEAD
         WebUI.clickUntilVisible(threeDots, optionLogin);
+=======
+        //WebUI.clickUntilVisible(threeDots, optionLogin);
+        WebUI.moveToElement(threeDots);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.clickUntilVisible(optionLogin, inputEmail);
         WebUI.setTextElement(inputEmail, PropertiesHelper.getValue("EMAIL"));
         WebUI.setTextElement(inputPassword, PropertiesHelper.getValue("PASSWORD"));
@@ -30,4 +35,8 @@ public class LoginPexelsPage {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0

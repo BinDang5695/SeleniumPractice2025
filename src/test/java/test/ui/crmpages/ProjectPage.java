@@ -12,24 +12,42 @@ public class ProjectPage extends BasePage {
 
     //verify projects page
     private By titleProjectPage = By.xpath("//span[normalize-space()='Projects Summary']");
+<<<<<<< HEAD
     private By inputSearchProject = By.xpath("//input[@aria-controls='projects']");
     private By itemCustomerFirst = By.xpath("//a[contains(@href,'1595') and normalize-space()='Bin Customer']");
     private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
+=======
+    private By inprogressProject = By.xpath("//span[@class='project-status-#2563eb']");
+    private By inputSearchProject = By.xpath("//input[@class='form-control input-sm']");
+    private By itemCustomerFirst = By.xpath("//table[@id='clients']/tbody/tr[1]/td[3]/a[normalize-space()='Bin Customer']");
+    private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
+    private By customerID = By.xpath("//th[@id='th-number']");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
     //verify addnewproject page
     private By buttonNewProject = By.xpath("//a[normalize-space()='New Project']");
 
     //addnewproject page
     private By inputprojectName = By.xpath("//input[@id='name']");
+<<<<<<< HEAD
     private By inputcustomer = By.xpath("//button[@data-id='clientid']");
     private By searchCustomer = By.xpath("//input[@placeholder='Type to search...']");
+=======
+    private By inputcustomer = By.xpath("//button[@class='btn dropdown-toggle bs-placeholder btn-default']");
+    private By searchCustomer = By.xpath("//div[@class='dropdown bootstrap-select ajax-search bs3 open']//input[@placeholder='Type to search...']");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     private By selectCustomer = By.xpath("//span[normalize-space()='Bin Customer']");
     private By checkBoxCalculate = By.xpath("//label[normalize-space()='Calculate progress through tasks']");
     private By saveProject = By.xpath("//button[normalize-space()='Save']");
 
     //verify project created
+<<<<<<< HEAD
     private By projectNameCustomer = By.xpath("//button[@title='Bin Project - Bin Customer']");
     private By projectProgress = By.xpath("//p[contains(@class,'project-info')]");
+=======
+    private By projectNameCustomer = By.xpath("//button[@title='Bin Project - Bin Customer']//div[@class='filter-option-inner-inner']");
+    private By projectProgress = By.xpath("//p[@class='project-info tw-mb-0 tw-font-medium tw-text-base tw-tracking-tight']");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     private By customer = By.xpath("//dt[normalize-space()='Customer']");
     private By projectNameCreated = By.xpath("//a[normalize-space()='Bin Customer']");
     private By status = By.xpath("//dt[normalize-space()='Status']");
@@ -38,7 +56,11 @@ public class ProjectPage extends BasePage {
 
     //verify project created on project tab
     private By projectNameOnProjectTab = By.xpath("//a[normalize-space()='Bin Project']");
+<<<<<<< HEAD
     private By statusOnProjectTab = By.xpath("//span[normalize-space()='In Progress']");
+=======
+    private By statusOnProjectTab = By.xpath("//span[@class='label project-status-2']");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
     //delete project created
     private By deleteProject = By.xpath("//a[@class='text-danger _delete']");
@@ -48,6 +70,14 @@ public class ProjectPage extends BasePage {
     //search and check nodata
     private By noData = By.xpath("//td[@class='dataTables_empty']");
 
+<<<<<<< HEAD
+=======
+    //logout
+    private By iconUser = By.xpath("//img[@class='img img-responsive staff-profile-image-small tw-ring-1 tw-ring-offset-2 tw-ring-primary-500 tw-mx-1 tw-mt-2.5']");
+    private By logOutoption = By.xpath("//ul[@class='dropdown-menu animated fadeIn']//li[@class='header-logout']//a[@href='#'][normalize-space()='Logout']");
+
+
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     public void verifyNavigateToProjectPage()
     {
         AssertHelper.assertTrue(WebUI.checkElementExist(titleProjectPage), "The ProjectPage title not display.");
@@ -73,9 +103,15 @@ public class ProjectPage extends BasePage {
                 .perform();
     }
 
+<<<<<<< HEAD
     public void submitDataForNewCustomer()
     {
         WebUI.setTextElement(inputprojectName, "Bin Project");
+=======
+    public void submitDataForNewCustomer(String projectName)
+    {
+        WebUI.setTextElement(inputprojectName, projectName);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.clickElement(inputcustomer);
         WebUI.setTextElement(searchCustomer, "Bin Customer");
         WebUI.clickElement(selectCustomer);
@@ -102,14 +138,26 @@ public class ProjectPage extends BasePage {
         AssertHelper.assertEquals(WebUI.getTextElement(statusProject), "In Progress", "The statusProject title not match.");
     }
 
+<<<<<<< HEAD
     public void searchAndCheckCustomerInTable()
     {
         WebUI.setTextElement(inputSearchCustomer, "Bin Customer");
         AssertHelper.assertEquals(WebUI.getTextElement(itemCustomerFirst), "Bin Customer", "The customer name in table not match");
+=======
+    public void searchAndCheckCustomerInTable(String customerName)
+    {
+        WebUI.setTextElement(inputSearchCustomer, customerName);
+        AssertHelper.assertEquals(WebUI.getTextElement(itemCustomerFirst), customerName, "The customer name in table not match");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
     public void clickFirstCustomer()
     {
+<<<<<<< HEAD
+=======
+        //WebUI.clickElement(customerID);
+        //WebUI.clickElement(customerID);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.clickElement(itemCustomerFirst);
     }
 
@@ -132,9 +180,16 @@ public class ProjectPage extends BasePage {
         WebUI.acceptAlert();
     }
 
+<<<<<<< HEAD
     public void searchAndCheckProjectInTable()
     {
         WebUI.setTextElement(inputSearchProject, "Bin Project");
+=======
+    public void searchAndCheckProjectInTable(String projectName)
+    {
+        //clickmenuProjects();
+        WebUI.setTextElement(inputSearchProject, projectName);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
     public void verifyNoDataAfterDeletedProject()
@@ -143,4 +198,20 @@ public class ProjectPage extends BasePage {
         AssertHelper.assertEquals(WebUI.getTextElement(noData), "No matching records found", "The nodata text not match.");
     }
 
+<<<<<<< HEAD
+=======
+    public int getProjectInprogress()
+    {
+        String totalString = WebUI.getTextElement(inprogressProject);
+        System.out.println("getProjectInprogress: " + totalString);
+        return Integer.parseInt(totalString);
+    }
+
+    public void logOutCRM()
+    {
+        WebUI.clickElement(iconUser);
+        WebUI.clickElement(logOutoption);
+    }
+
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 }

@@ -17,7 +17,11 @@ public class ImagePage {
     By imageProfile = By.xpath("//img[@alt='Bin Dang']");
     By optionYourCollections = By.xpath("//a[normalize-space()='Your Collections']");
     By optionMyCollection = By.xpath("//button[contains(.,'My collection')]");
+<<<<<<< HEAD
     By buttonClose = By.xpath("//button[@class='Modal_close__Pf0IY']");
+=======
+    By buttonClose = By.xpath("//button[contains(@class, 'Modal_close')]");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     By buttonFreeDownload = By.xpath("(//a[.='Free download'])[2]");
 
     // Scenario 1
@@ -36,6 +40,10 @@ public class ImagePage {
 
     public void verifyButtonFollowChangeToFollowing()
     {
+<<<<<<< HEAD
+=======
+        WebUI.waitForElementVisible(buttonFollowing);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         AssertHelper.assertTrue(WebUI.checkElementExist(buttonFollowing), "The buttonFollowing not display.");
         AssertHelper.assertEquals(WebUI.getTextElement(buttonFollowing), "Following", "The buttonFollowing text not match.");
     }
@@ -59,6 +67,11 @@ public class ImagePage {
     }
 
     public void clickLikeRandomImages(int numberOfImages) {
+<<<<<<< HEAD
+=======
+        clickedImageIndexes.clear();
+        clickedImageSrcs.clear();
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         By imageLocator = By.xpath("//article//img[contains(@src,'pexels.com')]");
 
         LogUtils.info("🚀 Loading images on Pexels...");
@@ -104,6 +117,10 @@ public class ImagePage {
                 WebElement article = img.findElement(By.xpath("./ancestor::article"));
                 WebElement likeBtn = article.findElement(By.xpath(".//button[@title='Like']"));
 
+<<<<<<< HEAD
+=======
+                WebUI.scrollToElement(likeBtn);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
                 WebUI.moveToElement(likeBtn);
                 WebUI.clickElement(likeBtn);
 
@@ -134,6 +151,11 @@ public class ImagePage {
 
 
     public void clickRandomCollections(int numberOfImages) {
+<<<<<<< HEAD
+=======
+        clickedImageIndexes.clear();
+        clickedImageSrcs.clear();
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
         By imageLocator = By.xpath("//article//img[contains(@src,'pexels.com')]");
 
@@ -169,7 +191,11 @@ public class ImagePage {
             int idx = random.nextInt(totalImages);
             if (!randomIndexes.contains(idx)) randomIndexes.add(idx);
         }
+<<<<<<< HEAD
         LogUtils.info("🎯 Selected image indexes (List Index): " + randomIndexes + 1);
+=======
+        LogUtils.info("🎯 Selected image indexes (List Index): " + randomIndexes);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
         for (int listIndex : randomIndexes) {
             int xpathIndex = listIndex + 1;
@@ -198,14 +224,22 @@ public class ImagePage {
                 clickedImageSrcs.add(src);
                 clickedImageIndexes.add(listIndex);
 
+<<<<<<< HEAD
                 LogUtils.info("🖼️ Collection image index=" + listIndex + " | src=" + src);
+=======
+                LogUtils.info("🖼️ Collection image index=" + xpathIndex + " | src=" + src);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
             } catch (Exception e) {
                 LogUtils.error("⚠️ Error clicking image index " + listIndex + ": " + e.getMessage());
             }
         }
 
+<<<<<<< HEAD
         LogUtils.info("🎉 Done clicking " + clickedImageIndexes.size() + " random images");
+=======
+        LogUtils.info("🎉 Done clicking random collection images");
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
     // Scenario 5
@@ -237,4 +271,8 @@ public class ImagePage {
 
 
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0

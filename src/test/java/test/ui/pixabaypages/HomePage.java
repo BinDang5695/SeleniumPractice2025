@@ -55,11 +55,19 @@ public class HomePage {
 
         WebUI.waitForElementVisible(actionButton);
         WebUI.moveToElement(actionButton);
+<<<<<<< HEAD
         WebUI.clickElement(actionButton);
 
         if (actionType.equalsIgnoreCase("bookmark")) {
             WebUI.clickElement(buttonAdd);
             WebUI.clickElement(buttonX);
+=======
+        WebUI.clickUntilVisible(actionButton);
+
+        if (actionType.equalsIgnoreCase("bookmark")) {
+            WebUI.clickUntilVisible(buttonAdd);
+            WebUI.clickUntilVisible(buttonX);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
             LogUtils.info("✅ Added image index " + imageIndex + " to collection successfully!");
         } else {
             LogUtils.info("❤️ Liked image index " + imageIndex + " successfully!");
@@ -75,12 +83,20 @@ public class HomePage {
             case "like":
                 ariaLabel = "HeartOutline";
                 break;
+<<<<<<< HEAD
             case "collection":
             case "bookmark":
+=======
+
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
             case "addtocollection":
                 ariaLabel = "BookmarkOutline";
                 requiresPopupAction = true;
                 break;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
             default:
                 LogUtils.error("❌ Invalid action type: " + actionType);
                 return;
@@ -117,8 +133,15 @@ public class HomePage {
             try {
                 WebElement imageElement = allImages.get(index);
 
+<<<<<<< HEAD
                 WebUI.waitForAllElementsVisible(imageLocator, 10);
                 WebUI.scrollToElement(imageElement);
+=======
+                //WebUI.waitForElementVisible(imageElement);
+                WebUI.sleep(5);
+                WebUI.scrollToElement(imageElement);
+                WebUI.sleep(3);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
                 WebUI.moveToElement(imageElement);
 
                 WebElement actionButton = imageElement.findElement(
@@ -126,7 +149,13 @@ public class HomePage {
                                 "//button[.//div[@role='img' and @aria-label='" + ariaLabel + "']]")
                 );
 
+<<<<<<< HEAD
                 WebUI.moveToElement(actionButton);
+=======
+                WebUI.sleep(2);
+                WebUI.moveToElement(actionButton);
+                WebUI.sleep(2);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
                 WebUI.clickElement(actionButton);
 
                 if (requiresPopupAction) {
@@ -151,7 +180,11 @@ public class HomePage {
 
     public void clickOnImageByIndex(int index) {
         By image = By.xpath("(//img)[" + index + "]");
+<<<<<<< HEAD
         WebUI.clickElement(image);
+=======
+        WebUI.clickUntilVisible(image);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
     public void clickOnImageProfile() {
@@ -160,11 +193,19 @@ public class HomePage {
 
     public void clickOnOptionSettings() {
         WebUI.moveToElement(optionSettings);
+<<<<<<< HEAD
         WebUI.clickElement(optionSettings);
     }
 
     public void clickOnOptionLibrary() {
         WebUI.clickElement(optionLibrary);
+=======
+        WebUI.clickUntilVisible(optionSettings);
+    }
+
+    public void clickOnOptionLibrary() {
+        WebUI.clickUntilVisible(optionLibrary);
+>>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
 
