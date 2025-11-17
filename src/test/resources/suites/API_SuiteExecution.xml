@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite Demo Parallel" verbose="1">
+    <test name="Test Parallel version 1">
+        <classes>
+            <class name="test.api.crud.CRUDBook"/>
+            <class name="test.api.crud.CRUDImage"/>
+            <class name="test.api.crud.CRUDUser" />
+        </classes>
+    </test>
+</suite>
