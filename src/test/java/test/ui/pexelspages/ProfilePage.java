@@ -63,8 +63,4 @@ public class ProfilePage {
 
 
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0

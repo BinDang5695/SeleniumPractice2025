@@ -17,36 +17,21 @@ public class CustomerTest extends BaseTest {
     @Description("Add new Customer, verify and delete Customer")
     @Test(priority = 0)
     public void manageCustomer() {
-<<<<<<< HEAD
-=======
-        String customerName = "Nashtech Company";
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         customerPage().clickMenuCustomers();
         int beforeTotal = customerPage().getTotalCustomers();
         customerPage().clickbuttonAddNewCustomer();
-<<<<<<< HEAD
         customerPage().addNewCustomer();
-=======
-        customerPage().addNewCustomer(customerName);
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         customerPage().verifyCustomerAdded();
         contactsPage().clickTabContacts();
         contactsPage().clickButtonNewContact();
         contactsPage().addNewContact("Bin", "Dang");
         contactsPage().verifyCreatedContact("Bin", "Dang");
-<<<<<<< HEAD
         customerPage().searchCustomer();
         int afterTotal = customerPage().getTotalCustomers();
         Assert.assertEquals(afterTotal, beforeTotal + 1, "Total customers should be increased by 1 after adding a new customer.");
         customerPage().deleteCustomer();
-=======
-        customerPage().searchCustomer(customerName);
-        int afterTotal = customerPage().getTotalCustomers();
-        Assert.assertEquals(afterTotal, beforeTotal + 1, "Total customers should be increased by 1 after adding a new customer.");
-        customerPage().deleteCustomer(customerName);
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
 

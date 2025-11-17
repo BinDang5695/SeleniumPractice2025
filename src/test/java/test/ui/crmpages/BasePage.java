@@ -14,21 +14,13 @@ public class BasePage {
     private ContactsPage contactsPage;
     private ProjectPage projectPage;
     private TaskPage taskPage;
-<<<<<<< HEAD
     private HeaderPage headerPage;
-=======
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     private ExcelHelper excelHelper;
 
     private By menuDashboard = By.xpath("//span[normalize-space()='Dashboard']");
     private By menuCustomers = By.xpath("//span[normalize-space()='Customers']");
     private By menuProjects = By.xpath("//span[normalize-space()='Projects']");
     private By menuTasks = By.xpath("//span[normalize-space()='Tasks']");
-<<<<<<< HEAD
-=======
-
-    // Tab
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     private By tabProjects = By.xpath("//a[@data-group='projects']");
     private By tabContacts = By.xpath("//a[normalize-space()='Contacts']");
 
@@ -84,7 +76,6 @@ public class BasePage {
         return taskPage;
     }
 
-<<<<<<< HEAD
     public HeaderPage headerPage () {
         if (headerPage == null) {
             headerPage = new HeaderPage();
@@ -92,8 +83,6 @@ public class BasePage {
         return headerPage;
     }
 
-=======
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     public DashboardPage clickMenuDashboard() {
         WebUI.clickElement(menuDashboard);
         return new DashboardPage();
@@ -207,8 +196,4 @@ public class BasePage {
 
 
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0

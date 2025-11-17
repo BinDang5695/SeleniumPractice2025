@@ -1,16 +1,10 @@
 package test.ui.pixabaytestcases;
 
-<<<<<<< HEAD
 import settings.keywords.WebUI;
 import test.ui.common.BaseTest;
 import org.testng.annotations.Test;
 import test.ui.pixabaypages.HomePage;
 import test.ui.pixabaypages.LibraryPage;
-=======
-import test.ui.common.BaseTest;
-import org.testng.annotations.Test;
-
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
 
 public class ATEPractice extends BaseTest {
 

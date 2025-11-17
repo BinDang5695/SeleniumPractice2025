@@ -22,7 +22,6 @@ public class SettingsPage {
     private By inputCity = By.xpath("//input[@placeholder='Enter your city']");
     private By buttonSaveChanges = By.xpath("//span[normalize-space()='Save changes']");
     private By imageUploaded = By.xpath("(//img[contains(@class, 'image')])[4]");
-<<<<<<< HEAD
     private By allImagesInSettingPage = By.xpath("//img[contains(@class, 'image')]");
 
     public void clickOnButtonEdit()
@@ -30,14 +29,6 @@ public class SettingsPage {
         WebUI.waitForAllElementsVisible(allImagesInSettingPage, 10);
         WebUI.moveToElement(imageUploaded);
         WebUI.scrollToElement(imageUploaded);
-=======
-
-    public void clickOnButtonEdit()
-    {
-        WebUI.scrollToElement(imageUploaded);
-        WebUI.moveToElement(imageUploaded);
-        WebUI.waitForElementVisible(buttonEdit);
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.clickUntilVisible(buttonEdit);
     }
 
@@ -46,19 +37,11 @@ public class SettingsPage {
     }
 
     public void clickOnButtonApply() {
-<<<<<<< HEAD
         WebUI.clickElement(buttonApply);
     }
 
     public void clickOnButtonClose() {
         WebUI.clickElement(buttonClose);
-=======
-        WebUI.clickUntilVisible(buttonApply);
-    }
-
-    public void clickOnButtonClose() {
-        WebUI.clickUntilVisible(buttonClose);
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
     }
 
     public void inputInformationAndSave() {
@@ -66,11 +49,7 @@ public class SettingsPage {
         WebUI.setTextElement(inputLastName, "Dang");
         WebUI.setTextElement(inputAboutMe, "Bindz");
         WebUI.setTextElement(inputCity, "DN");
-<<<<<<< HEAD
         WebUI.clickElement(buttonSaveChanges);
-=======
-        WebUI.clickUntilVisible(buttonSaveChanges);
->>>>>>> 505f0111a689153ed2faf36e7bbe7c06b69d0fc0
         WebUI.getTextElement(imageUploaded);
     }
 
