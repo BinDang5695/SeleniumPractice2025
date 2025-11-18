@@ -24,7 +24,7 @@ public class ImagePage {
 
     public void clickOnImageByIndex(int index) {
         By image = By.xpath("//article[contains(@class,'MediaCard_card')]");
-        WebUI.scrollToElementTest(image);
+        WebUI.scrollToCenterElement(image);
         WebUI.moveToElement(image);
         WebUI.clickUntilVisible(image, buttonFollow);
     }

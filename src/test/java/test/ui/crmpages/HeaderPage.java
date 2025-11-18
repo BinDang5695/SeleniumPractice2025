@@ -1,6 +1,7 @@
 package test.ui.crmpages;
 import org.openqa.selenium.By;
 import settings.keywords.WebUI;
+import test.ui.common.BasePage;
 
 public class HeaderPage extends BasePage {
 

@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
         {
             loginPage().loginCRM();
             dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
+            headerPage().logout();
         }
 
 }

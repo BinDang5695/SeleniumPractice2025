@@ -3,6 +3,7 @@ package test.ui.crmpages;
 import settings.helpers.AssertHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
+import test.ui.common.BasePage;
 
 public class DashboardPage extends BasePage {
 

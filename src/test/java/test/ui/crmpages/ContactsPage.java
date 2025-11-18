@@ -4,6 +4,7 @@ import settings.helpers.AssertHelper;
 import settings.helpers.SystemHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
+import test.ui.common.BasePage;
 
 public class ContactsPage extends BasePage {
 

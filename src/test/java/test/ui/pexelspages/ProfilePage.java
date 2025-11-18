@@ -25,7 +25,7 @@ public class ProfilePage {
         WebUI.uploadFileWithRobotClass(buttonChangeImage, filePath);
         WebUI.setTextElement(inputFirstName, "Bin");
         WebUI.setTextElement(inputLastName, "Dang");
-        WebUI.scrollToElementTest(buttonSaveProfile);
+        WebUI.scrollToCenterElement(buttonSaveProfile);
         WebUI.clickElement(buttonSaveProfile);
     }
 

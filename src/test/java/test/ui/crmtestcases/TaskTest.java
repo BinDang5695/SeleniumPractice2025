@@ -17,7 +17,7 @@ public class TaskTest extends BaseTest {
     public void verifyTask() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
-        taskPage().clickMenuTasks();
+        basePage().clickMenuTasks();
         taskPage().verifyNavigateToTasksPage();
         taskPage().clickButtonSwitchToKanBan();
         taskPage().verifyNavigateToKanbanPage();

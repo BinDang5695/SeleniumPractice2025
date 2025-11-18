@@ -5,7 +5,6 @@ import settings.drivers.DriverManager;
 import settings.helpers.PropertiesHelper;
 import settings.utils.LogUtils;
 import test.ui.listeners.TestListener;
-import test.ui.crmpages.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;

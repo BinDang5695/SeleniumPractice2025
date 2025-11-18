@@ -18,19 +18,19 @@ public class ProjectTest extends BaseTest {
     {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
-        projectPage().clickMenuProjects();
+        basePage().clickMenuProjects();
         projectPage().verifyNavigateToProjectPage();
         projectPage().clickButtonAddNewCustomer();
         projectPage().submitDataForNewCustomer();
         projectPage().verifyProjectCreated();
-        customerPage().clickMenuCustomers();
+        basePage().clickMenuCustomers();
         projectPage().searchAndCheckCustomerInTable();
         projectPage().clickFirstCustomer();
-        projectPage().clickTabProjects();
+        basePage().clickTabProjects();
         projectPage().verifyProjectCreatedOnProjectTab();
         projectPage().moveToProjectName();
         projectPage().clickAndDeleteProject();
-        projectPage().clickMenuProjects();
+        basePage().clickMenuProjects();
         projectPage().searchAndCheckProjectInTable();
         projectPage().verifyNoDataAfterDeletedProject();
         headerPage().logout();

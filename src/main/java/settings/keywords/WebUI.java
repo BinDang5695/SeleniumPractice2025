@@ -486,7 +486,7 @@ public class WebUI {
     }
 
     @Step("Scroll to element {0}")
-    public static void scrollToElementTest(By by) {
+    public static void scrollToCenterElement(By by) {
         LogUtils.info("🧭 Scrolling to element: " + by);
         waitForElementVisible(by);
 

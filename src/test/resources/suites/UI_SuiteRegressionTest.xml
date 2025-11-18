@@ -7,11 +7,17 @@
         <classes>
             <class name="test.ui.crmtestcases.LoginTest">
             </class>
+            <class name="test.ui.crmtestcases.LoginTestByExcelFile">
+            </class>
             <class name="test.ui.crmtestcases.CustomerTest">
             </class>
             <class name="test.ui.crmtestcases.ProjectTest">
             </class>
             <class name="test.ui.crmtestcases.TaskTest">
+            </class>
+            <class name="test.ui.crmtestcases.ContractsTest">
+            </class>
+            <class name="test.ui.crmtestcases.ExpensesTest">
             </class>
         </classes>
     </test>

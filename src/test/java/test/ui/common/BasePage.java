@@ -1,13 +1,15 @@
-package test.ui.crmpages;
+package test.ui.common;
 
 import settings.helpers.ExcelHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
+import test.ui.crmpages.*;
 import test.ui.pexelspages.*;
 import test.ui.pixabaypages.*;
 
 public class BasePage {
 
+    private BasePage basePage;
     private LoginPage loginPage;
     private DashboardPage dashboardPage;
     private CustomerPage customerPage;
@@ -15,16 +17,27 @@ public class BasePage {
     private ProjectPage projectPage;
     private TaskPage taskPage;
     private HeaderPage headerPage;
+    private ContractsPage contractsPage;
+    private ExpensesPage expensesPage;
+    private LeadsPage leadsPage;
     private ExcelHelper excelHelper;
 
     private By menuDashboard = By.xpath("//span[normalize-space()='Dashboard']");
     private By menuCustomers = By.xpath("//span[normalize-space()='Customers']");
     private By menuProjects = By.xpath("//span[normalize-space()='Projects']");
     private By menuTasks = By.xpath("//span[normalize-space()='Tasks']");
+    private By menuContracts = By.xpath("//span[normalize-space()='Contracts']");
+    private By menuExpenses = By.xpath("//span[@class='menu-text'][normalize-space()='Expenses']");
+    private By menuLeads = By.xpath("//span[@class='menu-text'][normalize-space()='Leads']");
     private By tabProjects = By.xpath("//a[@data-group='projects']");
     private By tabContacts = By.xpath("//a[normalize-space()='Contacts']");
 
-    public BasePage() {
+
+    public BasePage basePage() {
+        if (basePage == null) {
+            basePage = new BasePage();
+        }
+        return basePage;
     }
 
     public ExcelHelper excelHelper() {
@@ -83,6 +96,27 @@ public class BasePage {
         return headerPage;
     }
 
+    public ContractsPage contractsPage () {
+        if (contractsPage == null) {
+            contractsPage = new ContractsPage();
+        }
+        return contractsPage;
+    }
+
+    public ExpensesPage expensesPage () {
+        if (expensesPage == null) {
+            expensesPage = new ExpensesPage();
+        }
+        return expensesPage;
+    }
+
+    public LeadsPage leadsPage () {
+        if (leadsPage == null) {
+            leadsPage = new LeadsPage();
+        }
+        return leadsPage;
+    }
+
     public DashboardPage clickMenuDashboard() {
         WebUI.clickElement(menuDashboard);
         return new DashboardPage();
@@ -108,9 +142,24 @@ public class BasePage {
         return new ContactsPage();
     }
 
+    public ContractsPage clickMenuContracts() {
+        WebUI.clickElement(menuContracts);
+        return new ContractsPage();
+    }
+
     public TaskPage clickMenuTasks() {
         WebUI.clickElement(menuTasks);
         return new TaskPage();
+    }
+
+    public ExpensesPage clickMenuExpenses() {
+        WebUI.clickElement(menuExpenses);
+        return new ExpensesPage();
+    }
+
+    public LeadsPage clickMenuLeads() {
+        WebUI.clickElement(menuLeads);
+        return new LeadsPage();
     }
 
     // Pixabay

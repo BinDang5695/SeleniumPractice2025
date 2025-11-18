@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import test.ui.common.BasePage;
 
 public class ProjectPage extends BasePage {
 
@@ -20,8 +21,8 @@ public class ProjectPage extends BasePage {
     private By buttonNewProject = By.xpath("//a[normalize-space()='New Project']");
 
     //addnewproject page
-    private By inputprojectName = By.xpath("//input[@id='name']");
-    private By inputcustomer = By.xpath("//button[@data-id='clientid']");
+    private By inputProjectName = By.xpath("//input[@id='name']");
+    private By inputCustomer = By.xpath("//button[@data-id='clientid']");
     private By searchCustomer = By.xpath("//input[@placeholder='Type to search...']");
     private By selectCustomer = By.xpath("//span[normalize-space()='Bin Customer']");
     private By checkBoxCalculate = By.xpath("//label[normalize-space()='Calculate progress through tasks']");
@@ -34,7 +35,7 @@ public class ProjectPage extends BasePage {
     private By projectNameCreated = By.xpath("//a[normalize-space()='Bin Customer']");
     private By status = By.xpath("//dt[normalize-space()='Status']");
     private By statusProject = By.xpath("//dd[normalize-space()='In Progress']");
-    private By alertsuccess = By.xpath("//span[@class='alert-title']");
+    private By alertSuccess = By.xpath("//span[@class='alert-title']");
 
     //verify project created on project tab
     private By projectNameOnProjectTab = By.xpath("//a[normalize-space()='Bin Project']");
@@ -75,8 +76,8 @@ public class ProjectPage extends BasePage {
 
     public void submitDataForNewCustomer()
     {
-        WebUI.setTextElement(inputprojectName, "Bin Project");
-        WebUI.clickElement(inputcustomer);
+        WebUI.setTextElement(inputProjectName, "Bin Project");
+        WebUI.clickElement(inputCustomer);
         WebUI.setTextElement(searchCustomer, "Bin Customer");
         WebUI.clickElement(selectCustomer);
         WebUI.clickElement(checkBoxCalculate);
@@ -86,8 +87,8 @@ public class ProjectPage extends BasePage {
 
     public void verifyProjectCreated()
     {
-        AssertHelper.assertTrue(WebUI.checkElementExist(alertsuccess), "The alertsuccess title not display.");
-        AssertHelper.assertEquals(WebUI.getTextElement(alertsuccess), "Project added successfully.", "The alertsuccess title not match.");
+        AssertHelper.assertTrue(WebUI.checkElementExist(alertSuccess), "The alertsuccess title not display.");
+        AssertHelper.assertEquals(WebUI.getTextElement(alertSuccess), "Project added successfully.", "The alertsuccess title not match.");
         AssertHelper.assertTrue(WebUI.checkElementExist(projectNameCustomer), "The project customer header page not display.");
         AssertHelper.assertEquals(WebUI.getTextElement(projectNameCustomer), "Bin Project - Bin Customer", "The project customer header page not match.");
         AssertHelper.assertTrue(WebUI.checkElementExist(projectProgress), "The project progress not display.");

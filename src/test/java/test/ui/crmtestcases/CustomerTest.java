@@ -19,12 +19,12 @@ public class CustomerTest extends BaseTest {
     public void manageCustomer() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
-        customerPage().clickMenuCustomers();
+        basePage().clickMenuCustomers();
         int beforeTotal = customerPage().getTotalCustomers();
         customerPage().clickbuttonAddNewCustomer();
         customerPage().addNewCustomer();
         customerPage().verifyCustomerAdded();
-        contactsPage().clickTabContacts();
+        basePage().clickTabContacts();
         contactsPage().clickButtonNewContact();
         contactsPage().addNewContact("Bin", "Dang");
         contactsPage().verifyCreatedContact("Bin", "Dang");
@@ -32,6 +32,8 @@ public class CustomerTest extends BaseTest {
         int afterTotal = customerPage().getTotalCustomers();
         Assert.assertEquals(afterTotal, beforeTotal + 1, "Total customers should be increased by 1 after adding a new customer.");
         customerPage().deleteCustomer();
+        customerPage().verifyCustomerDeleted();
+        headerPage().logout();
     }
 
 

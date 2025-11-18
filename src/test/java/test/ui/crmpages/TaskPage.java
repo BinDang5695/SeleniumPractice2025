@@ -4,6 +4,7 @@ import settings.helpers.AssertHelper;
 import settings.keywords.WebUI;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import test.ui.common.BasePage;
 
 public class TaskPage extends BasePage {
 
