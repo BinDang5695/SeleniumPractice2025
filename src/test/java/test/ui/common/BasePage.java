@@ -20,6 +20,9 @@ public class BasePage {
     private ContractsPage contractsPage;
     private ExpensesPage expensesPage;
     private LeadsPage leadsPage;
+    private KnowledgeBasePage knowledgeBase;
+    private SalesPage salesPage;
+    private ProposalsPage proposalsPage;
     private ExcelHelper excelHelper;
 
     private By menuDashboard = By.xpath("//span[normalize-space()='Dashboard']");
@@ -29,9 +32,12 @@ public class BasePage {
     private By menuContracts = By.xpath("//span[normalize-space()='Contracts']");
     private By menuExpenses = By.xpath("//span[@class='menu-text'][normalize-space()='Expenses']");
     private By menuLeads = By.xpath("//span[@class='menu-text'][normalize-space()='Leads']");
+    private By menuKnowledgeBase = By.xpath("//span[normalize-space()='Knowledge Base']");
+    private By menuSales = By.xpath("//span[@class='menu-text'][normalize-space()='Sales']");
+    private By menuProposals = By.xpath("//span[normalize-space()='Proposals']");
+    private By menuInvoices = By.xpath("//span[normalize-space()='Invoices']");
     private By tabProjects = By.xpath("//a[@data-group='projects']");
     private By tabContacts = By.xpath("//a[normalize-space()='Contacts']");
-
 
     public BasePage basePage() {
         if (basePage == null) {
@@ -117,6 +123,20 @@ public class BasePage {
         return leadsPage;
     }
 
+    public KnowledgeBasePage knowledgeBase () {
+        if (knowledgeBase == null) {
+            knowledgeBase = new KnowledgeBasePage();
+        }
+        return knowledgeBase;
+    }
+
+    public ProposalsPage proposalsPage () {
+        if (proposalsPage == null) {
+            proposalsPage = new ProposalsPage();
+        }
+        return proposalsPage;
+    }
+
     public DashboardPage clickMenuDashboard() {
         WebUI.clickElement(menuDashboard);
         return new DashboardPage();
@@ -160,6 +180,21 @@ public class BasePage {
     public LeadsPage clickMenuLeads() {
         WebUI.clickElement(menuLeads);
         return new LeadsPage();
+    }
+
+    public KnowledgeBasePage clickMenuKnowledgeBase() {
+        WebUI.clickElement(menuKnowledgeBase);
+        return new KnowledgeBasePage();
+    }
+
+    public SalesPage clickMenuSalesPage() {
+        WebUI.clickElement(menuSales);
+        return new SalesPage();
+    }
+
+    public ProposalsPage clickMenuProposalsPage() {
+        WebUI.clickElement(menuProposals);
+        return new ProposalsPage();
     }
 
     // Pixabay

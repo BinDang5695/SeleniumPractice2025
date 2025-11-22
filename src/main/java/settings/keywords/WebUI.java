@@ -79,6 +79,34 @@ public class WebUI {
         }
     }
 
+    public static void waitForTableFullyLoaded(By rowLocator) {
+
+        // Đợi table có ít nhất 1 dòng
+        WebUI.waitForElementVisible(rowLocator);
+
+        int oldCount = -1;
+        int stableCount = 0;
+
+        for (int i = 0; i < 20; i++) {
+            int newCount = getWebElements(rowLocator).size();
+
+            // Kiểm tra số dòng ổn định 2 lần liên tiếp
+            if (newCount == oldCount && newCount > 0) {
+                stableCount++;
+
+                if (stableCount >= 2) {
+                    return; // Table thực sự load xong
+                }
+            } else {
+                stableCount = 0;
+            }
+
+            oldCount = newCount;
+            sleep(200);
+        }
+    }
+
+
     public static void waitForPageRefresh(By by) {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeout));
@@ -478,11 +506,32 @@ public class WebUI {
 
     // Advanced
 
+    public static void setTextAndKey(By by, String value, Keys key) {
+        waitForPageLoaded();
+        getWebElement(by).sendKeys(value, key);
+        LogUtils.info("Set text: " + value + " on element " + by);
+    }
+
+    public static String getElementCssValue(By by, String cssPropertyName) {
+        waitForElementVisible(by);
+        LogUtils.info("Get CSS value " + cssPropertyName + " of element " + by);
+        String value = getWebElement(by).getCssValue(cssPropertyName);
+        LogUtils.info("==> CSS value: " + value);
+        return value;
+    }
+
     @Step("Scroll to element {0}")
     public static void scrollToElement(By by) {
         waitForElementVisible(by);
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("arguments[0].scrollIntoView(false);", getWebElement(by));
+    }
+
+    @Step("Scroll to element {0}")
+    public static void scrollToElementTrue(WebElement element) {
+        waitForElementVisible(element);
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     @Step("Scroll to element {0}")
@@ -581,5 +630,26 @@ public class WebUI {
             return false;
         }
     }
+
+    public static void switchToIframe(By iframe) {
+        try {
+            WebUI.waitForElementVisible(iframe);
+            WebElement iframeElement = getWebElement(iframe);
+            DriverManager.getDriver().switchTo().frame(iframeElement);
+        } catch (Exception e) {
+            LogUtils.error("Failed to switch to iframe: " + iframe.toString(), e);
+            throw e;
+        }
+    }
+
+    public static void switchToDefaultContent() {
+        try {
+            DriverManager.getDriver().switchTo().defaultContent();
+        } catch (Exception e) {
+            LogUtils.error("Failed to switch to default content.", e);
+            throw e;
+        }
+    }
+
 
 }

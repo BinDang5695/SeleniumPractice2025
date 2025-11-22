@@ -1,10 +1,14 @@
 package test.ui.crmpages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import settings.helpers.AssertHelper;
 import settings.helpers.SystemHelper;
 import settings.keywords.WebUI;
 import test.ui.common.BasePage;
+
+import java.sql.Driver;
+import java.sql.DriverManager;
 
 public class ExpensesPage extends BasePage {
 
@@ -14,10 +18,12 @@ public class ExpensesPage extends BasePage {
     private By inputName = By.xpath("//input[@id='expense_name']");
     private By inputNote = By.xpath("//textarea[@id='note']");
     private By dropdownExpenseCategory = By.xpath("//div[contains(text(),'Nothing selected')]");
+    private By inputExpenseCategory = By.xpath("//input[@aria-controls='bs-select-2']");
     private By optionBinCategory = By.xpath("//span[normalize-space()='Bin Category']");
     private By inputExpenseDate = By.xpath("//input[@id='date']");
     private By inputAmount = By.xpath("//input[@id='amount']");
     private By dropdownPaymentMode = By.xpath("//button[@data-id='paymentmode']");
+    private By inputPaymentMode = By.xpath("//input[@aria-controls='bs-select-6']");
     private By optionBank = By.xpath("//a[normalize-space()='Bank']");
     private By inputReference = By.xpath("//input[@id='reference_no']");
     private By dropdownRepeatEvery = By.xpath("//button[@data-id='repeat_every']");
@@ -25,6 +31,12 @@ public class ExpensesPage extends BasePage {
     private By checkboxInfinity = By.xpath("//label[normalize-space()='Infinity']");
     private By inputTotalCycles = By.xpath("//input[@id='cycles']");
     private By buttonSave = By.xpath("//div[@class='btn-bottom-toolbar text-right']//button[@type='submit'][normalize-space()='Save']");
+    private By menuSales = By.xpath("//span[@class='menu-text'][normalize-space()='Sales']");
+    private By menuInvoices = By.xpath("//span[normalize-space()='Invoices']");
+    private By buttonCreateNewInvoice = By.xpath("//a[normalize-space()='Create New Invoice']");
+    private By toogleItem = By.xpath("//i[@data-title='New lines are not supported for item description. Use the item long description instead.']");
+    private By tooltipContent = By.cssSelector(".tooltip-inner");
+
     //Verify
     private By alertSuccess = By.xpath("//span[@class='alert-title']");
     private By expenseName = By.xpath("//h4[@id='expenseName']");
@@ -57,10 +69,12 @@ public class ExpensesPage extends BasePage {
         WebUI.setTextElement(inputName, "Bin Name");
         WebUI.setTextElement(inputNote, "Bin Note");
         WebUI.clickElement(dropdownExpenseCategory);
+        WebUI.setTextElement(inputExpenseCategory, "Bin Category");
         WebUI.clickElement(optionBinCategory);
         WebUI.setTextElement(inputExpenseDate, "18-11-2026");
         WebUI.setTextElement(inputAmount, "1000");
         WebUI.clickElement(dropdownPaymentMode);
+        WebUI.setTextElement(inputPaymentMode, "Bank");
         WebUI.clickElement(optionBank);
         WebUI.setTextElement(inputReference, "#1000");
         WebUI.clickElement(dropdownRepeatEvery);
@@ -107,5 +121,10 @@ public class ExpensesPage extends BasePage {
         WebUI.clickElement(buttonX);
         WebUI.setTextElement(inputSearchExpenses, "Bin Category");
         AssertHelper.assertEquals(WebUI.getTextElement(noDataAfterDelete), "No matching records found", "Deleted Contract still shown");
+        WebUI.clickElement(menuSales);
+        WebUI.clickElement(menuInvoices);
+        WebUI.clickElement(buttonCreateNewInvoice);
+        WebUI.moveToElement(toogleItem);
+        AssertHelper.assertEquals(WebUI.getTextElement(tooltipContent), "New lines are not supported for item description. Use the item long description instead.", "Toogle content incorrect");
     }
 }

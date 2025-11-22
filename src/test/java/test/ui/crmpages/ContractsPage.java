@@ -29,6 +29,7 @@ public class ContractsPage extends BasePage {
     private By buttonDelete = By.xpath("//a[normalize-space()='Delete']");
     private By searchContract = By.xpath("//input[@aria-controls='contracts']");
     private By noDataAfterDelete = By.xpath("//td[@class='dataTables_empty']");
+    private By buttonX = By.xpath("//button[@data-dismiss='alert']//span[@aria-hidden='true'][normalize-space()='×']");
 
     public void clickButtonNewContract() {
         WebUI.waitForElementVisible(buttonNewContract);
@@ -86,6 +87,7 @@ public class ContractsPage extends BasePage {
         WebUI.clickElement(dropdownMore);
         WebUI.clickElement(buttonDelete);
         WebUI.acceptAlert();
+        WebUI.clickElement(buttonX);
     }
 
     public void verifyDeletedContract() {

@@ -34,6 +34,7 @@ public class CustomerPage extends BasePage {
     private By totalCustomer = By.xpath("//span[normalize-space()='Total Customers']/preceding-sibling::span");
     private By buttonDelete = By.xpath("//a[normalize-space()='Delete']");
     private By noData = By.xpath("//td[@class='dataTables_empty']");
+    private By buttonX = By.xpath("//button[@data-dismiss='alert']//span[@aria-hidden='true'][normalize-space()='×']");
 
     public void clickbuttonAddNewCustomer() {
         WebUI.waitForElementVisible(buttonAddNewCustomer);
@@ -108,6 +109,7 @@ public class CustomerPage extends BasePage {
         WebUI.moveToElement(dataInTable);
         WebUI.clickElement(buttonDelete);
         WebUI.acceptAlert();
+        WebUI.clickElement(buttonX);
     }
 
     public void verifyCustomerDeleted() {

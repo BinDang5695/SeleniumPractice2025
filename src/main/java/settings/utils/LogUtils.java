@@ -34,6 +34,10 @@ public class LogUtils {
         logger.error(object);
     }
 
+    public static void error(String message, Throwable t) {
+        logger.error(message, t);
+    }
+
     //Fatal Level Logs
     public static void fatal(String message) {
         logger.fatal(message);

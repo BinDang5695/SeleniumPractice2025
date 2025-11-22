@@ -43,6 +43,7 @@ public class ProjectPage extends BasePage {
 
     //delete project created
     private By deleteProject = By.xpath("//a[@class='text-danger _delete']");
+    private By buttonX = By.xpath("//button[@data-dismiss='alert']");
 
     //verify Project deleted success
     //Project deleted success message
@@ -131,6 +132,7 @@ public class ProjectPage extends BasePage {
     {
         WebUI.clickElement(deleteProject);
         WebUI.acceptAlert();
+        WebUI.clickElement(buttonX);
     }
 
     public void searchAndCheckProjectInTable()
