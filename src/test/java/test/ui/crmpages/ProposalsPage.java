@@ -34,6 +34,7 @@ public class ProposalsPage extends BasePage {
     private By buttonSaveAddNewProposal = By.xpath("//button[@type='button'][normalize-space()='Save']");
     private By iconToggleFullView = By.xpath("//li[@data-title='Toggle full view']");
     private By tooltipContent = By.cssSelector(".tooltip-inner");
+    private By buttonToogleTableRight = By.xpath("//i[@class='fa fa-angle-double-right']");
     private By inputSearchProposals = By.xpath("//input[@aria-controls='proposals']");
     private By contentProposals_info = By.xpath("//div[@id='proposals_info' and contains(., 'Showing 1 to 1 of 1 entries')]");
     private By dropdownMore = By.xpath("//button[normalize-space()='More']");
@@ -49,15 +50,17 @@ public class ProposalsPage extends BasePage {
     private By tableSubject = By.xpath("//tr[1]//td[2]//a[normalize-space()='Bin Subject']");
     private By tableTo = By.xpath("//a[contains(text(),'Bin Customer')]");
     private By tableTotal = By.xpath("//td[normalize-space()='$1,000.00']");
-    private By tableDate = By.xpath("//input[@value='21-11-2026']");
-    private By tableOpenTill = By.xpath("//input[@value='28-11-2026']");
-    private By tableStatus = By.xpath("//tr[1]//td[5]//span[normalize-space()='Draft']");
+    private By tableDate = By.xpath("//td[normalize-space()='21-11-2026']");
+    private By tableOpenTill = By.xpath("//td[normalize-space()='28-11-2026']");
+    private By tableCreated = By.xpath("//td[@class='sorting_1']");
+    private By tableStatus = By.xpath("//td//span[contains(@class,'proposal-status')]");
     String uiProposalNumber;
     String uiSubject;
     String uiTo;
     String uiTotal;
     String uiDate;
     String uiOpenTill;
+    String uiCreated;
     String uiProject;
     String uiTags;
     String uiStatus;
@@ -75,15 +78,12 @@ public class ProposalsPage extends BasePage {
         uiSubject = WebUI.getTextElement(tableSubject);
         uiTo = WebUI.getTextElement(tableTo);
         uiTotal = WebUI.getTextElement(tableTotal);
-        uiStatus = WebUI.getTextElement(tableStatus);
-        WebUI.moveToElement(tableSubject);
-        WebUI.waitForElementVisible(buttonEdit);
-        WebUI.clickElement(buttonEdit);
-        uiDate = WebUI.getAttributeElement(tableDate, "value");
-        uiOpenTill = WebUI.getAttributeElement(tableOpenTill, "value");
+        uiDate = WebUI.getTextElement(tableDate);
+        uiOpenTill = WebUI.getTextElement(tableOpenTill);
         uiProject = "";
         uiTags = "";
-        WebUI.clickElement(buttonSaveAddNewProposal);
+        uiCreated = WebUI.getTextElement(tableCreated);
+        uiStatus = WebUI.getTextElement(tableStatus);
     }
 
     public void clickButtonNewProposal() {
@@ -125,13 +125,12 @@ public class ProposalsPage extends BasePage {
     }
 
     public void searchCreatedProposal() {
+        WebUI.clickElement(buttonToogleTableRight);
         WebUI.setTextElement(inputSearchProposals, "Bin Subject");
         WebUI.waitForElementVisible(contentProposals_info);
     }
 
     public void exportPDFFile() {
-        WebUI.setTextElement(inputSearchProposals, "Bin Subject");
-        WebUI.waitForElementVisible(contentProposals_info);
         WebUI.waitForElementVisible(buttonExport);
         WebUI.clickElement(buttonExport);
         WebUI.waitForElementVisible(optionPDF);
@@ -162,6 +161,7 @@ public class ProposalsPage extends BasePage {
         String uiOpenTillNorm = normalizeText(uiOpenTill);
         String uiProjectNorm = normalizeText(uiProject);
         String uiTagsNorm = normalizeText(uiTags);
+        String uiCreatedNorm = normalizeText(uiCreated);
         String uiStatusNorm = normalizeText(uiStatus);
 
         //LogUtils.info("📄 Normalized PDF Content: " + pdfNorm);
@@ -173,6 +173,7 @@ public class ProposalsPage extends BasePage {
                 + ", Open Till: " + uiOpenTillNorm
                 + ", Project: " + uiProjectNorm
                 + ", Tags: " + uiTagsNorm
+                + ", Date Created: " + uiCreatedNorm
                 + ", Status: " + uiStatusNorm);
 
         AssertHelper.assertTrue(pdfNorm.contains(uiProposalNorm), "❌ Proposal # not found in PDF");
@@ -183,6 +184,7 @@ public class ProposalsPage extends BasePage {
         AssertHelper.assertTrue(pdfNorm.contains(uiOpenTillNorm), "❌ Open Till missing");
         AssertHelper.assertTrue(pdfNorm.contains("Project"), "❌ Project not empty in PDF");
         AssertHelper.assertTrue(pdfNorm.contains("Tags"), "❌ Tags not empty in PDF");
+        AssertHelper.assertTrue(pdfNorm.contains(uiCreatedNorm), "❌ Date Created missing");
         AssertHelper.assertTrue(pdfNorm.contains(uiStatusNorm), "❌ Status missing");
 
         LogUtils.info("✅ PDF content verified!");
@@ -191,7 +193,7 @@ public class ProposalsPage extends BasePage {
     }
 
     public void deleteCreatedProposal() {
-        WebUI.openURL("https://crm.anhtester.com/admin/proposals#1");
+        WebUI.waitForPageRefresh(tableBinSubject);
         WebUI.clickElement(tableBinSubject);
         WebUI.waitForElementVisible(dropdownMore);
         WebUI.clickElement(dropdownMore);
