@@ -15,7 +15,7 @@ public class ProposalsTest extends BaseTest {
     @Issue("CRM-12")
     @Description("Add new Proposal, verify and delete Proposal")
     @Test(priority = 0)
-    public void manageKnowledgeBase() {
+    public void manageProposals() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         basePage().clickMenuSalesPage();
@@ -23,6 +23,10 @@ public class ProposalsTest extends BaseTest {
         proposalsPage().clickButtonNewProposal();
         proposalsPage().addNewProposal();
         proposalsPage().verifyTooltip();
+        proposalsPage().searchCreatedProposal();
+        proposalsPage().captureUITableData();
+        proposalsPage().exportPDFFile();
+        proposalsPage().verifyDownloadPDFFile("Proposals.pdf");
         proposalsPage().deleteCreatedProposal();
         headerPage().logout();
     }

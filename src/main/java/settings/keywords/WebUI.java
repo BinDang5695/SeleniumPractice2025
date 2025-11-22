@@ -271,6 +271,20 @@ public class WebUI {
         return text;
     }
 
+    @Step("Get text of element {0}")
+    public static String getTextElement(String locator) {
+        By by;
+
+        // Tự detect dạng locator
+        if (locator.startsWith("//") || locator.startsWith("(//")) {
+            by = By.xpath(locator);
+        } else {
+            by = By.cssSelector(locator);
+        }
+
+        return getTextElement(by);
+    }
+
     @Step("Get attribute: {1} on element {0}")
     public static String getAttributeElement(By by, String attributeName) {
         waitForElementVisible(by);
@@ -650,6 +664,38 @@ public class WebUI {
             throw e;
         }
     }
+
+    public static void waitForElementInVisible(By locator) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeout));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    public static void waitForDtOverlayGone(By locator) {
+        WebDriver driver = DriverManager.getDriver();
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        wait.until(driver1 -> {
+            try {
+                WebElement overlay = driver.findElement(locator);
+
+                // case 1: tồn tại nhưng không hiển thị
+                if (!overlay.isDisplayed()) return true;
+
+                // case 2: height = 0 hoặc opacity = 0 (invisible)
+                String style = overlay.getAttribute("style");
+                if (style.contains("display: none") || style.contains("opacity: 0")) return true;
+
+                // case 3: overlay visible → chờ tiếp
+                return false;
+
+            } catch (NoSuchElementException | StaleElementReferenceException e) {
+                return true; // case 4: overlay không tồn tại trong DOM → OK
+            }
+        });
+    }
+
+
 
 
 }

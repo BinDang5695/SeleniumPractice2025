@@ -37,12 +37,6 @@ public class LoginPage {
             return new DashboardPage();
         }
 
-        public DashboardPage waitForMenuDashboard()
-        {
-            WebUI.waitForElementVisible(menuDashboard);
-            return new DashboardPage();
-        }
-
         public void verifyLoginSuccess()
         {
             WebUI.waitForElementVisible(menuDashboard);
@@ -56,13 +50,5 @@ public class LoginPage {
             AssertHelper.assertEquals(WebUI.getTextElement(alertErrorMessage), text, "Error message is not as expected");
             AllureManager.saveTextLog("==> Login failed with error message: " + text);
         }
-
-
-
-
-
-
-
-
 
 }

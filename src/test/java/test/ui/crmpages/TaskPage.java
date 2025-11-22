@@ -8,60 +8,37 @@ import test.ui.common.BasePage;
 
 public class TaskPage extends BasePage {
 
-    //verify projects page
     private By titleTaskPage = By.xpath("//span[normalize-space()='Tasks Summary']");
     private By switchToKanBan = By.xpath("//i[@class='fa-solid fa-grip-vertical']");
     private By switchToList = By.xpath("//i[@class='fa-solid fa-table-list']");
-
-    //verify after switchToKanBan
     private By completeTaskTotal = By.xpath("(//div[@class='panel-heading'])[5]");
     private By notStartedTaskTotal = By.xpath("(//div[@class='panel-heading'])[1]");
     private By completeTaskAfterDragDrop = By.xpath("//div[@class='panel-heading' and normalize-space()='Complete - 0 Tasks']");
-
-    //verify Add new task page
     private By newTaskButton = By.xpath("//a[normalize-space()='New Task']");
     private By titleAddNewTaskPopUp = By.xpath("//h4[normalize-space()='Add new task']");
     private By inputStartDate = By.xpath("//input[@id='startdate']");
     private By titleSubject = By.xpath("//label[@for='name']");
-
-    //Add new task page
     private By inputSubject = By.xpath("//input[@id='name']");
     private By saveTask = By.xpath("//button[normalize-space()='Save']");
     private By alertAddNewTaskSuccess = By.xpath("//span[@class='alert-title']");
-
-    //Verify Add new task page, mark complete and complete status
     private By taskName = By.xpath("//h4[contains(@class,'modal-title ')]");
     private By taskStatus = By.xpath("//span[contains(@class,'trigger') and normalize-space()='In Progress']");
     private By markComplete = By.xpath("//i[@class='fa fa-check']");
     private By closePopUp = By.xpath("//div[@class='modal-header task-single-header']//button[@aria-label='Close']");
-
-    //Verify Search Task Created and other Status don't have
     private By searchOnKanBan = By.xpath("//input[@id='search']");
     private By nodataNotStarted = By.xpath("(//h4[normalize-space()='No Tasks Found'])[1]");
     private By nodataInprogress = By.xpath("(//h4[normalize-space()='No Tasks Found'])[2]");
     private By nodataTesting = By.xpath("(//h4[normalize-space()='No Tasks Found'])[3]");
     private By nodataAwaitingFeedback = By.xpath("(//h4[normalize-space()='No Tasks Found'])[4]");
-
-    //Click and edit Task
     private By menu = By.xpath("//a[@class='trigger manual-popover mright5']");
     private By editOption = By.xpath("//div[@class='popover-content']//ul//li//a[@href='#'][normalize-space()='Edit']");
-
-    //Close popup and verify description
     private By binTask = By.xpath("//span[normalize-space()='Bin Task']");
-
-    //DragDrop
     private By from = By.xpath("//ul[5]//li[1]//div[1]//div[2]//div[1]//ul[1]//li[1]");
     private By to = By.xpath("//ul[1]//li[1]//div[1]//div[2]//div[1]//ul[1]//li[1]");
-
-    //click switch to list, search and delete
     private By searchOnList = By.xpath("//input[@aria-controls='tasks']");
     private By binEditedTaskOnList = By.xpath("//a[normalize-space()='NashTech']");
     private By deleteTask = By.xpath("//a[normalize-space()='Delete']");
-
-    //verify delete success, search and verify nodata after search
     private By nodataTask = By.xpath("//td[@class='dataTables_empty']");
-
-    //logout
     private By dismissAlert = By.xpath("//button[@data-dismiss='alert']");
 
     public void verifyNavigateToTasksPage()

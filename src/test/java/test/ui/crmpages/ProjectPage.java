@@ -11,24 +11,17 @@ import test.ui.common.BasePage;
 
 public class ProjectPage extends BasePage {
 
-    //verify projects page
     private By titleProjectPage = By.xpath("//span[normalize-space()='Projects Summary']");
     private By inputSearchProject = By.xpath("//input[@aria-controls='projects']");
     private By itemCustomerFirst = By.xpath("//a[contains(@href,'1595') and normalize-space()='Bin Customer']");
     private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
-
-    //verify addnewproject page
     private By buttonNewProject = By.xpath("//a[normalize-space()='New Project']");
-
-    //addnewproject page
     private By inputProjectName = By.xpath("//input[@id='name']");
     private By inputCustomer = By.xpath("//button[@data-id='clientid']");
     private By searchCustomer = By.xpath("//input[@placeholder='Type to search...']");
     private By selectCustomer = By.xpath("//span[normalize-space()='Bin Customer']");
     private By checkBoxCalculate = By.xpath("//label[normalize-space()='Calculate progress through tasks']");
     private By saveProject = By.xpath("//button[normalize-space()='Save']");
-
-    //verify project created
     private By projectNameCustomer = By.xpath("//button[@title='Bin Project - Bin Customer']");
     private By projectProgress = By.xpath("//p[contains(@class,'project-info')]");
     private By customer = By.xpath("//dt[normalize-space()='Customer']");
@@ -36,18 +29,10 @@ public class ProjectPage extends BasePage {
     private By status = By.xpath("//dt[normalize-space()='Status']");
     private By statusProject = By.xpath("//dd[normalize-space()='In Progress']");
     private By alertSuccess = By.xpath("//span[@class='alert-title']");
-
-    //verify project created on project tab
     private By projectNameOnProjectTab = By.xpath("//a[normalize-space()='Bin Project']");
     private By statusOnProjectTab = By.xpath("//span[normalize-space()='In Progress']");
-
-    //delete project created
     private By deleteProject = By.xpath("//a[@class='text-danger _delete']");
     private By buttonX = By.xpath("//button[@data-dismiss='alert']");
-
-    //verify Project deleted success
-    //Project deleted success message
-    //search and check nodata
     private By noData = By.xpath("//td[@class='dataTables_empty']");
 
     public void verifyNavigateToProjectPage()

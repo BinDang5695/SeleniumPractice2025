@@ -36,8 +36,6 @@ public class ExpensesPage extends BasePage {
     private By buttonCreateNewInvoice = By.xpath("//a[normalize-space()='Create New Invoice']");
     private By toogleItem = By.xpath("//i[@data-title='New lines are not supported for item description. Use the item long description instead.']");
     private By tooltipContent = By.cssSelector(".tooltip-inner");
-
-    //Verify
     private By alertSuccess = By.xpath("//span[@class='alert-title']");
     private By expenseName = By.xpath("//h4[@id='expenseName']");
     private By expenseNote = By.xpath("//div[normalize-space()='Bin Note']");
@@ -49,12 +47,9 @@ public class ExpensesPage extends BasePage {
     private By expenseRepeat = By.xpath("//b[normalize-space()='25-11-2026']");
     private By expenseCyclesRemaining= By.xpath("//b[normalize-space()='10']");
     private By attachedReceipt = By.xpath("//a[normalize-space()='UK.jpg']");
-    //Edit
     private By buttonEditExpense = By.xpath("//i[contains(@class,'pen')]");
     private By updatedExpenseAmount = By.xpath("//span[contains(normalize-space(),'$2,000.00')]");
-    //Delete
     private By buttonDeleteExpense = By.xpath("//a[contains(@class,'delete')]//i[contains(@class,'remove')]");
-    //Verify after deleted
     private By inputSearchExpenses = By.xpath("//input[@aria-controls='expenses']");
     private By noDataAfterDelete = By.xpath("//td[@class='dataTables_empty']");
     private By buttonX = By.xpath("//button[@data-dismiss='alert']//span[@aria-hidden='true'][normalize-space()='×']");
