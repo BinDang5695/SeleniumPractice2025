@@ -17,7 +17,6 @@ public class TableHelper {
 
     public static void checkDataInTableByColumn_Contains(int column, String value, String columnName) {
 
-        WebUI.sleep(3);
         List<WebElement> row = DriverManager.getDriver().findElements(By.xpath("//table//tbody/tr"));
         int rowTotal = row.size();
         LogUtils.info(("Number of lines found: " + rowTotal));

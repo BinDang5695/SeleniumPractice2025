@@ -26,6 +26,7 @@ public class ExpensesTest extends BaseTest {
         expensesPage().verifyUpdatedContract();
         expensesPage().deleteExpense();
         expensesPage().verifyDeletedContract();
+        expensesPage().verifyTooltipContent();
         headerPage().logout();
     }
 }

@@ -1,11 +1,18 @@
 package test.ui.crmpages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import settings.drivers.DriverManager;
 import settings.helpers.AssertHelper;
 import settings.helpers.TableHelper;
 import settings.keywords.WebUI;
 import settings.utils.LogUtils;
 import test.ui.common.BasePage;
+
+import java.time.Duration;
+import java.util.List;
 
 public class LeadsPage extends BasePage {
 
@@ -43,9 +50,12 @@ public class LeadsPage extends BasePage {
     private By value10 = By.xpath("//option[@value='10']");
     private By value25 = By.xpath("//option[@value='25']");
     private By inputSearchLead = By.xpath("//input[@aria-controls='leads']");
+    private By contentLeads_info1To10 = By.xpath("//div[@id='leads_info' and contains(., 'Showing 1 to 10 of 11 entries')]");
+    private By contentLeads_info11To11 = By.xpath("//div[@id='leads_info' and contains(., 'Showing 11 to 11 of 11 entries')]");
     private By page1 = By.xpath("//a[normalize-space()='1']");
     private By page2 = By.xpath("//a[normalize-space()='2']");
     private By checkboxSelectAllLead = By.xpath("//div[@class='checkbox mass_select_all_wrap']");
+    private By allBinLeadcheckbox = By.xpath("//div[@class='checkbox']");
     private By buttonBulkActions = By.xpath("//span[normalize-space()='Bulk Actions']");
     private By checkboxMassDelete = By.xpath("//label[normalize-space()='Mass Delete']");
     private By buttonConfirm = By.xpath("//a[normalize-space()='Confirm']");
@@ -107,16 +117,77 @@ public class LeadsPage extends BasePage {
         WebUI.clickElement(dropdownPagination);
         WebUI.clickElement(value10);
         WebUI.setTextElement(inputSearchLead, "Bin Lead");
+        WebUI.waitForElementVisible(contentLeads_info1To10);
         TableHelper.checkDataInTableByColumn_Contains(column, data, columnName);
         WebUI.clickElement(page2);
+        WebUI.waitForElementVisible(contentLeads_info11To11);
         TableHelper.checkDataInTableByColumn_Contains(column, data, columnName);
     }
+
+    public boolean verifyAllCheckboxIsSelected() {
+        List<WebElement> elements = DriverManager.getDriver().findElements(allBinLeadcheckbox);
+        int total = elements.size();
+
+        for (int i = 1; i <= total; i++) {
+            By indexedCheckbox = By.xpath("(//div[@class='checkbox'])[" + i + "]/input");
+            WebElement cb = DriverManager.getDriver().findElement(indexedCheckbox);
+
+            if (!cb.isSelected()) {
+                Assert.fail("❌ Checkbox at index " + i + " does not tick!");
+            }
+        }
+
+        LogUtils.info("✅ All the checkbox ticked.");
+        return true;
+    }
+
+    public void waitUntilCheckboxSelected(By indexedCheckbox) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(3));
+
+        wait.until(driver -> {
+            WebElement cb = driver.findElement(indexedCheckbox);
+            return cb.isSelected();
+        });
+    }
+
+    public void clickSelectAllAndEnsureChecked() {
+        int retry = 0;
+        int maxRetry = 3;
+
+        while (retry < maxRetry) {
+
+            WebUI.waitForElementVisible(checkboxSelectAllLead);
+            WebUI.clickElement(checkboxSelectAllLead);
+
+            List<WebElement> elements = DriverManager.getDriver().findElements(allBinLeadcheckbox);
+            int total = elements.size();
+
+            for (int i = 1; i <= total; i++) {
+                By indexedCheckbox = By.xpath("(//div[@class='checkbox'])[" + i + "]/input");
+
+                try {
+                    waitUntilCheckboxSelected(indexedCheckbox);
+                } catch (Exception e) {
+                    LogUtils.warn("⏳ Checkbox " + i + " does not tick, retry...");
+                }
+            }
+
+            if (verifyAllCheckboxIsSelected()) {
+                LogUtils.info("✅ All checkbox ticked after retry number: " + retry);
+                return;
+            }
+
+            LogUtils.warn("⚠️ Not ticked all yet, retry number: " + (retry + 1));
+            retry++;
+        }
+        Assert.fail("❌ After clicked Select All many times but still has checkbox does not tick yet.");
+    }
+
 
     public void deleteDataAfterSearched() {
         WebUI.clickElement(page1);
         WebUI.clickElement(value25);
-        WebUI.sleep(3);
-        WebUI.clickElement(checkboxSelectAllLead);
+        clickSelectAllAndEnsureChecked();
         WebUI.clickElement(buttonBulkActions);
         WebUI.clickElement(checkboxMassDelete);
         WebUI.clickElement(buttonConfirm);

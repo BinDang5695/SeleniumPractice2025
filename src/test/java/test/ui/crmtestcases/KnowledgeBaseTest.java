@@ -24,6 +24,6 @@ public class KnowledgeBaseTest extends BaseTest {
         basePage().clickMenuKnowledgeBase();
         knowledgeBase().switchBetweenTabTest();
         knowledgeBase().deleteCreatedArticle();
-
+        headerPage().logout();
     }
 }

@@ -119,7 +119,10 @@ public class ExpensesPage extends BasePage {
         WebUI.clickElement(menuSales);
         WebUI.clickElement(menuInvoices);
         WebUI.clickElement(buttonCreateNewInvoice);
+    }
+
+    public void verifyTooltipContent() {
         WebUI.moveToElement(toogleItem);
-        AssertHelper.assertEquals(WebUI.getTextElement(tooltipContent), "New lines are not supported for item description. Use the item long description instead.", "Toogle content incorrect");
+        AssertHelper.assertEquals(WebUI.getTextElement(tooltipContent), "New lines are not supported for item description. Use the item long description instead.", "Tooltip content incorrect");
     }
 }
