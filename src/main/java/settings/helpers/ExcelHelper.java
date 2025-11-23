@@ -2,6 +2,7 @@ package settings.helpers;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.Color;
@@ -9,9 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.*;
 
 public class ExcelHelper {
 
@@ -210,6 +209,8 @@ public class ExcelHelper {
         }
     }
 
+
+
     public int getLastRowNum() {
         return sh.getLastRowNum();
     }
@@ -261,4 +262,61 @@ public class ExcelHelper {
 
         return data;
     }
+
+    public static List<List<String>> readExcel(String filePath) {
+        List<List<String>> rows = new ArrayList<>();
+
+        try (FileInputStream fis = new FileInputStream(filePath);
+             XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
+
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
+            for (Row row : sheet) {
+                List<String> rowData = new ArrayList<>();
+                for (Cell cell : row) {
+                    cell.setCellType(CellType.STRING);
+                    rowData.add(cell.getStringCellValue().trim());
+                }
+                rows.add(rowData);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("❌ Error reading Excel: " + e.getMessage());
+        }
+
+        return rows;
+    }
+
+    public static Map<String, Integer> getColumns(String filePath) {
+        Map<String, Integer> columns = new HashMap<>();
+
+        try (FileInputStream fis = new FileInputStream(filePath);
+             XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
+
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Row headerRow = sheet.getRow(1);
+
+            if (headerRow == null) {
+                throw new RuntimeException("❌ Header row (row 2) is empty!");
+            }
+
+            for (Cell cell : headerRow) {
+                cell.setCellType(CellType.STRING);
+                String key = cell.getStringCellValue()
+                        .trim()
+                        .replaceAll("\\u00A0"," ")
+                        .replaceAll("\\s+"," ");
+                columns.put(key, cell.getColumnIndex());
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("❌ Error reading columns: " + e.getMessage());
+        }
+
+        return columns;
+    }
+
+
+
+
 }

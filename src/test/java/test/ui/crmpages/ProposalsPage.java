@@ -1,14 +1,18 @@
 package test.ui.crmpages;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import settings.drivers.DriverManager;
 import settings.helpers.AssertHelper;
+import settings.helpers.ExcelHelper;
 import settings.helpers.FileHelper;
 import settings.keywords.WebUI;
 import settings.utils.LogUtils;
 import test.ui.common.BasePage;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 public class ProposalsPage extends BasePage {
 
@@ -42,6 +46,7 @@ public class ProposalsPage extends BasePage {
     private By buttonX = By.xpath("//button[@data-dismiss='alert']//span[@aria-hidden='true'][normalize-space()='×']");
     private By buttonExport = By.xpath("//span[normalize-space()='Export']");
     private By optionPDF = By.xpath("//a[normalize-space()='PDF']");
+    private By optionExcel = By.xpath("//a[normalize-space()='Excel']");
     private By tableBinSubject = By.xpath("//tr[@class='has-row-options odd']//a[contains(text(),'Bin Subject')]");
     private By buttonEdit = By.xpath("//div[@class='row-options']//a[contains(text(),'Edit')]");
 
@@ -200,6 +205,65 @@ public class ProposalsPage extends BasePage {
         WebUI.clickElement(optionDelete);
         WebUI.acceptAlert();
         WebUI.clickElement(buttonX);
+    }
+
+    public void exportExcelFile() {
+        WebUI.waitForElementVisible(buttonExport);
+        WebUI.clickElement(buttonExport);
+        WebUI.waitForElementVisible(optionExcel);
+        WebUI.clickElement(optionExcel);
+    }
+
+    public void verifyDownloadExcelFile(String expectedFileName) {
+
+        String fileName = (expectedFileName != null && !expectedFileName.isEmpty())
+                ? expectedFileName : "Proposals.xlsx";
+
+        String fullPath = DriverManager.getDownloadPath() + File.separator + fileName;
+
+        LogUtils.info("🔍 Waiting for downloaded Excel file: " + fileName);
+
+        FileHelper.waitForFileExists(fullPath, 10);
+
+        // Map tên cột từ row 2 (index 1)
+        Map<String, Integer> columns = ExcelHelper.getColumns(fullPath);
+        List<List<String>> excelData = ExcelHelper.readExcel(fullPath);
+
+        LogUtils.info("📘 Excel Data Loaded: " + excelData.size() + " rows");
+
+        // Kiểm tra có đủ dữ liệu (row 3 trở đi)
+        if (excelData.size() < 3) {
+            Assert.fail("❌ No data inside Excel!");
+        }
+
+        List<String> row = excelData.get(2);  // row 3: dữ liệu thực tế
+
+        String exProposal = normalizeText(row.get(columns.get("Proposal #")));
+        String exSubject  = normalizeText(row.get(columns.get("Subject")));
+        String exTo       = normalizeText(row.get(columns.get("To")));
+        String exTotal    = normalizeText(row.get(columns.get("Total")));
+        String exDate     = normalizeText(row.get(columns.get("Date")));
+        String exOpenTill = normalizeText(row.get(columns.get("Open Till")));
+        String exProject  = normalizeText(row.get(columns.get("Project")));
+        String exTags     = normalizeText(row.get(columns.get("Tags")));
+        String exCreated  = normalizeText(row.get(columns.get("Date Created")));
+        String exStatus   = normalizeText(row.get(columns.get("Status")));
+
+        LogUtils.info("🔢 Excel Data: " + row);
+
+        // So sánh với UI
+        AssertHelper.assertEquals(exProposal, normalizeText(uiProposalNumber), "Proposal mismatch!");
+        AssertHelper.assertEquals(exSubject, normalizeText(uiSubject), "Subject mismatch!");
+        AssertHelper.assertEquals(exTo, normalizeText(uiTo), "To mismatch!");
+        AssertHelper.assertEquals(exTotal, normalizeText(uiTotal), "Total mismatch!");
+        AssertHelper.assertEquals(exDate, normalizeText(uiDate), "Date mismatch!");
+        AssertHelper.assertEquals(exOpenTill, normalizeText(uiOpenTill), "Open Till mismatch!");
+        AssertHelper.assertEquals(exProject, normalizeText(uiProject), "Project mismatch!");
+        AssertHelper.assertEquals(exTags, normalizeText(uiTags), "Tags mismatch!");
+        AssertHelper.assertEquals(exCreated, normalizeText(uiCreated), "Created mismatch!");
+        AssertHelper.assertEquals(exStatus, normalizeText(uiStatus), "Status mismatch!");
+
+        LogUtils.info("✅ Excel content verified!");
     }
 
 
