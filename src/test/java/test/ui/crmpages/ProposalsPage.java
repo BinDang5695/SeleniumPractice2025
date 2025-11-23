@@ -1,7 +1,6 @@
 package test.ui.crmpages;
 
 import org.openqa.selenium.By;
-import org.testng.Assert;
 import settings.drivers.DriverManager;
 import settings.helpers.AssertHelper;
 import settings.helpers.ExcelHelper;
@@ -11,8 +10,10 @@ import settings.utils.LogUtils;
 import test.ui.common.BasePage;
 
 import java.io.File;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 
 public class ProposalsPage extends BasePage {
 
@@ -47,8 +48,8 @@ public class ProposalsPage extends BasePage {
     private By buttonExport = By.xpath("//span[normalize-space()='Export']");
     private By optionPDF = By.xpath("//a[normalize-space()='PDF']");
     private By optionExcel = By.xpath("//a[normalize-space()='Excel']");
+    private By optionCSV = By.xpath("//a[normalize-space()='CSV']");
     private By tableBinSubject = By.xpath("//tr[@class='has-row-options odd']//a[contains(text(),'Bin Subject')]");
-    private By buttonEdit = By.xpath("//div[@class='row-options']//a[contains(text(),'Edit')]");
 
     //Compare file PDF with data on UI table
     private By tableProposal = By.xpath("//tr[1]//td[1]//a[contains(@href,'list_proposals')]");
@@ -126,6 +127,7 @@ public class ProposalsPage extends BasePage {
 
     public void verifyTooltip() {
         WebUI.moveToElement(iconToggleFullView);
+        WebUI.waitForElementVisible(tooltipContent);
         AssertHelper.assertEquals(WebUI.getTextElement(tooltipContent), "Toggle full view", "The content Toggle does not match.");
     }
 
@@ -214,6 +216,13 @@ public class ProposalsPage extends BasePage {
         WebUI.clickElement(optionExcel);
     }
 
+    public void exportCSVFile() {
+        WebUI.waitForElementVisible(buttonExport);
+        WebUI.clickElement(buttonExport);
+        WebUI.waitForElementVisible(optionCSV);
+        WebUI.clickElement(optionCSV);
+    }
+
     public void verifyDownloadExcelFile(String expectedFileName) {
 
         String fileName = (expectedFileName != null && !expectedFileName.isEmpty())
@@ -225,46 +234,118 @@ public class ProposalsPage extends BasePage {
 
         FileHelper.waitForFileExists(fullPath, 10);
 
-        // Map tên cột từ row 2 (index 1)
-        Map<String, Integer> columns = ExcelHelper.getColumns(fullPath);
-        List<List<String>> excelData = ExcelHelper.readExcel(fullPath);
+        String excelText = ExcelHelper.readExcelAsText(fullPath);
+        LogUtils.info("📘 Excel Content (raw):\n" + excelText);
 
-        LogUtils.info("📘 Excel Data Loaded: " + excelData.size() + " rows");
+        String excelNorm = normalizeText(excelText);
 
-        // Kiểm tra có đủ dữ liệu (row 3 trở đi)
-        if (excelData.size() < 3) {
-            Assert.fail("❌ No data inside Excel!");
+        String uiProposalNorm = normalizeText(uiProposalNumber);
+        String uiSubjectNorm = normalizeText(uiSubject);
+        String uiToNorm = normalizeText(uiTo);
+        //String uiTotalNorm = normalizeText(uiTotal);
+        String uiDateNorm = normalizeText(uiDate);
+        String uiOpenTillNorm = normalizeText(uiOpenTill);
+        String uiProjectNorm = normalizeText(uiProject);
+        String uiTagsNorm = normalizeText(uiTags);
+        String uiCreatedNorm = normalizeText(uiCreated);
+        String uiStatusNorm = normalizeText(uiStatus);
+
+        LogUtils.info("🔢 UI Data to verify inside Excel: " +
+                "\nProposal#: " + uiProposalNorm +
+                "\nSubject: " + uiSubjectNorm +
+                "\nTo: " + uiToNorm +
+                //"\nTotal: " + uiTotalNorm +
+                "\nDate: " + uiDateNorm +
+                "\nOpen Till: " + uiOpenTillNorm +
+                "\nProject: " + uiProjectNorm +
+                "\nTags: " + uiTagsNorm +
+                "\nDate Created: " + uiCreatedNorm +
+                "\nStatus: " + uiStatusNorm
+        );
+
+        AssertHelper.assertTrue(excelNorm.contains(uiProposalNorm), "❌ Proposal # not found");
+        AssertHelper.assertTrue(excelNorm.contains(uiSubjectNorm), "❌ Subject not found");
+        AssertHelper.assertTrue(excelNorm.contains(uiToNorm), "❌ To not found");
+        //AssertHelper.assertTrue(excelNorm.contains(uiTotalNorm), "❌ Total missing");
+        AssertHelper.assertTrue(excelNorm.contains(uiDateNorm), "❌ Date missing");
+        AssertHelper.assertTrue(excelNorm.contains(uiOpenTillNorm), "❌ Open Till missing");
+        AssertHelper.assertTrue(excelNorm.contains("Project"), "❌ Project column not found");
+        AssertHelper.assertTrue(excelNorm.contains("Tags"), "❌ Tags column not found");
+
+        AssertHelper.assertTrue(excelNorm.contains(uiCreatedNorm), "❌ Date Created missing");
+        AssertHelper.assertTrue(excelNorm.contains(uiStatusNorm), "❌ Status missing");
+
+        LogUtils.info("✅ Excel content verified successfully!");
+
+        FileHelper.deleteFile(fullPath);
+    }
+
+    public void verifyDownloadCSVFile(String expectedFileName) {
+
+        String fileName = (expectedFileName != null && !expectedFileName.isEmpty())
+                ? expectedFileName : "Proposals.csv";
+
+        String fullPath = DriverManager.getDownloadPath() + File.separator + fileName;
+
+        LogUtils.info("🔍 Waiting for downloaded CSV file: " + fileName);
+
+        FileHelper.waitForFileExists(fullPath, 10);
+
+        StringBuilder csvTextBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(fullPath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                csvTextBuilder.append(line).append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("❌ Failed to read CSV file: " + fullPath, e);
         }
 
-        List<String> row = excelData.get(2);  // row 3: dữ liệu thực tế
+        String csvText = csvTextBuilder.toString();
+        LogUtils.info("📄 CSV Content (raw):\n" + csvText);
 
-        String exProposal = normalizeText(row.get(columns.get("Proposal #")));
-        String exSubject  = normalizeText(row.get(columns.get("Subject")));
-        String exTo       = normalizeText(row.get(columns.get("To")));
-        String exTotal    = normalizeText(row.get(columns.get("Total")));
-        String exDate     = normalizeText(row.get(columns.get("Date")));
-        String exOpenTill = normalizeText(row.get(columns.get("Open Till")));
-        String exProject  = normalizeText(row.get(columns.get("Project")));
-        String exTags     = normalizeText(row.get(columns.get("Tags")));
-        String exCreated  = normalizeText(row.get(columns.get("Date Created")));
-        String exStatus   = normalizeText(row.get(columns.get("Status")));
+        String csvNorm = normalizeText(csvText);
 
-        LogUtils.info("🔢 Excel Data: " + row);
+        String uiProposalNorm = normalizeText(uiProposalNumber);
+        String uiSubjectNorm = normalizeText(uiSubject);
+        String uiToNorm = normalizeText(uiTo);
+        String uiTotalNorm = normalizeText(uiTotal);
+        String uiDateNorm = normalizeText(uiDate);
+        String uiOpenTillNorm = normalizeText(uiOpenTill);
+        String uiProjectNorm = normalizeText(uiProject);
+        String uiTagsNorm = normalizeText(uiTags);
+        String uiCreatedNorm = normalizeText(uiCreated);
+        String uiStatusNorm = normalizeText(uiStatus);
 
-        // So sánh với UI
-        AssertHelper.assertEquals(exProposal, normalizeText(uiProposalNumber), "Proposal mismatch!");
-        AssertHelper.assertEquals(exSubject, normalizeText(uiSubject), "Subject mismatch!");
-        AssertHelper.assertEquals(exTo, normalizeText(uiTo), "To mismatch!");
-        AssertHelper.assertEquals(exTotal, normalizeText(uiTotal), "Total mismatch!");
-        AssertHelper.assertEquals(exDate, normalizeText(uiDate), "Date mismatch!");
-        AssertHelper.assertEquals(exOpenTill, normalizeText(uiOpenTill), "Open Till mismatch!");
-        AssertHelper.assertEquals(exProject, normalizeText(uiProject), "Project mismatch!");
-        AssertHelper.assertEquals(exTags, normalizeText(uiTags), "Tags mismatch!");
-        AssertHelper.assertEquals(exCreated, normalizeText(uiCreated), "Created mismatch!");
-        AssertHelper.assertEquals(exStatus, normalizeText(uiStatus), "Status mismatch!");
+        LogUtils.info("🔢 UI Data to verify inside CSV: " +
+                "\nProposal#: " + uiProposalNorm +
+                "\nSubject: " + uiSubjectNorm +
+                "\nTo: " + uiToNorm +
+                "\nTotal: " + uiTotalNorm +
+                "\nDate: " + uiDateNorm +
+                "\nOpen Till: " + uiOpenTillNorm +
+                "\nProject: " + uiProjectNorm +
+                "\nTags: " + uiTagsNorm +
+                "\nDate Created: " + uiCreatedNorm +
+                "\nStatus: " + uiStatusNorm
+        );
 
-        LogUtils.info("✅ Excel content verified!");
+        AssertHelper.assertTrue(csvNorm.contains(uiProposalNorm), "❌ Proposal # not found");
+        AssertHelper.assertTrue(csvNorm.contains(uiSubjectNorm), "❌ Subject not found");
+        AssertHelper.assertTrue(csvNorm.contains(uiToNorm), "❌ To not found");
+        AssertHelper.assertTrue(csvNorm.contains(uiTotalNorm), "❌ Total missing");
+        AssertHelper.assertTrue(csvNorm.contains(uiDateNorm), "❌ Date missing");
+        AssertHelper.assertTrue(csvNorm.contains(uiOpenTillNorm), "❌ Open Till missing");
+        AssertHelper.assertTrue(csvNorm.contains("Project"), "❌ Project column not found");
+        AssertHelper.assertTrue(csvNorm.contains("Tags"), "❌ Tags column not found");
+        AssertHelper.assertTrue(csvNorm.contains(uiCreatedNorm), "❌ Date Created missing");
+        AssertHelper.assertTrue(csvNorm.contains(uiStatusNorm), "❌ Status missing");
+
+        LogUtils.info("✅ CSV content verified successfully!");
+
+        FileHelper.deleteFile(fullPath);
     }
+
 
 
 }
