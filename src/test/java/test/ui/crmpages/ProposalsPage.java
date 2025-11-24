@@ -346,4 +346,7 @@ public class ProposalsPage extends BasePage {
 
         FileHelper.deleteFile(fullPath);
     }
+
+
+
 }
