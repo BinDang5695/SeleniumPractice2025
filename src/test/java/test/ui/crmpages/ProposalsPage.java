@@ -70,6 +70,7 @@ public class ProposalsPage extends BasePage {
     String uiProject;
     String uiTags;
     String uiStatus;
+
     private String normalizeText(String text) {
         if (text == null) return "";
         return text
@@ -345,11 +346,4 @@ public class ProposalsPage extends BasePage {
 
         FileHelper.deleteFile(fullPath);
     }
-
-
-
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8750b133f09992f03a85474f9b6de1d17f053f29

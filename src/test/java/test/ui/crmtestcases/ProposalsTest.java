@@ -80,8 +80,4 @@ public class ProposalsTest extends BaseTest {
         proposalsPage().deleteCreatedProposal();
         headerPage().logout();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8750b133f09992f03a85474f9b6de1d17f053f29
