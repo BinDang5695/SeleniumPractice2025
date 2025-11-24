@@ -15,7 +15,7 @@ public class ProposalsTest extends BaseTest {
     @Issue("CRM-12")
     @Description("Add new Proposal, verify and delete Proposal")
     @Test(priority = 0)
-    public void manageProposals1() {
+    public void manageProposalsPDFFile() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         basePage().clickMenuSalesPage();
@@ -39,8 +39,8 @@ public class ProposalsTest extends BaseTest {
     @Link(name = "Jira", url = "https://anhtester.atlassian.net/browse/CRM-13")
     @Issue("CRM-13")
     @Description("Add new Proposal, verify and delete Proposal")
-    @Test(priority = 0)
-    public void manageProposals2() {
+    @Test(priority = 1)
+    public void manageProposalExcelFile() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
         basePage().clickMenuSalesPage();
@@ -55,4 +55,33 @@ public class ProposalsTest extends BaseTest {
         proposalsPage().deleteCreatedProposal();
         headerPage().logout();
     }
+
+    @Epic("Regression Test")
+    @Feature("Add New Proposal")
+    @Story("Proposal")
+    @Owner("Bin Tester")
+    @Severity(SeverityLevel.CRITICAL)
+    @Link(name = "Jira", url = "https://anhtester.atlassian.net/browse/CRM-14")
+    @Issue("CRM-14")
+    @Description("Add new Proposal, verify and delete Proposal")
+    @Test(priority = 2)
+    public void manageProposalCSVFile() {
+        loginPage().loginCRM();
+        dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
+        basePage().clickMenuSalesPage();
+        basePage().clickMenuProposalsPage();
+        proposalsPage().clickButtonNewProposal();
+        proposalsPage().addNewProposal();
+        proposalsPage().verifyTooltip();
+        proposalsPage().searchCreatedProposal();
+        proposalsPage().captureUITableData();
+        proposalsPage().exportCSVFile();
+        proposalsPage().verifyDownloadCSVFile("Proposals.csv");
+        proposalsPage().deleteCreatedProposal();
+        headerPage().logout();
+    }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8750b133f09992f03a85474f9b6de1d17f053f29

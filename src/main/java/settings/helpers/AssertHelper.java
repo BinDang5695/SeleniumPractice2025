@@ -27,6 +27,11 @@ public class AssertHelper {
         Assert.assertTrue(condition, message);
     }
 
+    public static void assertTrue(boolean condition, String expected, String message) {
+        LogUtils.info("Assert true: " + condition + " ↔\uFE0F " + expected);
+        Assert.assertTrue(condition, message);
+    }
+
     public static void assertFalse(boolean condition, String message) {
         LogUtils.info("Assert false: " + condition);
         Assert.assertTrue(condition, message);

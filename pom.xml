@@ -102,6 +102,12 @@
             <version>2.0.29</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.mailslurp</groupId>
+            <artifactId>mailslurp-client-java</artifactId>
+            <version>15.19.22</version>
+        </dependency>
+
         <!-- RestAssured -->
         <dependency>
             <groupId>io.rest-assured</groupId>

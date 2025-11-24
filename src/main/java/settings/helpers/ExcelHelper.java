@@ -270,8 +270,16 @@ public class ExcelHelper {
              XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
 
             XSSFSheet sheet = workbook.getSheetAt(0);
+            boolean isFirstRow = true;
 
             for (Row row : sheet) {
+
+                // Skip row merge đầu tiên (ví dụ row chứa "Proposals")
+                if (isFirstRow) {
+                    isFirstRow = false;
+                    continue;
+                }
+
                 List<String> rowData = new ArrayList<>();
                 for (Cell cell : row) {
                     cell.setCellType(CellType.STRING);
@@ -287,6 +295,7 @@ public class ExcelHelper {
         return rows;
     }
 
+
     public static Map<String, Integer> getColumns(String filePath) {
         Map<String, Integer> columns = new HashMap<>();
 
@@ -294,7 +303,7 @@ public class ExcelHelper {
              XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
 
             XSSFSheet sheet = workbook.getSheetAt(0);
-            Row headerRow = sheet.getRow(1);
+            Row headerRow = sheet.getRow(0);
 
             if (headerRow == null) {
                 throw new RuntimeException("❌ Header row (row 2) is empty!");
@@ -315,6 +324,25 @@ public class ExcelHelper {
 
         return columns;
     }
+
+    public static String readExcelAsText(String filePath) {
+        StringBuilder sb = new StringBuilder();
+        try (FileInputStream fis = new FileInputStream(filePath);
+             Workbook workbook = WorkbookFactory.create(fis)) {
+
+            for (Sheet sheet : workbook) {
+                for (Row row : sheet) {
+                    for (Cell cell : row) {
+                        sb.append(cell.toString()).append(" ");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
 
 
 

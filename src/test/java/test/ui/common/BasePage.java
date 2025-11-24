@@ -23,6 +23,7 @@ public class BasePage {
     private KnowledgeBasePage knowledgeBase;
     private SalesPage salesPage;
     private ProposalsPage proposalsPage;
+    private ItemsPage itemsPage;
     private ExcelHelper excelHelper;
 
     private By menuDashboard = By.xpath("//span[normalize-space()='Dashboard']");
@@ -35,7 +36,7 @@ public class BasePage {
     private By menuKnowledgeBase = By.xpath("//span[normalize-space()='Knowledge Base']");
     private By menuSales = By.xpath("//span[@class='menu-text'][normalize-space()='Sales']");
     private By menuProposals = By.xpath("//span[normalize-space()='Proposals']");
-    private By menuInvoices = By.xpath("//span[normalize-space()='Invoices']");
+    private By menuItems = By.xpath("//span[normalize-space()='Items']");
     private By tabProjects = By.xpath("//a[@data-group='projects']");
     private By tabContacts = By.xpath("//a[normalize-space()='Contacts']");
 
@@ -137,6 +138,13 @@ public class BasePage {
         return proposalsPage;
     }
 
+    public ItemsPage itemsPage () {
+        if (itemsPage == null) {
+            itemsPage = new ItemsPage();
+        }
+        return itemsPage;
+    }
+
     public DashboardPage clickMenuDashboard() {
         WebUI.clickElement(menuDashboard);
         return new DashboardPage();
@@ -195,6 +203,11 @@ public class BasePage {
     public ProposalsPage clickMenuProposalsPage() {
         WebUI.clickElement(menuProposals);
         return new ProposalsPage();
+    }
+
+    public ItemsPage clickMenuItemsPage() {
+        WebUI.clickElement(menuItems);
+        return new ItemsPage();
     }
 
     // Pixabay

@@ -369,6 +369,11 @@ public class WebUI {
         }
     }
 
+    public static void sendKeysUploadFile(By locator, String filePath) {
+        DriverManager.getDriver().findElement(locator).sendKeys(filePath);
+    }
+
+
     public static void uploadFileWithRobotClass(By elementFileForm, String filePath) {
         LogUtils.info("📁 Start uploading file using Robot class...");
         LogUtils.info("👉 File to upload: " + filePath);

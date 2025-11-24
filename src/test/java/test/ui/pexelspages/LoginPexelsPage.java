@@ -12,6 +12,21 @@ public class LoginPexelsPage {
     private By inputPassword = By.xpath("//input[@placeholder='Password']");
     private By buttonLogin = By.xpath("//span[contains(text(),'Log in')]");
     private By logoIcon = By.xpath("//div[contains(@class, 'Navbar_left')]");
+    private By linkForgotYourPassword = By.xpath("//span[normalize-space()='Forgot your password?']");
+    private By inputEnterYourEmailAddress = By.xpath("//input[@placeholder='name@email.com']");
+    private By buttonResetPassword = By.xpath("//span[contains(text(),'Reset password')]");
+
+    public void forgotPassword(String email) {
+        WebUI.openURL("https://www.pexels.com/");
+        WebUI.waitForPageLoaded();
+        WebUI.moveToElement(threeDots);
+        WebUI.waitForElementVisible(optionLogin);
+        WebUI.clickElement(optionLogin);
+        WebUI.waitForElementVisible(linkForgotYourPassword);
+        WebUI.clickElement(linkForgotYourPassword);
+        WebUI.setTextElement(inputEnterYourEmailAddress, email);
+        WebUI.clickElement(buttonResetPassword);
+    }
 
     public void login() {
         WebUI.openURL("https://www.pexels.com/");
