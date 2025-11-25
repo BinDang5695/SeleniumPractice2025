@@ -636,6 +636,12 @@ public class WebUI {
         }
     }
 
+    public static void scrollHorizontally(By locator) {
+        WebElement element = DriverManager.getDriver().findElement(locator);
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+        js.executeScript("arguments[0].scrollIntoView({behavior: 'auto', block: 'nearest', inline: 'center'});", element);
+    }
+
     public static boolean dragAndDrop(By fromElement, By toElement) {
         try {
             Actions action = new Actions(getDriver());

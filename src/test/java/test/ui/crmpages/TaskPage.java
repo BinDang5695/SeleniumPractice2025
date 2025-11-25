@@ -53,6 +53,11 @@ public class TaskPage extends BasePage {
         WebUI.clickElement(switchToKanBan);
     }
 
+    public void scrollHorizontal()
+    {
+        WebUI.scrollHorizontally(from);
+    }
+
     public void verifyNavigateToKanbanPage()
     {
         Assert.assertTrue(WebUI.checkElementExist(switchToList), "Not navigate to Kanban page yet.");
@@ -125,6 +130,7 @@ public class TaskPage extends BasePage {
         AssertHelper.assertEquals(WebUI.getTextElement(nodataTesting), "No Tasks Found", "The nodataTesting title not match.");
         Assert.assertTrue(WebUI.checkElementExist(nodataAwaitingFeedback), "The nodataAwaitingFeedback title not display.");
         AssertHelper.assertEquals(WebUI.getTextElement(nodataAwaitingFeedback), "No Tasks Found", "The nodataAwaitingFeedback title not match.");
+        WebUI.scrollHorizontally(from);
     }
 
     public void dragAndDrop()
