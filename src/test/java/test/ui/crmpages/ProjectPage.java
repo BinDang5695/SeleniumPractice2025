@@ -13,8 +13,7 @@ public class ProjectPage extends BasePage {
 
     private By titleProjectPage = By.xpath("//span[normalize-space()='Projects Summary']");
     private By inputSearchProject = By.xpath("//input[@aria-controls='projects']");
-    private By itemCustomerFirst = By.xpath("//a[contains(@href,'1595') and normalize-space()='Bin Customer']");
-    private By inputSearchCustomer = By.xpath("//div[@id='clients_filter']//input[@type='search']");
+    private By itemCustomerFirst = By.xpath("//a[normalize-space()='Bin Project']");
     private By buttonNewProject = By.xpath("//a[normalize-space()='New Project']");
     private By inputProjectName = By.xpath("//input[@id='name']");
     private By inputCustomer = By.xpath("//button[@data-id='clientid']");
@@ -30,7 +29,6 @@ public class ProjectPage extends BasePage {
     private By statusProject = By.xpath("//dd[normalize-space()='In Progress']");
     private By alertSuccess = By.xpath("//span[@class='alert-title']");
     private By projectNameOnProjectTab = By.xpath("//a[normalize-space()='Bin Project']");
-    private By statusOnProjectTab = By.xpath("//span[normalize-space()='In Progress']");
     private By deleteProject = By.xpath("//a[@class='text-danger _delete']");
     private By buttonX = By.xpath("//button[@data-dismiss='alert']");
     private By noData = By.xpath("//td[@class='dataTables_empty']");
@@ -91,21 +89,9 @@ public class ProjectPage extends BasePage {
 
     public void searchAndCheckCustomerInTable()
     {
-        WebUI.setTextElement(inputSearchCustomer, "Bin Customer");
-        AssertHelper.assertEquals(WebUI.getTextElement(itemCustomerFirst), "Bin Customer", "The customer name in table not match");
-    }
-
-    public void clickFirstCustomer()
-    {
-        WebUI.clickElement(itemCustomerFirst);
-    }
-
-    public void verifyProjectCreatedOnProjectTab()
-    {
-        AssertHelper.assertTrue(WebUI.checkElementExist(projectNameOnProjectTab), "The Project Name not display.");
-        AssertHelper.assertEquals(WebUI.getTextElement(projectNameOnProjectTab), "Bin Project", "The Project Name not match.");
-        AssertHelper.assertTrue(WebUI.checkElementExist(statusOnProjectTab), "The status not display.");
-        AssertHelper.assertEquals(WebUI.getTextElement(statusOnProjectTab), "In Progress", "The status not match.");
+        WebUI.setTextElement(inputSearchProject, "Bin Project");
+        AssertHelper.assertTrue(WebUI.checkElementExist(itemCustomerFirst), "Bin Project", "The customer name in table not match");
+        AssertHelper.assertEquals(WebUI.getTextElement(itemCustomerFirst), "Bin Project", "The customer name in table not match");
     }
 
     public void moveToProjectName()

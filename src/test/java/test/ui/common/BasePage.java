@@ -19,9 +19,10 @@ public class BasePage {
     private HeaderPage headerPage;
     private ContractsPage contractsPage;
     private ExpensesPage expensesPage;
+    private SalesPage salesPage;
+    private EstimatesPage estimatesPage;
     private LeadsPage leadsPage;
     private KnowledgeBasePage knowledgeBase;
-    private SalesPage salesPage;
     private ProposalsPage proposalsPage;
     private ItemsPage itemsPage;
     private ExcelHelper excelHelper;
@@ -35,6 +36,7 @@ public class BasePage {
     private By menuLeads = By.xpath("//span[@class='menu-text'][normalize-space()='Leads']");
     private By menuKnowledgeBase = By.xpath("//span[normalize-space()='Knowledge Base']");
     private By menuSales = By.xpath("//span[@class='menu-text'][normalize-space()='Sales']");
+    private By menuEstimates= By.xpath("//span[normalize-space()='Estimates']");
     private By menuProposals = By.xpath("//span[normalize-space()='Proposals']");
     private By menuItems = By.xpath("//span[normalize-space()='Items']");
     private By tabProjects = By.xpath("//a[@data-group='projects']");
@@ -195,9 +197,14 @@ public class BasePage {
         return new KnowledgeBasePage();
     }
 
-    public SalesPage clickMenuSalesPage() {
+    public SalesPage clickMenuSales() {
         WebUI.clickElement(menuSales);
         return new SalesPage();
+    }
+
+    public EstimatesPage clickMenuEstimates() {
+        WebUI.clickElement(menuEstimates);
+        return new EstimatesPage();
     }
 
     public ProposalsPage clickMenuProposalsPage() {

@@ -93,7 +93,7 @@ public class ContractsPage extends BasePage {
     public void verifyDeletedContract() {
         WebUI.setTextElement(searchContract, "Bin Subject");
         WebUI.scrollToCenterElement(noDataAfterDelete);
-        AssertHelper.assertEquals(WebUI.getTextElement(noDataAfterDelete), "No matching records found", "Deleted Contract still shown");
+        AssertHelper.assertEquals(WebUI.getTextElement(noDataAfterDelete), "No entries found", "Deleted Contract still shown");
     }
 
 }

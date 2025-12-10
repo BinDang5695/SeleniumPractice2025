@@ -56,6 +56,7 @@ public class KnowledgeBasePage extends BasePage {
     public void switchBetweenTabTest() {
         String tab1 = DriverManager.getDriver().getWindowHandle();
         WebUI.moveToElement(createdArticle);
+        WebUI.waitForElementVisible(buttonView);
         WebUI.clickElement(buttonView);
         Set<String> allTabs = DriverManager.getDriver().getWindowHandles();
         String tab2 = null;
@@ -72,8 +73,10 @@ public class KnowledgeBasePage extends BasePage {
 
             AssertHelper.assertEquals(WebUI.getTextElement(nameArticle), "Bin Article", "The project progress not match.");
             AssertHelper.assertEquals(WebUI.getTextElement(descriptionArticle), "Bin article description", "The description Article does not match.");
+            WebUI.waitForElementVisible(buttonYes);
             WebUI.clickElement(buttonYes);
             AssertHelper.assertEquals(WebUI.getTextElement(messageNotification), "Thanks for your feedback", "The 1st message Notification does not match.");
+            WebUI.waitForElementVisible(buttonYes);
             WebUI.clickElement(buttonYes);
             WebUI.waitForElementVisible(messageNotification);
             AssertHelper.assertEquals(WebUI.getTextElement(messageNotification), "You can vote once in 24 hours", "The 2nd message Notification does not match.");

@@ -18,7 +18,7 @@ public class ProposalsTest extends BaseTest {
     public void manageProposalsPDFFile() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
-        basePage().clickMenuSalesPage();
+        basePage().clickMenuSales();
         basePage().clickMenuProposalsPage();
         proposalsPage().clickButtonNewProposal();
         proposalsPage().addNewProposal();
@@ -43,7 +43,7 @@ public class ProposalsTest extends BaseTest {
     public void manageProposalExcelFile() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
-        basePage().clickMenuSalesPage();
+        basePage().clickMenuSales();
         basePage().clickMenuProposalsPage();
         proposalsPage().clickButtonNewProposal();
         proposalsPage().addNewProposal();
@@ -68,7 +68,7 @@ public class ProposalsTest extends BaseTest {
     public void manageProposalCSVFile() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
-        basePage().clickMenuSalesPage();
+        basePage().clickMenuSales();
         basePage().clickMenuProposalsPage();
         proposalsPage().clickButtonNewProposal();
         proposalsPage().addNewProposal();

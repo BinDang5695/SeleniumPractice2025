@@ -24,10 +24,8 @@ public class ProposalsPage extends BasePage {
     private By dropdownCustomer = By.xpath("//div[contains(text(),'Select and begin typing')]");
     private By inputCustomer = By.xpath("//input[@placeholder='Type to search...']");
     private By option1stBinCustomer = By.xpath("(//span[normalize-space()='Bin Customer'])[1]");
-    private By calendarDate = By.xpath("//div[@app-field-wrapper='date']//i[contains(@class,'calendar')]");
-    private By year2025 = By.xpath("//span[normalize-space()='2025']");
-    private By year2026 = By.xpath("//div[normalize-space()='2026']");
-    private By date21 = By.xpath("//div[normalize-space()='21']");
+    private By inputDate = By.xpath("//input[@id='date']");
+    private By date20 = By.xpath("//div[normalize-space()='20']");
     private By toogleAllowComments = By.xpath("//label[@for='allow_comments']");
     private By inputEmail = By.xpath("//input[@id='email']");
     private By buttonAdd = By.xpath("//div[@class='input-group-btn']");
@@ -42,6 +40,7 @@ public class ProposalsPage extends BasePage {
     private By buttonToogleTableRight = By.xpath("//i[@class='fa fa-angle-double-right']");
     private By inputSearchProposals = By.xpath("//input[@aria-controls='proposals']");
     private By contentProposals_info = By.xpath("//div[@id='proposals_info' and contains(., 'Showing 1 to 1 of 1 entries')]");
+    private By searchProposals = By.xpath("//input[@class='form-control input-sm']");
     private By dropdownMore = By.xpath("//button[normalize-space()='More']");
     private By optionDelete = By.xpath("//a[normalize-space()='Delete']");
     private By buttonX = By.xpath("//button[@data-dismiss='alert']//span[@aria-hidden='true'][normalize-space()='×']");
@@ -49,15 +48,16 @@ public class ProposalsPage extends BasePage {
     private By optionPDF = By.xpath("//a[normalize-space()='PDF']");
     private By optionExcel = By.xpath("//a[normalize-space()='Excel']");
     private By optionCSV = By.xpath("//a[normalize-space()='CSV']");
+    private By optionPrint = By.xpath("//a[normalize-space()='Print']");
     private By tableBinSubject = By.xpath("//tr[@class='has-row-options odd']//a[contains(text(),'Bin Subject')]");
 
     //Compare file PDF with data on UI table
     private By tableProposal = By.xpath("//tr[1]//td[1]//a[contains(@href,'list_proposals')]");
     private By tableSubject = By.xpath("//tr[1]//td[2]//a[normalize-space()='Bin Subject']");
     private By tableTo = By.xpath("//a[contains(text(),'Bin Customer')]");
-    private By tableTotal = By.xpath("//td[normalize-space()='$1,000.00']");
-    private By tableDate = By.xpath("//td[normalize-space()='21-11-2026']");
-    private By tableOpenTill = By.xpath("//td[normalize-space()='28-11-2026']");
+    private By tableTotal = By.xpath("//td[contains(text(),'$1,000.00')]");
+    private By tableDate = By.xpath("//td[normalize-space()='20-12-2028']");
+    private By tableOpenTill = By.xpath("//td[normalize-space()='27-12-2028']");
     private By tableCreated = By.xpath("//td[@class='sorting_1']");
     private By tableStatus = By.xpath("//td//span[contains(@class,'proposal-status')]");
     String uiProposalNumber;
@@ -80,7 +80,6 @@ public class ProposalsPage extends BasePage {
     }
 
     public void captureUITableData() {
-        WebUI.waitForElementVisible(contentProposals_info);
         uiProposalNumber = WebUI.getTextElement(tableProposal);
         uiSubject = WebUI.getTextElement(tableSubject);
         uiTo = WebUI.getTextElement(tableTo);
@@ -105,11 +104,8 @@ public class ProposalsPage extends BasePage {
         WebUI.clickElement(dropdownCustomer);
         WebUI.setTextElement(inputCustomer, "Bin Customer");
         WebUI.clickElement(option1stBinCustomer);
-        WebUI.clickElement(calendarDate);
-        WebUI.clickElement(year2025);
-        WebUI.waitForElementVisible(year2026);
-        WebUI.clickElement(year2026);
-        WebUI.clickElement(date21);
+        WebUI.setTextElement(inputDate, "20-12-2028");
+        WebUI.clickElement(date20);
         WebUI.clickElement(toogleAllowComments);
         WebUI.setTextElement(inputEmail, "vbin@gmail.com");
         WebUI.clickElement(buttonAdd);
@@ -346,7 +342,5 @@ public class ProposalsPage extends BasePage {
 
         FileHelper.deleteFile(fullPath);
     }
-
-
 
 }

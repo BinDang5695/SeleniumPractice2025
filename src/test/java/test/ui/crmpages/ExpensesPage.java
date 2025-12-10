@@ -112,10 +112,12 @@ public class ExpensesPage extends BasePage {
     }
 
     public void verifyDeletedContract() {
+        WebUI.waitForElementVisible(alertSuccess);
         AssertHelper.assertEquals(WebUI.getTextElement(alertSuccess), "Expense deleted", "Alert Success after deleted does not match");
+        WebUI.waitForElementVisible(buttonX);
         WebUI.clickElement(buttonX);
         WebUI.setTextElement(inputSearchExpenses, "Bin Category");
-        AssertHelper.assertEquals(WebUI.getTextElement(noDataAfterDelete), "No matching records found", "Deleted Contract still shown");
+        AssertHelper.assertEquals(WebUI.getTextElement(noDataAfterDelete), "No entries found", "Deleted Contract still shown");
         WebUI.clickElement(menuSales);
         WebUI.clickElement(menuInvoices);
         WebUI.clickElement(buttonCreateNewInvoice);

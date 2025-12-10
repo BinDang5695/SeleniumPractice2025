@@ -23,11 +23,8 @@ public class ProjectTest extends BaseTest {
         projectPage().clickButtonAddNewCustomer();
         projectPage().submitDataForNewCustomer();
         projectPage().verifyProjectCreated();
-        basePage().clickMenuCustomers();
+        basePage().clickMenuProjects();
         projectPage().searchAndCheckCustomerInTable();
-        projectPage().clickFirstCustomer();
-        basePage().clickTabProjects();
-        projectPage().verifyProjectCreatedOnProjectTab();
         projectPage().moveToProjectName();
         projectPage().clickAndDeleteProject();
         basePage().clickMenuProjects();

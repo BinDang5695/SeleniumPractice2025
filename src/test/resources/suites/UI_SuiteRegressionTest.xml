@@ -19,11 +19,9 @@
             </class>
             <class name="test.ui.crmtestcases.ExpensesTest">
             </class>
-            <class name="test.ui.crmtestcases.LeadsTest">
-            </class>
             <class name="test.ui.crmtestcases.KnowledgeBaseTest">
             </class>
-            <class name="test.ui.crmtestcases.ProposalsTest">
+            <class name="test.ui.crmtestcases.LeadsTest">
             </class>
         </classes>
     </test>

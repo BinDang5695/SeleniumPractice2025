@@ -18,12 +18,12 @@ public class ItemsTest extends BaseTest {
     public void manageKnowledgeBase() {
         loginPage().loginCRM();
         dashboardPage().verifyDashboardPage("Invoices Awaiting Payment", "1 / 3");
-        basePage().clickMenuSalesPage();
+        basePage().clickMenuSales();
         basePage().clickMenuItemsPage();
         itemsPage().clickButtonImportItems();
         itemsPage().importCSVFile();
         itemsPage().clickToImportCSVFile();
-        basePage().clickMenuSalesPage();
+        basePage().clickMenuSales();
         basePage().clickMenuItemsPage();
         itemsPage().searchAndVerifyItems();
         itemsPage().deleteImportedItem();
